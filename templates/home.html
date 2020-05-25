@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <title> Juan Heza</title>
+    </head>
+
+    <body>
+        <h1>Juan Heza Notebook</h1>
+        <table>
+            <tr>
+                <th>Project</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>PokeTCG</td>
+                <td>A simple TCG game</td>
+            </tr>
+        </table>
+        <br>
+
+        <form action="/proyects" method="POST">
+            Data:
+            <input type="text" name="data" placeholder="data">
+            <br>
+            Description:
+            <input type="text" name="description" placeholder="Description">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+
+        <script>
+            ProjectTable = document.querySelector("table")
+            fetch("/proyects").then(respones=>response.json()).then(proyectList => {
+                proyectList.forEach(proyect=>{
+                    row= document.createElement("tr")
+                    data = document.createElement("td")
+                    data.innerHTML = proyect.data
+                    description = document.createElement("td")
+                    description.innerHTML = proyect.description
+
+                    row.appendChild(data)
+                    row.appendChild(description)
+
+                    ProjectTable.appendChild(row)    
+                })
+            })
+        </script>
+    </body>
+</html>
