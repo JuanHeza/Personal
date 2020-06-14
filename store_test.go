@@ -16,13 +16,14 @@ type StoreSuite struct {
 	db    *sql.DB
 }
 
+/*
 const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
 	password = "JHZ697heza"
 	dbname   = "proyect_encyclopedia"
-)
+) */
 
 //SetupSuite create a db connection
 func (s *StoreSuite) SetupSuite() {

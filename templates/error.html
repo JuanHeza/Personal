@@ -1,0 +1,63 @@
+{{define "error"}}
+<!-- 
+		<script>
+			document.title='Error'
+			document.getElementById("Cuerpo").innerHTML= '';
+		</script> 
+	-->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="static/stylesheets/estilos.css">
+    <!-- <script type="text/javascript" src="js/flipclock.js"></script> -->
+    <script src="js/JSAM.js"></script>
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+    ></script>
+
+    <title>{{.Title}}</title>
+    <link rel="icon" href="static/stylesheets/59.ico" type="image/x-icon" />
+    <!-- <link rel="stylesheet" type="text/css" href="src/slider/engine1/style.css" /> -->
+    <!-- <script type="text/javascript" src="src/slider/engine1/jquery.js"></script> -->
+  </head>
+
+  <body>
+    {{template "header"}}
+    <section class="main container">
+      <div class="container">
+        <center>
+          <section id="Cuerpo">
+            <h2 class="post-title">
+              <a href="#">Lo Sentimos</a>
+            </h2>
+            <p>
+              <span class="post-fecha">2016 </span
+              ><span class="post-autor"><a href="#"> AMFIME</a></span>
+            </p>
+            <p class="post-contenido text-justify">
+              <center>
+                Esta pagina esta actualmente en deshabilitata favor de volver
+                mas tarde <br /><br /><br />
+                <img
+                  src="src/anigif.gif"
+                  alt="Amfime"
+                  style="width: 304px; height: 228px;"
+                />
+              </center>
+            </p>
+            <br /><br />
+          </section>
+        </center>
+      </div>
+    </section>
+    {{template "footer"}}
+  </body>
+</html>
+{{end}}

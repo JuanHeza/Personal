@@ -1,19 +1,65 @@
-body{
-    min-height: 100%;
-    background-image: url("/static/stylesheets/background.jpg"), linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2));
-    background-blend-mode: overlay;
-    background-size: cover;
+body {
+  min-height: 100%;
+  background-image: url("/static/stylesheets/background.jpg"),
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-blend-mode: overlay;
+  background-size: cover;
 }
 
-.welcome{
-    font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-sherif';
-    font-size: 3rem;
-    color: aliceblue;
+.welcome {
+  font-family: "Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-sherif";
+  font-size: 3rem;
+  color: aliceblue;
 }
 
-.center{
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.center {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a:link, a:visited {
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  
+  justify-content: center;
+  border-radius: 8px;
+  left: 50%;
+  background-color: seagreen;
+  border: none;
+  font-size: 28px;
+  width: 40%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+a span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+a span:after {
+  /* esto pone los >> */
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+a:hover span {
+  padding-right: 25px;
+}
+
+a:hover span:after {
+  opacity: 1;
+  right: 0;
 }

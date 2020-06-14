@@ -4,45 +4,43 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-//Proyect struct
-type Proyect struct {
-	Data        string `json:"data"`
-	Description string `json:"description"`
+const (
+	//APIKey is the WakaTime key
+	APIKey = "502f3c9e-67d4-48ce-a6b9-77dbe3887e7c"
+)
+
+func proyectHandler(w http.ResponseWriter, r *http.Request) {
+	var actual Projects
+	errorPage := Templates.Lookup("proyect")
+	vars := mux.Vars(r)
+	actual = ProyectData[vars["name"]]
+	actual.Time = getWakaTime(vars["name"])
+	fmt.Println(actual)
+	if err := errorPage.ExecuteTemplate(w, "proyect", actual); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
-func getProyectHandler(w http.ResponseWriter, r *http.Request) {
-
-	proyects, err := store.GetProyect()
-
-	proyectListBytes, err := json.Marshal(proyects)
-
+func getWakaTime(Project string) []string {
+	var data interface{} //= make(map[string]string)
+	url := fmt.Sprintf("https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=%s&project=%s", APIKey, Project)
+	res, err := http.Get(url)
 	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v",err))
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		panic(err)
 	}
-	w.Write(proyectListBytes)
-}
-
-func createProyectHandler(w http.ResponseWriter, r *http.Request) {
-	proyect := Proyect{}
-	err := r.ParseForm()
-
-	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+	decoder.Decode(&data)
+	fmt.Println(url)
+	x := data.(map[string]interface{})
+	y := x["data"].(map[string]interface{})
+	if len(y["categories"].([]interface{})) > 0 {
+		z := y["categories"].([]interface{})[0].(map[string]interface{})
+		return []string{fmt.Sprint(z["hours"]), fmt.Sprint(z["minutes"]), fmt.Sprint(z["seconds"])}
 	}
-
-	proyect.Data = r.Form.Get("data")
-	proyect.Description = r.Form.Get("description")
-
-	err = store.CreateProyect(&proyect)
-	if err != nil{
-		fmt.Println(err)
-	}
-
-	http.Redirect(w, r, "/templates/", http.StatusFound)
+	return nil //"Time Not Initialized"
 }

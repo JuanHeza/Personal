@@ -5,7 +5,6 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"time"
 )
@@ -17,22 +16,19 @@ type Welcome struct {
 }
 
 func welcome() {
-	welcome := Welcome{"Juan", time.Now().Format(time.Stamp)}
 
-	template := template.Must(template.ParseFiles("templates/welcome-template.html"))
-
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if name := r.FormValue("name"); name != "" {
-			welcome.Name = name
-		}
-
-		if err := template.ExecuteTemplate(w, "welcome-template.html", welcome); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-	})
-
+	http.HandleFunc("/", welcomeHandler)
 	fmt.Println("listening")
 	fmt.Println(http.ListenAndServe(":8080", nil))
+}
+
+func welcomeHandler(w http.ResponseWriter, r *http.Request) {
+	welcome := Welcome{"Juan", time.Now().Format(time.Stamp)}
+	temp := Templates.Lookup("welcome") //template.Must(template.ParseFiles("templates/welcome-template.html"))
+	if name := r.FormValue("name"); name != "" {
+		welcome.Name = name
+	}
+	if err := temp.ExecuteTemplate(w, "welcome", welcome); err != nil { // "welcome-template.html", welcome); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

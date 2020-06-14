@@ -1,0 +1,181 @@
+{
+  "data": {
+    "best_day": {
+      "created_at": "2020-06-10T18:20:36Z",
+      "date": "2020-06-09",
+      "id": "d8ee7d3d-c894-4356-8a3b-8c1542d031ec",
+      "modified_at": null,
+      "text": "4 hrs 45 mins",
+      "total_seconds": 17106.058949
+    },
+    "categories": [
+      {
+        "digital": "15:52:01",
+        "hours": 15,
+        "minutes": 52,
+        "name": "Coding",
+        "percent": 100.0,
+        "seconds": 1,
+        "text": "15 hrs 52 mins",
+        "total_seconds": 57121.991646
+      }
+    ],
+    "created_at": "2020-06-10T18:20:35Z",
+    "daily_average": 14276,
+    "daily_average_including_other_language": 14280,
+    "days_including_holidays": 7,
+    "days_minus_holidays": 4,
+    "dependencies": [],
+    "editors": [
+      {
+        "digital": "15:52:01",
+        "hours": 15,
+        "minutes": 52,
+        "name": "VS Code",
+        "percent": 100.0,
+        "seconds": 1,
+        "text": "15 hrs 52 mins",
+        "total_seconds": 57121.991646
+      }
+    ],
+    "end": "2020-06-10T04:59:59Z",
+    "holidays": 3,
+    "human_readable_daily_average": "3 hrs 57 mins",
+    "human_readable_daily_average_including_other_language": "3 hrs 58 mins",
+    "human_readable_total": "15 hrs 51 mins",
+    "human_readable_total_including_other_language": "15 hrs 52 mins",
+    "id": "00322ec8-9ded-41ea-bf8d-478aebdefba9",
+    "is_already_updating": false,
+    "is_coding_activity_visible": false,
+    "is_including_today": false,
+    "is_other_usage_visible": true,
+    "is_stuck": false,
+    "is_up_to_date": true,
+    "languages": [
+      {
+        "digital": "4:33:03",
+        "hours": 4,
+        "minutes": 33,
+        "name": "HTML",
+        "percent": 28.68,
+        "seconds": 3,
+        "text": "4 hrs 33 mins",
+        "total_seconds": 16383.207595
+      },
+      {
+        "digital": "4:07:22",
+        "hours": 4,
+        "minutes": 7,
+        "name": "CSS",
+        "percent": 25.98,
+        "seconds": 22,
+        "text": "4 hrs 7 mins",
+        "total_seconds": 14842.920206
+      },
+      {
+        "digital": "3:41:02",
+        "hours": 3,
+        "minutes": 41,
+        "name": "Go",
+        "percent": 23.22,
+        "seconds": 2,
+        "text": "3 hrs 41 mins",
+        "total_seconds": 13262.652248
+      },
+      {
+        "digital": "2:05:19",
+        "hours": 2,
+        "minutes": 5,
+        "name": "JSON",
+        "percent": 13.16,
+        "seconds": 19,
+        "text": "2 hrs 5 mins",
+        "total_seconds": 7519.011086
+      },
+      {
+        "digital": "1:06:12",
+        "hours": 1,
+        "minutes": 6,
+        "name": "PHP",
+        "percent": 6.95,
+        "seconds": 12,
+        "text": "1 hr 6 mins",
+        "total_seconds": 3972.753473
+      },
+      {
+        "digital": "0:18:34",
+        "hours": 0,
+        "minutes": 18,
+        "name": "JavaScript",
+        "percent": 1.95,
+        "seconds": 34,
+        "text": "18 mins",
+        "total_seconds": 1114.735263
+      },
+      {
+        "digital": "0:00:16",
+        "hours": 0,
+        "minutes": 0,
+        "name": "Other",
+        "percent": 0.03,
+        "seconds": 16,
+        "text": "16 secs",
+        "total_seconds": 16.187077
+      },
+      {
+        "digital": "0:00:10",
+        "hours": 0,
+        "minutes": 0,
+        "name": "Text",
+        "percent": 0.02,
+        "seconds": 10,
+        "text": "10 secs",
+        "total_seconds": 10.524698
+      }
+    ],
+    "machines": [
+      {
+        "digital": "15:52:01",
+        "hours": 15,
+        "machine": {
+          "created_at": "2020-06-04T22:05:11Z",
+          "id": "9dcdf001-da7b-4c6f-9886-b360eacb0348",
+          "ip": "187.160.8.77",
+          "last_seen_at": "2020-06-06T01:59:11Z",
+          "name": "BISHOP",
+          "value": "BISHOP"
+        },
+        "minutes": 52,
+        "name": "BISHOP",
+        "percent": 100.0,
+        "seconds": 1,
+        "text": "15 hrs 52 mins",
+        "total_seconds": 57121.991646
+      }
+    ],
+    "modified_at": "2020-06-10T18:20:36Z",
+    "operating_systems": [
+      {
+        "digital": "15:52:01",
+        "hours": 15,
+        "minutes": 52,
+        "name": "Windows",
+        "percent": 100.0,
+        "seconds": 1,
+        "text": "15 hrs 52 mins",
+        "total_seconds": 57121.991646
+      }
+    ],
+    "project": "Personal",
+    "range": "last_7_days",
+    "start": "2020-06-03T05:00:00Z",
+    "status": "ok",
+    "timeout": 10,
+    "timezone": "America/Mexico_City",
+    "total_seconds": 57105.804569,
+    "total_seconds_including_other_language": 57121.991646,
+    "user_id": "e779c06a-3302-444c-a0f6-d608f1ce11de",
+    "username": null,
+    "writes_only": false
+  }
+}
