@@ -1,53 +1,49 @@
 {{define "card"}}
-<div id="card">
-          <div class="upperCard">
-            <div class=" upperColumn"><div class="proyectIcon">{{.Icon}}</div></div>
-            <div class="proyectDescription upperColumn">
-              <p class="">{{.Description}}</p>
-            </div>
-          </div>
-          <div class="bottomCard">
-            <div class="proyectTime bottomColumn">
-              {{if .Time}}
-              <div class="clock-col">
-                <p class="clock-hours clock-timer">{{index .Time 0 }}</p>
-                <p class="clock-label">
-                  Hours
-                </p>
-              </div>
-              <div class="clock-col">
-                <p class="clock-minutes clock-timer">{{index .Time 1 }}</p>
-                <p class="clock-label">
-                  Minutes
-                </p>
-              </div>
-              <div class="clock-col">
-                <p class="clock-seconds clock-timer">{{index .Time 2 }}</p>
-                <p class="clock-label">
-                  Seconds
-                </p>
-              </div>
-              {{else}}
-              Time Not Initialized
-              {{end}}
-            </div>
-            <!-- <div class="ProyectLanguage bottomColumn bottomMiddleColumn">.Lenguage</div> -->
-            <div class="proyectProgress bottomColumn" style="width: 40%;" id="proyectProgress">
-              <div class="ProgressText">
-                Progreso
-                <div id="value"></div>
-              </div>
-              <div class="ProgressBar" style="width: 100%;">
-                <div
-                  class="ProgressBar-Fill"
-                  id="Fill"
-                  style="width: 1%;"
-                  onclick="move()"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
+<div id="Card">
+  <div class="upperCard">
+    <div class=" upperColumn">
+      <div class="proyectIcon">
+        <image src="{{.Icon}}"></image>
+        <div class="">{{.Name}}</div>
+      </div>
+    </div>
+    <div class="proyectDescription upperColumn">
+      <p class="">{{.Description}}</p>
+    </div>
+  </div>
+  <div class="bottomCard">
+    <div class="proyectTime bottomColumn">
+      {{if .Time}}<div class="clock-col">
+        <p class="clock-hours clock-timer">{{index .Time 0 }}</p>
+        <p class="clock-label">
+          Hours
+        </p>
+      </div>
+      <div class="clock-col">
+        <p class="clock-minutes clock-timer">{{index .Time 1 }}</p>
+        <p class="clock-label">
+          Minutes
+        </p>
+      </div>
+      <div class="clock-col">
+        <p class="clock-seconds clock-timer">{{index .Time 2 }}</p>
+        <p class="clock-label">
+          Seconds
+        </p>
+      </div>
+      {{else}}<p class="">Time Not Initialized</p> {{end}}
+    </div>
+    <div class="proyectProgress bottomColumn" style="width: 40%;" id="proyectProgress">
+      <div class="ProgressText">
+        Progreso
+        <div id="value"></div>
+      </div>
+      <div class="ProgressBar" style="width: 100%;">
+        <div class="ProgressBar-Fill" id="Fill" style="width: 1%;" onclick="move()"></div>
+      </div>
+    </div>
+  </div>
+</div>
 {{end}}
 <!-- 
     ????????????????????????????????????????????????????????????????????
@@ -55,7 +51,20 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "structures"}}
-<div>
+<div id="Models" style="display: none;">
+  <div id="mainContent">
+    {{range .}}
+    <div class="structureCard">
+      <div class="name"> {{.Title}} </div>
+      {{range .Data}}
+      <div class="fields">
+        <div class="fieldName">{{.Name}}</div>
+        <div class="fieldType">{{.DataType}}</div>
+      </div>
+      {{end}}
+    </div>
+    {{end}}
+  </div>
 
 </div>
 {{end}}
@@ -65,8 +74,22 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "functions"}}
-<div>
-    
+<div id="Functions" style="display: none;">
+  <div class="functionMenu">
+  {{ range .}} <!-- FUNCTIONiNDEX-->
+    <div class="functionHeader" onclick="Show('.FunctionIndex')">
+      <div class="functionCall">{{.Call}}</div>
+      <div class="functionReturn">{{.Return}}</div>
+    </div>
+    <div class="functionDescription" id=".FunctionIndex">{{.Description}}</div>
+  {{end}}
+  </div>
+  <div class="FunctionCode">
+    <p class="code">
+      .FunctionCode
+    </p>
+  </div>
+
 </div>
 {{end}}
 <!-- 
@@ -75,8 +98,18 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "galery"}}
-<div>
-    
+<div id="Gallery" style="display: none;">
+  <div id="myModal" class="modal">
+    <span class="close" onclick ='hideModal()'>&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+  </div>
+  {{range .}}
+  <div class="galleryCard">
+    <img class="image" id="{{.ImageIndex}}" onclick="maximize('{{.ImageIndex}}')" src="{{.Src}}" alt="{{.Title}}">
+    <div class="imageFooter">{{.Title}}</div>
+  </div>
+  {{end}}
 </div>
 {{end}}
 <!-- 
@@ -85,8 +118,29 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "tasks"}}
-<div>
-    
+<div id="Tasks" style="display: none;">
+  <div class="undone">
+    <div class="taskTitle"> Pendientes</div>
+     <div class="task">
+        <div class="checkedBox">
+          <div class="check"></div>
+        </div>
+  {{range .Undone}}
+        <div class="text"> {{.Text}}</div>
+  {{end}}
+      </div>
+    </div>
+    <div class="done">
+      <div class="taskTitle"> Pendientes</div>
+       <div class="task">
+          <div class="checkedBox">
+            <div class="check"></div>
+          </div>
+    {{range .Done}}
+          <div class="text"> {{.Text}}</div>
+    {{end}}
+        </div>
+      </div>
 </div>
 {{end}}
 <!-- 
@@ -95,8 +149,15 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "notes"}}
-<div>
-    
+<div id="Notes" style="display: none;">
+  {{range .}}
+  <div class="noteBlock">
+    <div class="noteTitle"> {{.Title}}</div>
+    <div class="noteText">
+      <p>{{.Text}}</p>
+    </div>
+  </div>
+  {{end}}
 </div>
 {{end}}
 <!-- 
@@ -105,7 +166,22 @@
     ????????????????????????????????????????????????????????????????????
  -->
 {{define "missing"}}
-<div>
-    
+<div id="Missing" style="display: none;">
+  <div class="errorArea">
+    <div class="errorTitle"> Seccion Vacia</div>
+    <div class="errorText">
+      <p>Esta seccion esta en construccion o este proyecto no cuenta con datos relacionados</p>
+    </div>
+  </div>
 </div>
 {{end}}
+
+<!--
+
+  pseudocode
+    if map[baz] != nil{ print baz }{else{ print 99} 
+ 
+  template
+    baz={{if .baz}}{{.baz}}{{else}}99{{end}}
+
+-->

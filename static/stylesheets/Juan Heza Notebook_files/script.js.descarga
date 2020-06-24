@@ -1,0 +1,30 @@
+    var map = {
+        "Introduccion":"Card", 
+        "Modelos":"Models",
+        "Funciones":"Functions",
+        "Notas":"Notes",
+        "Imagenes":"Gallery",
+        "Pendientes":"Tasks",
+    }
+
+    function Active(clicked){	
+        var actual = document.getElementsByClassName('active');
+        document.getElementById(map[actual[0].id]).style.display = "none";
+        $(actual[0]).removeClass('active');
+        $(document.getElementById(clicked)).addClass('active');
+        document.getElementById(map[clicked]).style.display = "block";
+    }
+  
+    function myFunction() {
+         var y = document.getElementById("div1")
+         var x = document.getElementById("div2")
+        if (x.style.display == "none") {
+            x.style.display = "block"
+           	y.style.display = "none"
+        } else {
+            x.style.display = "none"
+           	y.style.display = "block"
+        }
+    }
+    
+    {/* https://www.w3schools.com/code/tryit.asp?filename=GFIVUL17L9WX */}

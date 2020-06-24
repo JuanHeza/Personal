@@ -15,10 +15,26 @@ func (m *MockStore) CreateProyect(pr *Proyect) error {
 	return rets.Error(0)
 }
 
+//CreateProject is something
+func (m *MockStore) CreateProject(pr *Projects) error {
+	rets := m.Called(pr)
+	return rets.Error(0)
+}
+
+//DeleteProject is something
+func (m *MockStore) DeleteProject(pr string) error {
+	rets := m.Called(pr)
+	return rets.Error(0)
+}
+
 //GetProyect returns a proyect
-func (m *MockStore) GetProyect() ([]*Proyect, error) {
+// func (m *MockStore) GetProyect() ([]*Proyect, error) {
+// 	rets := m.Called()
+// 	return rets.Get(0).([]*Proyect), rets.Error(1)
+// }
+func (m *MockStore) GetProyect(id ...string) ([]*Projects, error) {
 	rets := m.Called()
-	return rets.Get(0).([]*Proyect), rets.Error(1)
+	return rets.Get(0).([]*Projects), rets.Error(1)
 }
 
 //InitMockStore initialice the store

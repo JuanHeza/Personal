@@ -19,7 +19,6 @@ func proyectHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	actual = ProyectData[vars["name"]]
 	actual.Time = getWakaTime(vars["name"])
-	fmt.Println(actual)
 	if err := errorPage.ExecuteTemplate(w, "proyect", actual); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -27,10 +26,11 @@ func proyectHandler(w http.ResponseWriter, r *http.Request) {
 
 func getWakaTime(Project string) []string {
 	var data interface{} //= make(map[string]string)
-	url := fmt.Sprintf("https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=%s&project=%s", APIKey, Project)
+	url := fmt.Sprintf("https://wakatime.com/api/v1/users/current/stats/last_year?api_key=%s&project=%s", APIKey, Project)
 	res, err := http.Get(url)
 	if err != nil {
-		panic(err)
+		return nil
+		// panic(err)
 	}
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)

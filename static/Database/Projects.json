@@ -3,7 +3,7 @@
     "language": "Go",
     "description": "Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los que he trabajado, desglozando algunas de sus funcionalidades y la estrtuctura de sus datos, asi como tambien imagenes y notas sobre lo que he aprendido o resulto desafiante en su momento",
     "icon": "icon.jpg",
-    "progress": 20,
+    "progress": 50,
     "models": [
       {
         "title": "Project",
@@ -85,6 +85,30 @@
           }
         ]
       }
+    ],
+    "functions": [
+      {
+        "call":"func getWakaTime(Project string)",
+        "return":" []string",
+        "description":"Obtiene el tiempo trabajado en el proyecto utilizando la aplicacion WakaTime"
+      },
+      {
+        "call":"func ReadJSON()",
+        "return":"",
+        "description":"Lee el archivo JSON correspondiente al proyecto en cuestion"
+      }
+    ],
+    "tasks":[
+      {"done":false, "text":"Diseño Responsivo para todos los dispositivos"},
+      {"done":true, "text":"Implementar la base de datos SQL para migrar todos los datos de JSON a algo mejor manejado"}
+    ],
+    "notes":[
+      {"title":"Go Templates", "text":"Durante todo el desarrollo de este proyecto he entendido a mayor detalle como funcionan las Templates en Go y lo utiles que pueden llegar a ser para organizar el codigo en las diferentes secciones que lo componen, asi como tambien se puede usar para llamar secciones que son constantes en todas las paginas como lo seria la cabecera y el pie de pagina, sin necesidad de escribirlos en cada pagina, corriendo el riesgo de cometer variar los datos"},
+      {"title":"Api", "text":"Tengo pensado implementar un api para administrar algunos dispositivos IoT o proyectos que se conecten a internet a traves de un servidor, como lo serian el proyecto Arrow con IoT y el proyecto Elements con el servidor"}
+    ],
+    "images":[
+      {"src":"./static/images/Personal/Personal_Main.png","title":"Pagina Principal"},
+      {"src":"./static/images/Personal/Personal_Card.png","title":"Tarjeta de Proyecto"}
     ]
   },
   {"name": "Elements",

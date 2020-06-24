@@ -8,78 +8,86 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
 
-    <link rel="stylesheet" href="/static/stylesheets/estilos.css" />
-    <link rel="stylesheet" href="/static/stylesheets/styles.css" />
+    <link rel="stylesheet" href="./static/stylesheets/estilos.css" />
+    <link rel="stylesheet" href="./static/stylesheets/Project_Styles.css" />
 
-    <script type="text/javascript" src="/static/scripts/script.js"></script>
+    <script type="text/javascript" src="./static/scripts/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Juan Heza Notebook</title>
-    <link rel="icon" href="static/stylesheets/59.ico" type="image/x-icon" />
+    <link rel="icon" href="./static/stylesheets/59.ico" type="image/x-icon" />
   </head>
 
-  <body onload="move()">
-    <script>
-      function move() {
-        var elem = document.getElementById("Fill");
-        console.log(elem);
-        var width = 1;
-        var id = setTimeout(setInterval(frame, 10), 500);
-        function frame() {
-          if (width >= {{.Progress}}) {
-            clearInterval(id);
-          } else {
-            width++;
-            elem.style.width = width + "%";
-            document.getElementById("value").innerHTML = width * 1 + "%";
-          }
-        }
-      }
-    </script>
+  <body onload="move({{.Progress}})">
     <!-- 
 			-->
-	{{template "header"}}
-	<main>
-    <!-- 
-		-->
-      <div id="sidebar">
-        <ul
-          id="content"
-          class="nav nav-pills nav-stacked"
-          style="max-width: 250px;"
-        >
-          <li id="Introduccion">
-            <a  href="/#" onclick="Active('Introduccion')" class="sidebarButton">
-              <span class="glyphicon glyphicon-home"></span> Introduccion</a>
-          </li>
-          <li id="Modelos">
-            <a href="/#" onclick="Active('Modelos')" class="sidebarButton">
-              <span class="glyphicon glyphicon-th-list"></span> Modelos</a>
-          </li>
-          <li id="Funciones">
-            <a  href="/#" onclick="Active('Funciones')" class="sidebarButton">
-              <span class="glyphicon glyphicon-calendar"></span> Funciones</a>
-          </li>
-          <li id="Imagenes">
-            <a href="/#" onclick="Active('Imagenes')" class="sidebarButton">
-              <span class="glyphicon glyphicon-picture"></span> Imagenes</a>
-          </li>
-          <li id="Pendientes">
-            <a href="/#" onclick="Active('Pendientes')" class="sidebarButton">
-              <span class="glyphicon glyphicon-picture"></span> Pendientes</a>
-          </li>
-          <li id="Notas">
-            <a href="/#" onclick="Active('Notas')" class="sidebarButton">
-              <span class="glyphicon glyphicon-comment"></span> Notas</a>
-          </li>
-          <!-- <li id="" class="">	 <a href="/#" onclick="Active('')">		<span class="glyphicon glyphicon-picture"></span>  Galeria</a></li> -->
-        </ul>
-      </div>
-      {{template "card" .}}
-    <!-- 
-		-->
-	</main>
+    {{template "header"}}
+    <main>
+      <!-- 
+      -->
+        <div id="sidebar">
+          <ul
+            id="content"
+            class="nav nav-pills nav-stacked"
+            style="max-width: 250px;"
+          >
+            <li id="Introduccion" class="active">
+              <a  onclick="Active('Introduccion','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-home"></span> Introduccion</a>
+            </li>
+            <li id="Modelos">
+              <a  onclick="Active('Modelos','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-th-list"></span> Modelos</a>
+            </li>
+            <li id="Funciones">
+              <a  onclick="Active('Funciones','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-calendar"></span> Funciones</a>
+            </li>
+            <li id="Imagenes">
+              <a  onclick="Active('Imagenes','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-picture"></span> Imagenes</a>
+            </li>
+            <li id="Pendientes">
+              <a  onclick="Active('Pendientes','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-picture"></span> Pendientes</a>
+            </li>
+            <li id="Notas">
+              <a  onclick="Active('Notas','active')" class="sidebarButton">
+                <span class="glyphicon glyphicon-comment"></span> Notas</a>
+            </li>
+            <!-- <li id="" class="">	 <a  onclick="Active('')">		<span class="glyphicon glyphicon-picture"></span>  Galeria</a></li> -->
+          </ul>
+        </div>
+        <div class="mainArea">
+          {{template "card" .}}
+          
+          {{if .Functions}}
+            {{template "functions" .Functions}}
+          {{end}}
+          
+          {{if .Models}}
+            {{template "structures" .Models}}
+          {{end}}
+          
+          {{if .Tasks}}
+            {{template "tasks" .Tasks}}
+          {{end}}
+          
+          {{if .Images}}
+            {{template "galery" .Images}}
+          {{end}}
+          
+          {{if .Notes}}
+            {{template "notes" .Notes}}
+          {{end}}
+          
+          {{template "missing"}}
+        </div>
+      <!-- 
+      -->
+    </main>
     {{template "footer"}}
     <!-- 
-		--></body>
+    -->
+  </body>
 </html>
 {{end}}

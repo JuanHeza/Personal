@@ -25,7 +25,7 @@ const (
 	dbname   = "proyect_encyclopedia"
 )
 
-var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html"}
+var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html", "templates/home.html"}
 
 //ProyectFiles is the complete info about certain proyect or a general vieo of every project
 var ProyectFiles = map[string]string{
@@ -47,12 +47,15 @@ func newRouter() *mux.Router {
 	Templates = template.Must(template.ParseFiles(files...))
 
 	r.HandleFunc("/", welcomeHandler).Methods("GET")
-	// r.HandleFunc("/proyect/{name}", handler)
+	r.HandleFunc("/Crud", handler)
 	r.HandleFunc("/Proyect/{name}", proyectHandler)
 	r.HandleFunc("/Home", homeHandler).Methods("GET")
 	r.HandleFunc("/Error", errorHandler)
-	r.HandleFunc("/Proyects", getProyectHandler).Methods("GET")
-	r.HandleFunc("/Proyects", createProyectHandler).Methods("POST")
+	r.HandleFunc("/Data", getProyectHandler).Methods("GET")
+	r.HandleFunc("/Data", createProject).Methods("POST")
+	r.HandleFunc("/Data/{id}", getOneProjectHandler).Methods("GET")
+	// r.HandleFunc("/Data/{id}", UpdateProjectHandler).Methods("PUT")
+	r.HandleFunc("/Data/{id}", deleteProjectHandler).Methods("DELETE")
 	return r
 }
 
@@ -71,7 +74,7 @@ func main() {
 		panic(err)
 	}
 	InitStore(&dbStore{db: db})
-	ReadJSON()
+	// ReadJSON()
 	r := newRouter()
 	//http.HandleFunc("/",handler)
 	fmt.Println("listening http://127.0.0.1:8080/Home")
@@ -80,9 +83,13 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	Hi := fmt.Sprintf("Hi %v", vars["name"])
-	fmt.Fprintf(w, Hi)
+	// vars := mux.Vars(r)
+	// Hi := fmt.Sprintf("Hi %v", vars["name"])
+	// fmt.Fprintf(w, Hi)
+	errorPage := Templates.Lookup("CRUD")
+	if err := errorPage.ExecuteTemplate(w, "CRUD", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request) {

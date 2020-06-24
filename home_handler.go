@@ -10,18 +10,24 @@ import (
 
 // Projects General data
 type Projects struct {
-	Name        string   `json:"name,omitempty"`
-	Language    string   `json:"language,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Icon        string   `json:"icon,omitempty"`
-	Progress    float32  `json:"progress,omitempty"`
-	Model       []Models `json:"models,omitempty"`
-	Time        []string
-	Side        int
+	Name         string   `json:"name,omitempty"`
+	Language     []string `json:"language,omitempty"`
+	Introduccion string   `json:"introduccion,omitempty"`
+	Description  string   `json:"description,omitempty"`
+	Icon         string   `json:"icon,omitempty"`
+	Banner       string   `json:"banner,omitempty"`
+	Progress     int      `json:"progress,omitempty"`
+	Time         []string
+	Side         int
+	Models       []Model    `json:"models,omitempty"`
+	Functions    []Function `json:"functions,omitempty"`
+	Tasks        []Task     `json:"tasks,omitempty"`
+	Notes        []Note     `json:"notes,omitempty"`
+	Images       []Image    `json:"images,omitempty"`
 }
 
-//Models of the data in the proyect
-type Models struct {
+//Model of the data in the proyect
+type Model struct {
 	Title string `json:"title,omitempty"`
 	Data  []Data `json:"data,omitempty"`
 }
@@ -29,8 +35,33 @@ type Models struct {
 //Data is the info of each field in the model
 type Data struct {
 	Name        string `json:"name,omitempty"`
-	DataType    string `json:"data_type,omitempty"`
+	DataType    string `json:"type,omitempty"`
 	Description string `json:"description,omitempty"`
+}
+
+//Function is something
+type Function struct {
+	Call        string `json:"call,omitempty"`
+	Return      string `json:"return,omitempty"`
+	Description string `json:"description,omitempty"`
+}
+
+//Task is something
+type Task struct {
+	Done bool   `json:"done,omitempty"`
+	Text string `json:"text,omitempty"`
+}
+
+//Note is something
+type Note struct {
+	Title string `json:"title,omitempty"`
+	Text  string `json:"text,omitempty"`
+}
+
+//Image is something
+type Image struct {
+	Src   string `json:"src,omitempty"`
+	Title string `json:"title,omitempty"`
 }
 
 //ProyectData stores the data of each proyect to be accesible everytime its nedeed
@@ -67,6 +98,8 @@ func ReadJSON() { //w http.ResponseWriter){
 		ProyectData[General[a].Name] = General[a]
 	}
 }
+
+//ReadJSONProyect is something
 func ReadJSONProyect(file string) Projects { //w http.ResponseWriter){
 	dat, err := os.Open(ProyectFiles[file])
 	if err != nil {
