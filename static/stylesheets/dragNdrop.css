@@ -1,0 +1,155 @@
+
+  .icon {
+    height: 32px;
+    width: 32px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  table {
+    border-style: solid;
+    border-width: 5px;
+    border-color: blueviolet;
+  }
+  
+    .boxDragndrop,
+    .boxUploading,
+    .boxSuccess,
+    .boxError {
+      display: none;
+    }
+
+    .boxFile, input[name="icon"], input[name="banner"] {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+    }
+
+    .box.hasAdvancedUpload {
+      background-color: aquamarine;
+      outline-offset: -10px;
+      outline: 2px dashed black;
+      padding: 20px;
+      width: 400px;
+      height: 200px;
+    }
+
+    .box.hasAdvancedUpload .boxDragndrop {
+      display: inline;
+    }
+
+    .box.is-dragover {
+      background-color: aqua;
+    }
+
+    .box.is-uploading .boxInput {
+      visibility: none;
+    }
+
+    .box.box.is-uploading .boxUploading {
+      display: block;
+    }
+
+    #foto{
+      max-width: 300px;
+      max-height:  200px;
+    }
+    
+    label {
+      padding: 12px 12px 12px 0;
+      display: inline-block;
+    }
+    
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .container{
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    .nameCol {
+      float: left;
+      width: 25%;
+      margin-top: 6px;
+    }
+    
+    .inputCol {
+      float: left;
+      width: 75%;
+      margin-top: 6px;
+    }
+
+    #ProjectForm, #MethodsForm, #NotesForm, #TaskForm, #FunctionsForm, #PaletteForm{
+      background-color: #8a2be280;
+      border-radius: 10px;
+    }
+
+#section_Model, #section_Function, #section_Task, #section_Note, #section_Palette, .data{
+      display: none;
+    }
+
+    input[type="text"], textarea{
+      padding: 5px;
+      width: 90%;
+      background-color: rgb(184, 182, 182);
+    }
+
+    .cambiar, button{
+      padding: 5px;
+      background-color: darkorchid;
+      color: antiquewhite;
+    }
+
+    .editbutton{
+      background-color: forestgreen;
+    }
+
+    .deletebutton{
+      background-color: crimson;
+    }
+    .divButton{
+      float: left;
+      padding: 10px;
+    }
+
+    #menu{
+      width: 100%;
+      height: 30px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .option{
+      float: left;
+      margin-left: 10px
+    }
+    @media screen and (max-width: 600px) {
+      .nameCol, .inputCol, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+    body{
+      background-color:#505050; 
+    }
+    .table{
+      width: 100%;
+    }
+    .tableRow{
+      align-content: center;
+      height: 50px;
+      text-align: center;
+    }
+    .tableTitle{
+      width: 40%;
+      height: 50px;
+      float: left;
+    }
+    .tableButtons>.divButton{
+      float: left;
+      width: 25%;
+    }

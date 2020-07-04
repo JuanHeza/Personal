@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -25,7 +26,7 @@ const (
 	dbname   = "proyect_encyclopedia"
 )
 
-var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html", "templates/home.html"}
+var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html", "templates/crud.html"}
 
 //ProyectFiles is the complete info about certain proyect or a general vieo of every project
 var ProyectFiles = map[string]string{
@@ -38,24 +39,43 @@ var Templates *template.Template
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
-	staticFileDirectory := http.Dir("./templates/")
+	//		NOTA toma el strip prefix y lo pasa al fileserver, si el html dice 'miCasa' en stripprefix, y el codigo dice 'monclova' en fileserver pues lo manda a monclova
+	staticFileDirectory := http.Dir("./templates")
 	staticFileHandler := http.StripPrefix("/templates/", http.FileServer(staticFileDirectory))
-	staticFileSheet := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
+	staticFileSheet := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
 	r.PathPrefix("/templates/").Handler(staticFileHandler).Methods("GET")
 	r.PathPrefix("/static/").Handler(staticFileSheet).Methods("GET")
 
 	Templates = template.Must(template.ParseFiles(files...))
 
 	r.HandleFunc("/", welcomeHandler).Methods("GET")
-	r.HandleFunc("/Crud", handler)
-	r.HandleFunc("/Proyect/{name}", proyectHandler)
 	r.HandleFunc("/Home", homeHandler).Methods("GET")
+	r.HandleFunc("/Proyect/{name}", proyectHandler)
 	r.HandleFunc("/Error", errorHandler)
+	r.HandleFunc("/Crud", handler)
+	r.HandleFunc("/Crud/{id}", updateProject)
 	r.HandleFunc("/Data", getProyectHandler).Methods("GET")
 	r.HandleFunc("/Data", createProject).Methods("POST")
 	r.HandleFunc("/Data/{id}", getOneProjectHandler).Methods("GET")
-	// r.HandleFunc("/Data/{id}", UpdateProjectHandler).Methods("PUT")
+	r.HandleFunc("/Data/{id}", updateProjectHandler).Methods("PUT")
 	r.HandleFunc("/Data/{id}", deleteProjectHandler).Methods("DELETE")
+
+	r.HandleFunc("/Data/Funcion/{proyecto}", createFunctionHandler).Methods("POST")
+	r.HandleFunc("/Data/Funcion", updateFunctionHandler).Methods("PUT")
+	r.HandleFunc("/Data/Funcion/{id}", deleteFunctionHandler).Methods("DELETE")
+
+	r.HandleFunc("/Data/Modelo/{proyecto}", createModelHandler).Methods("POST")
+	r.HandleFunc("/Data/{proyecto}/Modelo", updateModelHandler).Methods("PUT")
+	r.HandleFunc("/Data/{proyecto}/Modelo/{id}", deleteModelHandler).Methods("DELETE")
+
+	r.HandleFunc("/Data/Notas/{proyecto}", createNotasHandler).Methods("POST")
+	r.HandleFunc("/Data/Notas", updateNotasHandler).Methods("PUT")
+	r.HandleFunc("/Data/Notas/{id}", deleteNotasHandler).Methods("DELETE")
+
+	r.HandleFunc("/Data/Tarea/{proyecto}", createTareasHandler).Methods("POST")
+	r.HandleFunc("/Data/Tarea", updateTareasHandler).Methods("PUT")
+	r.HandleFunc("/Data/Tarea/{id}", deleteTareasHandler).Methods("DELETE")
+
 	return r
 }
 
@@ -74,20 +94,28 @@ func main() {
 		panic(err)
 	}
 	InitStore(&dbStore{db: db})
-	// ReadJSON()
 	r := newRouter()
-	//http.HandleFunc("/",handler)
-	fmt.Println("listening http://127.0.0.1:8080/Home")
+	log.Println("listening http://127.0.0.1:8080/Home")
 	http.ListenAndServe(":8080", r)
-	// welcome()
+	//welcome()
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	// vars := mux.Vars(r)
-	// Hi := fmt.Sprintf("Hi %v", vars["name"])
-	// fmt.Fprintf(w, Hi)
 	errorPage := Templates.Lookup("CRUD")
 	if err := errorPage.ExecuteTemplate(w, "CRUD", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func updateProject(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	// fmt.Fprintf(w, Hi)
+	pr, err := store.GetProyect(id)
+	IfErr(err, w, r)
+	errorPage := Templates.Lookup("CRUD")
+	if err := errorPage.ExecuteTemplate(w, "CRUD", pr[0]); err != nil {
+		fmt.Println(len(pr))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
@@ -95,6 +123,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func errorHandler(w http.ResponseWriter, r *http.Request) {
 	errorPage := Templates.Lookup("error")
 	if err := errorPage.ExecuteTemplate(w, "error", nil); err != nil {
+		fmt.Println("Error/", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// IfErr is to check the error and redirect to error page if necessary
+func IfErr(err error, w http.ResponseWriter, r *http.Request) {
+	fmt.Println("IfErr", err)
+	if err != nil {
+		http.Redirect(w, r, "/Error/", http.StatusFound)
 	}
 }

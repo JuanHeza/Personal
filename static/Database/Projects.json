@@ -1,6 +1,6 @@
 [
   {"name": "Personal",
-    "language": "Go",
+    "language": ["Go"],
     "description": "Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los que he trabajado, desglozando algunas de sus funcionalidades y la estrtuctura de sus datos, asi como tambien imagenes y notas sobre lo que he aprendido o resulto desafiante en su momento",
     "icon": "icon.jpg",
     "progress": 50,
@@ -112,7 +112,7 @@
     ]
   },
   {"name": "Elements",
-    "language": "C#",
+    "language": ["C#"],
     "description": "Elements esta pensado para ser un centro de medios que pueda soportar diversos tipos de contenido como lo seria Comic, Musica, Video & Ebook. \n Esta planeado para implementarse en escritorio como en dispositivos moviles, compartiendo archivos a través de servicios de nube como podria ser Google Drive",
     "icon": "Elements.jpg",
     "progress": 40,
@@ -355,7 +355,7 @@
     ]
   },
   {"name": "TCGame",
-    "language": "Go",
+    "language": ["Go"],
     "description": "something",
     "icon": "icon.jpg",
     "progress": 20,
@@ -378,7 +378,7 @@
     ]
   },
   {"name": "TelegramBot",
-    "language": "Ruby",
+    "language":[ "Ruby"],
     "description": "something",
     "icon": "icon.jpg",
     "progress": 50,

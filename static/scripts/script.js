@@ -1,4 +1,6 @@
-    var map = {
+// https://css-tricks.com/drag-and-drop-file-uploading/
+
+var map = {
         "Introduccion":"Card", 
         "Modelos":"Models",
         "Funciones":"Functions",
@@ -125,6 +127,11 @@
                 contentType: 'application/json',
                 success: function(result) {
                     alert("Eliminado Correctamente")
+                    setTimeout(
+                        function() 
+                        {
+                           location.reload();
+                        }, 0001); 
                 },
                 error: function(request,msg,error) {
                     alert("Error al Eliminar")
@@ -135,6 +142,21 @@
 
     function editProyect(){
         alert($(this).val())
+        window.location= "Crud/"+$(this).val()
+        // $.ajax({
+        //     url: '/Data/'+ $(this).val(),
+        //     contentType: 'application/json',
+        //     success: function(result) {
+        //         setTimeout(
+        //             function() 
+        //             {
+        //                location.reload();
+        //             }, 0001); 
+        //     },
+        //     error: function(request,msg,error) {
+        //         alert("Error al Eliminar")
+        //     }
+        // });
     }
 
 function something(){
@@ -192,7 +214,6 @@ function something(){
             })
         })
 }
-
 
 function projectForm(value, values) {
      var x = document.getElementById("ProjectForm")

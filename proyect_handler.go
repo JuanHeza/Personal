@@ -14,10 +14,13 @@ const (
 )
 
 func proyectHandler(w http.ResponseWriter, r *http.Request) {
-	var actual Projects
+	var actual *Projects
 	errorPage := Templates.Lookup("proyect")
 	vars := mux.Vars(r)
-	actual = ProyectData[vars["name"]]
+	//actual = ProyectData[vars["name"]]
+	data, err := store.GetProyect(vars["name"])
+	actual = data[0]
+	IfErr(err,w,r)
 	actual.Time = getWakaTime(vars["name"])
 	if err := errorPage.ExecuteTemplate(w, "proyect", actual); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

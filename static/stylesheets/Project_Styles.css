@@ -260,9 +260,9 @@ div#sidebar {
 */
 .personal{
 	--text_color: #ffffff;
-	--enfasis_color: rgb(96, 125, 139);
-	--enfasis_color_alpha: rgba(96, 125, 139,0.5);
-	--code_color: dodgerblue;
+	--enfasis_color: #607d8b;
+	--enfasis_color_alpha: #607d8b80;
+	--code_color: #1e90ff;
 }
 
 /*

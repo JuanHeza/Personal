@@ -6,6 +6,7 @@ import (
 	_ "fmt"
 	"net/http"
 	"os"
+	"strings"
 )
 
 // Projects General data
@@ -41,19 +42,23 @@ type Data struct {
 
 //Function is something
 type Function struct {
+	ID int
 	Call        string `json:"call,omitempty"`
 	Return      string `json:"return,omitempty"`
 	Description string `json:"description,omitempty"`
+	Codigo      string
 }
 
 //Task is something
 type Task struct {
+	ID int
 	Done bool   `json:"done,omitempty"`
 	Text string `json:"text,omitempty"`
 }
 
 //Note is something
 type Note struct {
+	ID int
 	Title string `json:"title,omitempty"`
 	Text  string `json:"text,omitempty"`
 }
@@ -72,7 +77,10 @@ var General []Projects
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	home := Templates.Lookup("home")
-	if err := home.ExecuteTemplate(w, "home", General); err != nil {
+	data, err := store.GetProyect()
+	IfErr(err, w, r)
+	if err := home.ExecuteTemplate(w, "home", data); err != nil {
+		//	if err := home.ExecuteTemplate(w, "home", General); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
@@ -115,4 +123,9 @@ func ReadJSONProyect(file string) Projects { //w http.ResponseWriter){
 		panic(err) //http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	return ProyectData
+}
+
+//Join convert the slice into an array
+func (pr *Projects) Join() string {
+	return strings.Join(pr.Language, ", ")
 }

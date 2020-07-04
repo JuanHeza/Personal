@@ -119,28 +119,29 @@
  -->
 {{define "tasks"}}
 <div id="Tasks" style="display: none;">
-  <div class="undone">
-    <div class="taskTitle"> Pendientes</div>
-     <div class="task">
-        <div class="checkedBox">
-          <div class="check"></div>
-        </div>
-  {{range .Undone}}
-        <div class="text"> {{.Text}}</div>
-  {{end}}
-      </div>
-    </div>
-    <div class="done">
+  {{range .}}
+    {{if eq .Done false}}
+    <div class="undone">
       <div class="taskTitle"> Pendientes</div>
-       <div class="task">
+      <div class="task">
           <div class="checkedBox">
             <div class="check"></div>
           </div>
-    {{range .Done}}
           <div class="text"> {{.Text}}</div>
-    {{end}}
         </div>
       </div>
+    {{end}}{{if eq .Done true}}
+    <div class="done">
+      <div class="taskTitle"> Pendientes</div>
+      <div class="task">
+        <div class="checkedBox">
+          <div class="check"></div>
+        </div>
+        <div class="text"> {{.Text}}</div>
+      </div>
+    </div>
+    {{end}}
+  {{end}}
 </div>
 {{end}}
 <!-- 

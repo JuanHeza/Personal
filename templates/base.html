@@ -7,10 +7,10 @@
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
 
-  <link rel="stylesheet" href="./static/stylesheets/estilos.css">
+  <link rel="stylesheet" href="/static/stylesheets/estilos.css">
 
   <title>Juan Heza Notebook</title>
-  <link rel="icon" href="./static/stylesheets/59.ico" type="image/x-icon" />
+  <link rel="icon" href="/static/stylesheets/59.ico" type="image/x-icon" />
 
 
 </head>
@@ -29,7 +29,7 @@
     </div>
 {{range .}}
     <div class="portfolio">
-      <div class="portfolio-container">
+      <div class="portfolio-container" style="background-image: url({{.Banner}});  background-size: cover; background-position: center;">
         {{if eq .Side 0}}
         <div class="portfolio-text-container portfolio-text-container-left">
           {{else if eq .Side 1}}

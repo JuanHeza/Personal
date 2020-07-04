@@ -1,12 +1,12 @@
 :root{
 	--background_color:#505050; 
-	--placeHolder: blueviolet;
+	--placeHolder: #8a2be2;
 	--shadow_box: 1px 1px 5px rgba(255, 255, 255, 0.15),
 	0 15px 90px 30px rgba(0, 0, 0, 0.25);
 	
 	--text_color: #ffffff;
 	--enfasis_color: rgb(96, 125, 139);
-	--enfasis_color_alpha: rgba(96, 125, 139,0.5);
+	--enfasis_color_alpha: #607d8b80;
 	--code_color: dodgerblue;
   }
   
@@ -166,8 +166,6 @@ header
 	position: relative;
 	width: 100%;
 	height: 400px;
-	border-style: solid;
-    border-width: 2px;
     background-color: var(--placeHolder)
 }
 
