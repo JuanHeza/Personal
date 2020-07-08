@@ -21,6 +21,12 @@ func (m *MockStore) CreateProject(pr *Projects) error {
 	return rets.Error(0)
 }
 
+//UpdateProject is somenthing
+func (m *MockStore) UpdateProject(pr *Projects) error {
+	rets := m.Called(pr)
+	return rets.Error(0)
+}
+
 //DeleteProject is something
 func (m *MockStore) DeleteProject(pr string) error {
 	rets := m.Called(pr)
@@ -62,14 +68,14 @@ func (m *MockStore) CreateModel(md *Model, pr string) error {
 }
 
 //UpdateModel is something
-func (m *MockStore) UpdateModel(md *Model, pr string) error {
-	rets := m.Called(md, pr)
+func (m *MockStore) UpdateModel(md *Model) error {
+	rets := m.Called(md)
 	return rets.Error(0)
 }
 
 //DeleteModel is something
-func (m *MockStore) DeleteModel(md *Model, pr string) error {
-	rets := m.Called(md, pr)
+func (m *MockStore) DeleteModel(md *Model) error {
+	rets := m.Called(md)
 	return rets.Error(0)
 }
 

@@ -11,6 +11,7 @@ import (
 type Store interface {
 	CreateProyect(pr *Proyect) error
 	CreateProject(pr *Projects) error
+	UpdateProject(pr *Projects) error
 	DeleteProject(pr string) error
 	GetProyect(id ...string) ([]*Projects, error)
 
@@ -19,8 +20,8 @@ type Store interface {
 	DeleteFunction(fn *Function) error
 
 	CreateModel(md *Model, pr string) error
-	UpdateModel(md *Model, pr string) error
-	DeleteModel(md *Model, pr string) error
+	UpdateModel(md *Model) error
+	DeleteModel(md *Model) error
 
 	CreateTareas(tr *Task, pr string) error
 	UpdateTareas(tr *Task) error
@@ -38,6 +39,11 @@ type dbStore struct {
 
 func (store *dbStore) CreateProyect(pr *Proyect) error {
 	_, err := store.db.Query("INSERT INTO proyects(proyect,description) VALUES ($1,$2)", pr.Data, pr.Description)
+	return err
+}
+
+func (store *dbStore) UpdateProject(pr *Projects) error {
+	_, err := store.db.Query("UPDATE informacion_general SET lenguajes=$1, descripcion=$2, Introduccion=$3, progreso=$4, icon=$5, banner=$6 WHERE nombre=$7", pq.Array(pr.Language), pr.Description, pr.Introduccion, pr.Progress, pr.Icon, pr.Banner, pr.Name)
 	return err
 }
 
@@ -111,7 +117,7 @@ func (store *dbStore) GetProyect(id ...string) ([]*Projects, error) {
 				proyect.Tasks = append(proyect.Tasks, tarea)
 			}
 
-			models, err := store.db.Query("select modelo, campos, datos from modelos where proyecto=$1", id[0])
+			models, err := store.db.Query("select id_modelos, modelo, campos, datos from modelos where proyecto=$1", id[0])
 			if err != nil {
 				return nil, err
 			}
@@ -119,7 +125,7 @@ func (store *dbStore) GetProyect(id ...string) ([]*Projects, error) {
 			for models.Next() {
 				model := &Model{}
 				data := new([2][]string)
-				if err := models.Scan(&model.Title, pq.Array(&data[0]), pq.Array(&data[1])); err != nil {
+				if err := models.Scan(&model.ID, &model.Title, pq.Array(&data[0]), pq.Array(&data[1])); err != nil {
 					fmt.Println("[MODELOS] LINEA 107", err)
 					return nil, err
 				}
@@ -160,15 +166,15 @@ func InitStore(s Store) {
 }
 
 func (store *dbStore) CreateFunction(fn *Function, pr string) error {
-	_, err := store.db.Query("INSERT INTO funciones(proyecto, llamada, regresa, descripcion, codigo)	VALUES ($1,$2,$3,$4,$5)", pr, fn.Call, fn.Return, fn.Description, fn.Codigo)
+	_, err := store.db.Query("INSERT INTO funciones(proyecto, llamada, regresa, detalle, codigo)	VALUES ($1,$2,$3,$4,$5)", pr, fn.Call, fn.Return, fn.Description, fn.Codigo)
 	return err
 }
 func (store *dbStore) UpdateFunction(fn *Function) error {
-	_, err := store.db.Query("UPDATE funciones SET  llamada=$1, regresa=$2, descripcion=$3, codigo=$4 WHERE id=%5;", fn.Call, fn.Return, fn.Description, fn.Codigo, fn.ID)
+	_, err := store.db.Query("UPDATE funciones SET  llamada=$1, regresa=$2, detalle=$3, codigo=$4 WHERE id_funcion=$5;", fn.Call, fn.Return, fn.Description, fn.Codigo, fn.ID)
 	return err
 }
 func (store *dbStore) DeleteFunction(fn *Function) error {
-	_, err := store.db.Query("DELETE FROM funciones WHERE id=$1;", fn.ID)
+	_, err := store.db.Query("DELETE FROM funciones WHERE id_funcion=$1;", fn.ID)
 	return err
 }
 
@@ -186,13 +192,13 @@ func (store *dbStore) CreateModel(md *Model, pr string) error {
 	_, err := store.db.Query("INSERT INTO modelos(proyecto, modelo, campos, datos)	VALUES ($1,$2,$3,$4)", pr, md.Title, pq.Array(campos), pq.Array(datos))
 	return err
 }
-func (store *dbStore) UpdateModel(md *Model, pr string) error {
+func (store *dbStore) UpdateModel(md *Model) error {
 	campos, datos := modelToArray(md)
-	_, err := store.db.Query("UPDATE modelos SET  modelo=$1, campos=$2, datos=$3 WHERE modelo=$4 and proyecto=$5;", md.Title, pq.Array(campos), pq.Array(datos), md.Title, pr)
+	_, err := store.db.Query("UPDATE modelos SET  modelo=$1, campos=$2, datos=$3 WHERE id_modelos=$4;", md.Title, pq.Array(campos), pq.Array(datos), md.ID)
 	return err
 }
-func (store *dbStore) DeleteModel(md *Model, pr string) error {
-	_, err := store.db.Query("DELETE FROM modelos WHERE modelo=$1 and proyecto=$2;", md.Title, pr)
+func (store *dbStore) DeleteModel(md *Model) error {
+	_, err := store.db.Query("DELETE FROM modelos WHERE id_modelos=$1;", md.ID)
 	return err
 }
 
@@ -201,11 +207,11 @@ func (store *dbStore) CreateTareas(tr *Task, pr string) error {
 	return err
 }
 func (store *dbStore) UpdateTareas(tr *Task) error {
-	_, err := store.db.Query("UPDATE tareas SET tarea=$1, situacion=$2 WHERE id=$3;", tr.Text, tr.Done, tr.ID)
+	_, err := store.db.Query("UPDATE tareas SET tarea=$1, situacion=$2 WHERE id_tarea=$3;", tr.Text, tr.Done, tr.ID)
 	return err
 }
 func (store *dbStore) DeleteTareas(tr *Task) error {
-	_, err := store.db.Query("DELETE FROM tareas WHERE id=$1", tr.ID)
+	_, err := store.db.Query("DELETE FROM tareas WHERE id_tarea=$1", tr.ID)
 	return err
 }
 
@@ -214,11 +220,11 @@ func (store *dbStore) CreateNotas(nt *Note, pr string) error {
 	return err
 }
 func (store *dbStore) UpdateNotas(nt *Note) error {
-	_, err := store.db.Query("UPDATE notas SET cuerpo=$1, titulo=$2, WHERE id=$3;", nt.Text, nt.Title, nt.ID)
+	_, err := store.db.Query("UPDATE notas SET cuerpo=$1, titulo=$2 WHERE id_nota=$3;", nt.Text, nt.Title, nt.ID)
 	return err
 }
 func (store *dbStore) DeleteNotas(nt *Note) error {
-	_, err := store.db.Query("DELETE FROM notas WHERE id=$1;", nt.ID)
+	_, err := store.db.Query("DELETE FROM notas WHERE id_nota=$1;", nt.ID)
 	return err
 }
 

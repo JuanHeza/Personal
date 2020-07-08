@@ -8,20 +8,20 @@
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-  <link rel="stylesheet" href="/static/stylesheets/estilos.css">
-  <link rel="stylesheet" href="/static/stylesheets/Project_Styles.css">
+  <link rel="stylesheet" href="./static/stylesheets/estilos.css">
+  <link rel="stylesheet" href="./static/stylesheets/Project_Styles.css">
 
-  <script type="text/javascript" src="/static/scripts/script.js"></script>
+  <script type="text/javascript" src="./static/scripts/script.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>Juan Heza Notebook</title>
-  <link rel="icon" href="/static/stylesheets/59.ico" type="image/x-icon">
+  <link rel="icon" href="./static/stylesheets/59.ico" type="image/x-icon">
 </head>
 
 <body onload="move(50)">
 
   <style>
     .mainArea {
-      background-image: url(/static/images/Personal/Personal_Banner.png);
+      background-image: url(./static/images/Personal/Personal_Banner.png);
     }
   </style>
 
@@ -44,408 +44,416 @@
   </header>
 
   <main>
-
+      
     <div id="sidebar">
       <ul id="content" class="nav nav-pills nav-stacked" style="max-width: 250px;">
         <li id="Introduccion" class="active">
           <a onclick="Active('Introduccion','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-home"></span> Introduccion</a>
+            <span></span> Introduccion</a>
         </li>
         <li id="Modelos" class="">
           <a onclick="Active('Modelos','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-th-list"></span> Modelos</a>
+            <span></span> Modelos</a>
         </li>
         <li id="Funciones" class="">
           <a onclick="Active('Funciones','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-calendar"></span> Funciones</a>
+            <span></span> Funciones</a>
         </li>
         <li id="Imagenes" class="">
           <a onclick="Active('Imagenes','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-picture"></span> Imagenes</a>
+            <span></span> Imagenes</a>
         </li>
         <li id="Pendientes" class="">
           <a onclick="Active('Pendientes','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-picture"></span> Pendientes</a>
+            <span></span> Pendientes</a>
         </li>
         <li id="Notas" class="">
           <a onclick="Active('Notas','active')" class="sidebarButton">
-            <span class="glyphicon glyphicon-comment"></span> Notas</a>
+            <span></span> Notas</a>
         </li>
-
+        <li id="Miss" class="" style="display: none;">
+          <a onclick="Active('Miss','active')" class="sidebarButton">
+            <span></span> Notas</a>
+        </li>
+        
       </ul>
     </div>
-    <!-- AGREGAR UNA CLASSE QUE SIRVA PARA OBTENER LA PALETA DE COLORES -->
     <div class="mainArea">
-      <div id="Card" style="display: block;">
-        <div class="upperCard">
-          <div class=" upperColumn">
-            <div class="proyectIcon" style="background-color: transparent;">
-              <image src="/static/images/Personal/Personal_icon.png"></image>
-              <div class="">Personal</div>
-            </div>
-          </div>
-          <div class="proyectDescription upperColumn">
-            <p class="">Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los
-              que he trabajado, desglozando algunas de sus funcionalidades y la estrtuctura de sus datos, asi como
-              tambien imagenes y notas sobre lo que he aprendido o resulto desafiante en su momento</p>
-          </div>
-        </div>
-        <div class="bottomCard">
-          <div class="proyectTime bottomColumn">
+      
+<div id="Card" style="display:block ;">
+<div class="upperCard">
+<div class=" upperColumn">
+  <div class="proyectIcon">
+    <img src="./static/images/Personal/Icon.png">
+    <div class="">Personal</div>
+  </div>
+</div>
+<div class="proyectDescription upperColumn">
+  <p class="">Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los que he trabajado, desglozando algunas de sus funcionalidades y la estrtuctura de sus datos, asi como tambien imagenes y notas sobre lo que he aprendido o resulto desafiante en su momento</p>
+</div>
+</div>
+<div class="bottomCard">
+<div class="proyectTime bottomColumn">
+  <div class="clock-col">
+    <p class="clock-hours clock-timer">103</p>
+    <p class="clock-label">
+      Hours
+    </p>
+  </div>
+  <div class="clock-col">
+    <p class="clock-minutes clock-timer">39</p>
+    <p class="clock-label">
+      Minutes
+    </p>
+  </div>
+  <div class="clock-col">
+    <p class="clock-seconds clock-timer">22</p>
+    <p class="clock-label">
+      Seconds
+    </p>
+  </div>
+  
+</div>
+<div class="proyectProgress bottomColumn" id="proyectProgress">
+  <div class="ProgressText">
+    Progreso
+    <div id="value">68%</div>
+  </div>
+  <div class="ProgressBar" style="width: 100%;">
+    <div class="ProgressBar-Fill" id="Fill" style="width: 68%;" onclick="move()"></div>
+  </div>
+</div>
+</div>
+</div>
 
-            <div class="clock-col">
-              <p class="clock-hours clock-timer">15</p>
-              <p class="clock-label">
-                Hours
-              </p>
-            </div>
-            <div class="clock-col">
-              <p class="clock-minutes clock-timer">32</p>
-              <p class="clock-label">
-                Minutes
-              </p>
-            </div>
-            <div class="clock-col">
-              <p class="clock-seconds clock-timer">30</p>
-              <p class="clock-label">
-                Seconds
-              </p>
-            </div>
-            <!-- <p class="">Time Not Initialized</p> -->
-          </div>
+<div id="Functions" style="display: none;">
+<div class="functionMenu">
 
-          <div class="proyectProgress bottomColumn" style="width: 40%;" id="proyectProgress">
-            <div class="ProgressText">
-              Progreso
-              <div id="value">50%</div>
-            </div>
-            <div class="ProgressBar" style="width: 100%;">
-              <div class="ProgressBar-Fill" id="Fill" style="width: 50%;" onclick="move()"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="functionHeader" onclick="Show('.FunctionIndex')">
+  <div class="functionCall">func getWakaTime(Project string)</div>
+  <div class="functionReturn"> []string</div>
+</div>
+<div class="functionDescription" id=".FunctionIndex">Obtiene el tiempo trabajado en el proyecto utilizando la aplicacion WakaTime</div>
 
-      <div id="Functions" style="display: none;">
-        <!-- ARREGLAR QUE EL MENU SALE MUCHAS VECES -->
-        <div class="functionMenu">
-          <div class="functionHeader" onclick="Show('F-1')">
-            <div class="functionCall">func getWakaTime(Project string)</div>
-            <div class="functionReturn"> []string</div>
-          </div>
-          <div class="functionDescription" id="F-1">Obtiene el tiempo trabajado en el proyecto utilizando la aplicacion
-            WakaTime</div>
-          <div class="functionHeader" onclick="Show('F-2')">
-            <div class="functionCall">func ReadJSON()</div>
-            <div class="functionReturn"></div>
-          </div>
-          <div class="functionDescription" id="F-2">Lee el archivo JSON correspondiente al proyecto en cuestion</div>
-        </div>
-        <!-- <div class="separator"><div></div></div> -->
-        <div class="functionCode">
-          <p class="code">
-            .FunctionCode -
-            USAR SQL PARA ESTA SECCION Y MOSTRAR EL BLOQUE DE CODIGO
-          </p>
-        </div>
+<div class="functionHeader" onclick="Show('.FunctionIndex')">
+  <div class="functionCall">func ReadJSON()</div>
+  <div class="functionReturn"> </div>
+</div>
+<div class="functionDescription" id=".FunctionIndex">Lee el archivo JSON correspondiente al proyecto en cuestion</div>
 
-      </div>
+</div>
+<div class="functionCode">
+<p class="code">
+  .FunctionCode
+</p>
+</div>
 
-      <div id="Models" style="display: none;">
-        <!-- ELIMINAR ESTA SECCION, ES INECESARIA, SE USARAN TARJETAS DE IDENTIDAD -->
-        <!-- <div id="menu">
-          <div>Project</div>
-          <div>Models</div>
-          <div>Data</div>
-        </div> -->
+</div>
+        
+<div id="Models" style="display: none;">
+<div id="mainContent">
 
-        <div id="mainContent">
-          <!-- arreglar que el structure card no es id, es class -->
-          <div class="structureCard">
-            <div class="name"> Project </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Language</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Desription</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Icon</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Time</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Progress</div>
-              <div class="fieldType">float32</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Model</div>
-              <div class="fieldType">Models Array</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Side</div>
-              <div class="fieldType">int</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Models </div>
-            <div class="fields">
-              <div class="fieldName">Title</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Data</div>
-              <div class="fieldType">Data Array</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Data </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">DataType</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Description</div>
-              <div class="fieldType">string</div>
-            </div>
-          </div>
-          <div class="structureCard">
-            <div class="name"> Project </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Language</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Desription</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Icon</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Time</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Progress</div>
-              <div class="fieldType">float32</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Model</div>
-              <div class="fieldType">Models Array</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Side</div>
-              <div class="fieldType">int</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Models </div>
-            <div class="fields">
-              <div class="fieldName">Title</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Data</div>
-              <div class="fieldType">Data Array</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Data </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">DataType</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Description</div>
-              <div class="fieldType">string</div>
-            </div>
-          </div>
-          <div class="structureCard">
-            <div class="name"> Project </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Language</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Desription</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Icon</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Time</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Progress</div>
-              <div class="fieldType">float32</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Model</div>
-              <div class="fieldType">Models Array</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Side</div>
-              <div class="fieldType">int</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Models </div>
-            <div class="fields">
-              <div class="fieldName">Title</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Data</div>
-              <div class="fieldType">Data Array</div>
-            </div>
-          </div>
-
-          <div class="structureCard">
-            <div class="name"> Data </div>
-            <div class="fields">
-              <div class="fieldName">Name</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">DataType</div>
-              <div class="fieldType">string</div>
-            </div>
-            <div class="fields">
-              <div class="fieldName">Description</div>
-              <div class="fieldType">string</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="Tasks" style="display: none;">
-        <!-- EDITAR ESTA SECCION PARA QUE QUEDE COMO ESTA AQUI -->
-        <div class="undone">
-          <div class="taskTitle"> Pendientes</div>
-          <div class="task">
-
-            <div class="checkedBox">
-              <div class="check"></div>
-            </div>
-
-            <div class="text"> Diseño Responsivo para todos los dispositivos</div>
-          </div>
-        </div>
-
-        <div class="done">
-          <div class="taskTitle"> Completados</div>
-          <div class="task">
-
-            <div class="checkedBox">
-              <div class="check"></div>
-            </div>
-
-            <div class="text"> Implementar la base de datos SQL para migrar todos los datos de JSON a algo mejor
-              manejado</div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="Gallery" style="display: none;">
-        <div id="myModal" class="modal">
-          <span class="close" onclick ='hideModal()'>&times;</span>
-          <img class="modal-content" id="img01">
-          <div id="caption"></div>
-        </div>
-
-        <div class="galleryCard">
-          <img class="image" id="img-1" onclick="maximize('img-1')" src="static\images\Personal\img (1).png" alt="Snow">
-          <div class="imageFooter">Pagina Principal</div>
-        </div>
-
-        <div class="galleryCard">
-          <img class="image" id="img-2" onclick="maximize('img-2')" src="static\images\Personal\img (2).png" alt="Snow">
-          <div class="imageFooter">Tarjeta de Proyecto</div>
-        </div>
-
-        <div class="galleryCard">
-          <img class="image" id="img-3" onclick="maximize('img-3')" src="static\images\Personal\img (3).png" alt="Snow">
-          <div class="imageFooter">Pagina Principal</div>
-        </div>
-
-        <div class="galleryCard">
-          <img class="image" id="img-4" onclick="maximize('img-4')" src="static\images\Personal\img (4).png" alt="Snow" >
-          <div class="imageFooter">Tarjeta de Proyecto</div>
-        </div>
-
-      </div>
-
-      <div id="Notes" style="display: none;">
-
-        <div class="noteBlock">
-          <div class="noteTitle"> Go Templates</div>
-          <div class="noteText">
-            <p>Durante todo el desarrollo de este proyecto he entendido a mayor detalle como funcionan las Templates en
-              Go y lo utiles que pueden llegar a ser para organizar el codigo en las diferentes secciones que lo
-              componen, asi como tambien se puede usar para llamar secciones que son constantes en todas las paginas
-              como lo seria la cabecera y el pie de pagina, sin necesidad de escribirlos en cada pagina, corriendo el
-              riesgo de cometer variar los datos</p>
-          </div>
-        </div>
-
-        <div class="noteBlock">
-          <div class="noteTitle"> Api</div>
-          <div class="noteText">
-            <p>Tengo pensado implementar un api para administrar algunos dispositivos IoT o proyectos que se conecten a
-              internet a traves de un servidor, como lo serian el proyecto Arrow con IoT y el proyecto Elements con el
-              servidor</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="Missing" style="display: none;">
-        <div class="errorArea">
-          <div class="errorTitle"> Seccion Vacia</div>
-          <div class="errorText">
-            <p>Esta seccion esta en construccion o este proyecto no cuenta con datos relacionados</p>
-          </div>
-        </div>
-      </div>
+  <div class="structureCard">
+    <div class="name"> Project </div>
+    
+    <div class="fields">
+      <div class="fieldName">Name</div>
+      <div class="fieldType">string</div>
     </div>
+    
+    <div class="fields">
+      <div class="fieldName">Language</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Desription</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Icon</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Time</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Progress</div>
+      <div class="fieldType">float32</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Model</div>
+      <div class="fieldType">Models Array</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Side</div>
+      <div class="fieldType">int</div>
+    </div>
+    
+  </div>
+  
+  <div class="structureCard">
+    <div class="name"> Models </div>
+    
+    <div class="fields">
+      <div class="fieldName">Title</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Data</div>
+      <div class="fieldType">Data Array</div>
+    </div>
+    
+  </div>
+  
+  <div class="structureCard">
+    <div class="name"> Data </div>
+    
+    <div class="fields">
+      <div class="fieldName">Name</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">DataType</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+    <div class="fields">
+      <div class="fieldName">Description</div>
+      <div class="fieldType">string</div>
+    </div>
+    
+  </div>
 
-  </main>
+<div class="structureCard">
+  <div class="name"> Models </div>
+  
+  <div class="fields">
+    <div class="fieldName">Title</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Data</div>
+    <div class="fieldType">Data Array</div>
+  </div>
+  
+</div>
+<div class="structureCard">
+  <div class="name"> Project </div>
+  
+  <div class="fields">
+    <div class="fieldName">Name</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Language</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Desription</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Icon</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Time</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Progress</div>
+    <div class="fieldType">float32</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Model</div>
+    <div class="fieldType">Models Array</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Side</div>
+    <div class="fieldType">int</div>
+  </div>
+  
+</div>
+
+
+<div class="structureCard">
+  <div class="name"> Data </div>
+  
+  <div class="fields">
+    <div class="fieldName">Name</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">DataType</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Description</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+</div>
+
+<div class="structureCard">
+  <div class="name"> Models </div>
+  
+  <div class="fields">
+    <div class="fieldName">Title</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Data</div>
+    <div class="fieldType">Data Array</div>
+  </div>
+  
+</div>
+
+<div class="structureCard">
+  <div class="name"> Data </div>
+  
+  <div class="fields">
+    <div class="fieldName">Name</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">DataType</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Description</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+</div>
+<div class="structureCard">
+  <div class="name"> Project </div>
+  
+  <div class="fields">
+    <div class="fieldName">Name</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Language</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Desription</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Icon</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Time</div>
+    <div class="fieldType">string</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Progress</div>
+    <div class="fieldType">float32</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Model</div>
+    <div class="fieldType">Models Array</div>
+  </div>
+  
+  <div class="fields">
+    <div class="fieldName">Side</div>
+    <div class="fieldType">int</div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+
+<div id="Tasks" style="display: none;">
+
+
+<div class="undone">
+  <div class="taskTitle"> Pendientes</div>
+  <div class="task">
+      <div class="checkedBox">
+        <div class="check"></div>
+      </div>
+      <div class="text"> Diseño Responsivo para todos los dispositivos</div>
+    </div>
+  </div>
+
+
+
+<div class="done">
+  <div class="taskTitle"> Pendientes</div>
+  <div class="task">
+    <div class="checkedBox">
+      <div class="check"></div>
+    </div>
+    <div class="text"> Implementar la base de datos SQL para migrar todos los datos de JSON a algo mejor manejado</div>
+  </div>
+</div>
+
+
+</div>
+
+<div id="Notes" style="display: none;">
+
+<div class="noteBlock">
+<div class="noteTitle"> Go Templates</div>
+<div class="noteText">
+  <p>Durante todo el desarrollo de este proyecto he entendido a mayor detalle como funcionan las Templates en Go y lo utiles que pueden llegar a ser para organizar el codigo en las diferentes secciones que lo componen, asi como tambien se puede usar para llamar secciones que son constantes en todas las paginas como lo seria la cabecera y el pie de pagina, sin necesidad de escribirlos en cada pagina, corriendo el riesgo de cometer variar los datos</p>
+</div>
+</div>
+
+<div class="noteBlock">
+<div class="noteTitle"> Api</div>
+<div class="noteText">
+  <p>Tengo pensado implementar un api para administrar algunos dispositivos IoT o proyectos que se conecten a internet a traves de un servidor, como lo serian el proyecto Arrow con IoT y el proyecto Elements con el servidor</p>
+</div>
+</div>
+
+</div>
+  
+<div id="Missing" style="display: none;">
+<div class="errorArea">
+<div class="errorTitle"> Seccion Vacia</div>
+<div class="errorText">
+  <p>Esta seccion esta en construccion o este proyecto no cuenta con datos relacionados</p>
+</div>
+</div>
+</div>
+
+    </div>
+  
+</main>
 
   <footer>
     <div id="footer-container">

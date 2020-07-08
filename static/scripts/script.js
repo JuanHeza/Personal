@@ -8,6 +8,7 @@ var map = {
         "Imagenes":"Gallery",
         "Pendientes":"Tasks",
         "Miss":"Missing",
+        // "Detalle": "detail",
     }
 
     function Active(clicked, val){	
@@ -142,7 +143,7 @@ var map = {
 
     function editProyect(){
         alert($(this).val())
-        window.location= "Crud/"+$(this).val()
+        window.location= "Edit/"+$(this).val()
         // $.ajax({
         //     url: '/Data/'+ $(this).val(),
         //     contentType: 'application/json',

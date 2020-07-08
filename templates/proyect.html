@@ -16,7 +16,11 @@
     <title>Juan Heza Notebook</title>
     <link rel="icon" href="/static/stylesheets/59.ico" type="image/x-icon" />
   </head>
-
+  <style>
+    .mainArea {
+      background-image: url({{.Banner}});
+    }
+  </style>
   <body onload="move({{.Progress}})">
     <!-- 
 			-->
@@ -34,24 +38,32 @@
               <a  onclick="Active('Introduccion','active')" class="sidebarButton">
                 <span ></span> Introduccion</a>
             </li>
-            <li id="Modelos">
+            <li id="Detalle" class="">
+              <a  onclick="Active('Detalle','active')" class="sidebarButton">
+                <span ></span> Detalles</a>
+            </li>
+            <li id="Modelos" class="">
               <a  onclick="Active('Modelos','active')" class="sidebarButton">
                 <span ></span> Modelos</a>
             </li>
-            <li id="Funciones">
+            <li id="Funciones" class="">
               <a  onclick="Active('Funciones','active')" class="sidebarButton">
                 <span></span> Funciones</a>
             </li>
-            <li id="Imagenes">
+            <li id="Imagenes" class="">
               <a  onclick="Active('Imagenes','active')" class="sidebarButton">
                 <span ></span> Imagenes</a>
             </li>
-            <li id="Pendientes">
+            <li id="Pendientes" class="">
               <a  onclick="Active('Pendientes','active')" class="sidebarButton">
                 <span ></span> Pendientes</a>
             </li>
-            <li id="Notas">
+            <li id="Notas" class="">
               <a  onclick="Active('Notas','active')" class="sidebarButton">
+                <span ></span> Notas</a>
+            </li>
+            <li id="Miss" class="" style='display: none;'>
+              <a  onclick="Active('Miss','active')" class="sidebarButton">
                 <span ></span> Notas</a>
             </li>
             <!-- <li id="" class="">	 <a  onclick="Active('')">		<span class="glyphicon glyphicon-picture"></span>  Galeria</a></li> -->

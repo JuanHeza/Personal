@@ -6,11 +6,30 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+  #ProgressValue{
+    float: left;
+    margin-right: 20px;
+  }
+
+  fieldset{
+    text-decoration: wavy;
+    color: azure;
+    border-radius: 5px;
+  }
 
   table {
     border-style: solid;
     border-width: 5px;
-    border-color: blueviolet;
+    border-color: #8a2be280;
+  }
+
+  .table> .tableRow{
+    background-color: #f0ffff80;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    contain: content;
   }
   
     .boxDragndrop,
@@ -20,7 +39,7 @@
       display: none;
     }
 
-    .boxFile, input[name="icon"], input[name="banner"] {
+    .boxFile, input[name="icon"], input[name="banner"], input[name="gallery"] {
       width: 0.1px;
       height: 0.1px;
       opacity: 0;
@@ -104,6 +123,9 @@
       background-color: darkorchid;
       color: antiquewhite;
     }
+    button{
+      width: 100%
+    }
 
     .editbutton{
       background-color: forestgreen;
@@ -125,14 +147,9 @@
     }
     .option{
       float: left;
-      margin-left: 10px
+        width: 20%;
     }
-    @media screen and (max-width: 600px) {
-      .nameCol, .inputCol, input[type=submit] {
-        width: 100%;
-        margin-top: 0;
-      }
-    }
+
     body{
       background-color:#505050; 
     }
@@ -141,15 +158,77 @@
     }
     .tableRow{
       align-content: center;
-      height: 50px;
-      text-align: center;
+      text-align: justify;
+      min-height: 50px;
+      /* text-align: center; */
     }
     .tableTitle{
       width: 40%;
-      height: 50px;
+      min-height: 50px;
+      margin-left: 5px;
+      margin-right: 5px;
       float: left;
     }
     .tableButtons>.divButton{
       float: left;
-      width: 25%;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 511px) {
+      .nameCol> img{
+        height: 128px;
+      }
+      img[alt="Icon"]{
+        width: 128px;
+      }
+      img[alt="Banner"]{
+        width: 256px;
+      }
+      .nameCol, .inputCol, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+      }
+      .tableTitle{
+        width: 55%;
+      }
+      .tableButtons>.divButton{
+          width: 15%;
+      }
+
+    }
+
+    @media screen and (min-width: 512px) and (max-width: 1023px){
+      .nameCol> img{
+        height: 96px;
+      }
+      img[alt="Icon"]{
+        width: 96px;
+      }
+      img[alt="Banner"]{
+        width: 192px;
+      }
+      .tableTitle{
+        width: 50%;
+      }
+      .tableButtons>.divButton{
+          width: 20%;
+      }
+    }
+
+    @media screen and (min-width: 1024px){
+       .nameCol> img{
+         height: 128px;
+       }
+       img[alt="Icon"]{
+         width: 128px;
+       }
+       img[alt="Banner"]{
+         width: 256px;
+       }
+       .tableTitle{
+         width: 60%;
+       }
+       .tableButtons>.divButton{
+           width: 15%;
+       }
     }

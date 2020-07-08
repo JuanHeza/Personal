@@ -52,29 +52,29 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/Home", homeHandler).Methods("GET")
 	r.HandleFunc("/Proyect/{name}", proyectHandler)
 	r.HandleFunc("/Error", errorHandler)
-	r.HandleFunc("/Crud", handler)
-	r.HandleFunc("/Crud/{id}", updateProject)
+	r.HandleFunc("/Edit", handler)
+	r.HandleFunc("/Edit/{id}", updateProject)
 	r.HandleFunc("/Data", getProyectHandler).Methods("GET")
 	r.HandleFunc("/Data", createProject).Methods("POST")
 	r.HandleFunc("/Data/{id}", getOneProjectHandler).Methods("GET")
 	r.HandleFunc("/Data/{id}", updateProjectHandler).Methods("PUT")
 	r.HandleFunc("/Data/{id}", deleteProjectHandler).Methods("DELETE")
 
-	r.HandleFunc("/Data/Funcion/{proyecto}", createFunctionHandler).Methods("POST")
-	r.HandleFunc("/Data/Funcion", updateFunctionHandler).Methods("PUT")
-	r.HandleFunc("/Data/Funcion/{id}", deleteFunctionHandler).Methods("DELETE")
+	r.HandleFunc("/Crud/Modelo/{proyecto}", createModelHandler).Methods("POST")
+	r.HandleFunc("/Crud/Modelo", updateModelHandler).Methods("PUT")
+	r.HandleFunc("/Crud/Modelo/{id}", deleteModelHandler).Methods("DELETE")
 
-	r.HandleFunc("/Data/Modelo/{proyecto}", createModelHandler).Methods("POST")
-	r.HandleFunc("/Data/{proyecto}/Modelo", updateModelHandler).Methods("PUT")
-	r.HandleFunc("/Data/{proyecto}/Modelo/{id}", deleteModelHandler).Methods("DELETE")
+	r.HandleFunc("/Crud/Funcion/{proyecto}", createFunctionHandler).Methods("POST")
+	r.HandleFunc("/Crud/Funcion", updateFunctionHandler).Methods("PUT")
+	r.HandleFunc("/Crud/Funcion/{id}", deleteFunctionHandler).Methods("DELETE")
 
-	r.HandleFunc("/Data/Notas/{proyecto}", createNotasHandler).Methods("POST")
-	r.HandleFunc("/Data/Notas", updateNotasHandler).Methods("PUT")
-	r.HandleFunc("/Data/Notas/{id}", deleteNotasHandler).Methods("DELETE")
+	r.HandleFunc("/Crud/Notas/{proyecto}", createNotasHandler).Methods("POST")
+	r.HandleFunc("/Crud/Notas", updateNotasHandler).Methods("PUT")
+	r.HandleFunc("/Crud/Notas/{id}", deleteNotasHandler).Methods("DELETE")
 
-	r.HandleFunc("/Data/Tarea/{proyecto}", createTareasHandler).Methods("POST")
-	r.HandleFunc("/Data/Tarea", updateTareasHandler).Methods("PUT")
-	r.HandleFunc("/Data/Tarea/{id}", deleteTareasHandler).Methods("DELETE")
+	r.HandleFunc("/Crud/Tarea/{proyecto}", createTareasHandler).Methods("POST")
+	r.HandleFunc("/Crud/Tarea", updateTareasHandler).Methods("PUT")
+	r.HandleFunc("/Crud/Tarea/{id}", deleteTareasHandler).Methods("DELETE")
 
 	return r
 }

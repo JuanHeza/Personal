@@ -6,6 +6,7 @@
 <head>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://malsup.github.com/jquery.form.js"></script> 
   <script type="text/javascript" src="/static/scripts/script.js"></script>
   <script type="text/javascript" src="/static/scripts/dragNdrop.js"></script>
   <link rel="stylesheet" href="/static/stylesheets/estilos.css" />
@@ -21,8 +22,8 @@
 <body onload="init()">
   <!-- <h1>Juan Heza Notebook</h1>
   <H2 id="id">{{.Name}}</H2> -->
-  <form action="/Data" method="PUT" enctype="multipart/form-data" id="ProjectForm">
-    <fieldset class="container">
+  <form action="/Crud" method="PUT" enctype="multipart/form-data" id="ProjectForm">
+    <fieldset>
       <legend>Inforacion Basica</legend>
 
       <div class="row" id="nombre_container">
@@ -97,6 +98,7 @@
           <label for="gallery"><strong>Imagenes:</strong></label>
         </div>
         <div class="inputCol">
+          <label for="gallery"><strong>Agregar Galeria</strong></label>
           <input type="file" name="gallery" id="gallery" multiple />
         </div>
       </div>
@@ -126,34 +128,35 @@
 
   <div id="menu">
     <div class="option">
-      <button onclick="Show('section_Model')">Add Model</button>
+      <button onclick="Show('section_Model')">Model</button>
     </div>
     <div class="option">
-      <button onclick="Show('section_Function')"> Add Function</button>
+      <button onclick="Show('section_Function')"> Function</button>
     </div>
     <div class="option">
-      <button onclick="Show('section_Task')">Add Task</button>
+      <button onclick="Show('section_Task')">Task</button>
     </div>
     <div class="option">
-      <button onclick="Show('section_Note')">Add Note</button>
+      <button onclick="Show('section_Note')">Note</button>
     </div>
     <div class="option">
-      <button onclick="Show('section_Palette')">Add Palette</button>
+      <button onclick="Show('section_Palette')">Palette</button>
     </div>
   </div>
-
+  <!-- /////////////////////////////////////////////////////////////////////// -->
   <div id="section_Model">
     <div class="table" id="ModelsTable">
       {{range .Models}}
-      <div class="tableRow" id="{{.Title}}">
+      <div class="tableRow" id="M-{{.ID}}">
         <div class="tableTitle">{{.Title}}</div>
         <div class="tableButtons">
-          <div class="divButton"><a class="cambiar editbutton" onclick="EditModel({{.Title}})">Edit</a></div>
-          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteModel({{.Title}})">Delete</a></div>
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditModel('M-{{.ID}}')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteModel('{{.ID}}')">Delete</a></div>
         </div>
         <div class="data">
-          <div class="structureCard" id={{.Title}}>
+          <div class="structureCard">
             <div class="name"> {{.Title}} </div>
+            <div class="id">{{.ID}}</div>
             {{range .Data}}
             <div class="fields">
               <div class="fieldName">{{.Name}}</div>
@@ -166,7 +169,7 @@
       {{end}}
     </div>
 
-    <form action="/Data/{{.Name}}/Modelo" method="POST" enctype="application/x-www-form-urlencoded" id="MethodsForm">
+    <form action="/Crud/Modelo/{{.Name}}" method="POST" enctype="application/x-www-form-urlencoded" id="MethodsForm">
       <fieldset>
         <legend>Modelos</legend>
         <div class="row">
@@ -174,7 +177,7 @@
             <label for="titulo"><strong>Modelo:</strong></label>
           </div>
           <div class="nameCol">
-            <input type="text" name="titulo" placeholder="Description" id="modelsTitleForm" />
+            <input type="text" name="titulo" placeholder="Titulo" id="modelsTitleForm" value=""/>
           </div>
           <div class="nameCol">
             <div class="divButton"><a class="cambiar" onclick="addFields()">Agregar Fila</a></div>
@@ -185,41 +188,44 @@
             <label for="campo[]"><strong>Campo:</strong></label>
           </div>
           <div class="nameCol">
-            <input type="text" name="campo[]" placeholder="Nombre" id="modelsFiedForm" />
+            <input type="text" name="campo[]" placeholder="Campo" id="modelsFiedForm" value=""/>
           </div>
           <div class="nameCol">
             <label for="dato[]"><strong>Tipo de Dato:</strong></label>
           </div>
           <div class="nameCol">
-            <input type="text" name="dato[]" placeholder="Description" id="modelsDataForm" />
+            <input type="text" name="dato[]" placeholder="Tipo" id="modelsDataForm" value=""/>
           </div>
         </div>
-        <input type="hidden" name="id" value=''>
+        <input type="hidden" name="id" value="" id='model_id'>
         <input type="submit" value="Submit" />
       </fieldset>
     </form>
   </div>
+  <!-- /////////////////////////////////////////////////////////////////////// -->
   <div id="section_Function">
     <div class="table" id="FunctionsTable">
       {{ range .Functions}}
-      <div class="tableRow" id="{{.ID}}">
+      <div class="tableRow" id="F-{{.ID}}">
         <div class="tableTitle">{{.Call}}</div>
         <div class="tableButtons">
-          <div class="divButton"><a class="cambiar editbutton" onclick="EditFunction({{.ID}})">Edit</a></div>
-          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteFunction({{.ID}})">Delete</a></div>
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditFunction('F-{{.ID}}')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteFunction('{{.ID}}')">Delete</a></div>
         </div>
         <div class="data">
           <div class="functionHeader" onclick="Show('.FunctionIndex')">
+            <div class="id">{{.ID}}</div>
             <div class="functionCall">{{.Call}}</div>
             <div class="functionReturn">{{.Return}}</div>
           </div>
           <div class="functionDescription" id=".FunctionIndex">{{.Description}}</div>
+          <div class="functionCode">{{.Codigo}}</div>
         </div>
       </div>
       {{end}}
     </div>
 
-    <form action="/Data/{{.Name}}/Funcion" method="POST" enctype="application/x-www-form-urlencoded" id="FunctionsForm">
+    <form action="/Crud/Funcion/{{.Name}}" method="POST" enctype="application/x-www-form-urlencoded" id="FunctionsForm">
       <fieldset>
         <legend>Funciones</legend>
         <div class="row">
@@ -243,7 +249,7 @@
             <label for="funcion"><strong>Descripcion:</strong></label>
           </div>
           <div class="inputCol">
-            <input type="text" name="funcion" placeholder="Description" id="functionDescriptionForm" />
+            <textarea name="funcion" placeholder="Description" id="functionDescriptionForm"></textarea>
           </div>
         </div>
         <div class="row">
@@ -251,24 +257,26 @@
             <label for="codigo"><strong>Codigo:</strong></label>
           </div>
           <div class="inputCol">
-            <input type="text" name="codigo" placeholder="Description" id="functionCodeForm" />
+            <textarea name="codigo" placeholder="Description" id="functionCodeForm"></textarea>
           </div>
         </div>
-        <input type="hidden" name="id" value=''>
+        <input type="hidden" name="id" id="function_id" value="">
         <input type="submit" value="Submit" />
       </fieldset>
     </form>
   </div>
+  <!-- /////////////////////////////////////////////////////////////////////// -->
   <div id="section_Task">
     <div class="table" id="TaskTable">
       {{range .Tasks}}
-      <div class="tableRow" id="{{.ID}}">
+      <div class="tableRow" id="T-{{.ID}}">
         <div class="tableTitle">{{.Text}}</div>
         <div class="tableButtons">
-          <div class="divButton"><a class="cambiar editbutton" onclick="EditTask({{.ID}})">Edit</a></div>
-          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteTask({{.ID}})">Delete</a></div>
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditTask('T-{{.ID}}')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteTask('{{.ID}}')">Delete</a></div>
         </div>
         <div class="data">
+          <div class="id">{{.ID}}</div>
           <div>
             <img height="16px" width="16px" class="taskImage" src={{if eq .Done true}} "/static/stylesheets/Done.png"
               alt="Done" {{else}} "/static/stylesheets/Undone.png" alt="Undone" {{end}} />
@@ -279,7 +287,7 @@
       {{end}}
     </div>
 
-    <form action="/Data/{{.Name}}/Notas" method="POST" enctype="application/x-www-form-urlencoded" id="TaskForm">
+    <form action="/Crud/Tarea/{{.Name}}" method="POST" enctype="application/x-www-form-urlencoded" id="TaskForm">
       <fieldset>
         <legend>Tareas</legend>
         <div class="row">
@@ -287,36 +295,38 @@
             <label for="tarea"><strong> Tarea:</strong></label>
           </div>
           <div class="inputCol">
-            <input type="text" name="tarea" placeholder="Nombre" id="taskTextForm" />
+            <textarea name="tarea" placeholder="Nombre" id="taskTextForm"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="nameCol">
             <label for="completo"><strong>Completado:</strong></label>
-            <input type="checkbox" name="completo" placeholder="Nombre" id="taskDoneForm" value=true/>
+            <input type="radio" name="completo" placeholder="Nombre" id="taskDoneForm" value="true"/>
           </div>
           <div class="nameCol">
             <label for="completo"><strong>Pendiente:</strong></label>
-            <input type="checkbox" name="completo" placeholder="Nombre" id="taskUndoneForm" value=false />
+            <input type="radio" name="completo" placeholder="Nombre" id="taskUndoneForm" value="false" />
           </div>
   
         </div>
-        <input type="hidden" name="id" value=''>
+        <input type="hidden" name="id" id="task_id" value=''>
         <input type="submit" value="Submit" />
       </fieldset>
     </form>
   </div>
+  <!-- /////////////////////////////////////////////////////////////////////// -->
   <div id="section_Note">
     <div class="table" id="NoteTable">
       {{range .Notes}}
-      <div class="tableRow" id="{{.ID}}">
+      <div class="tableRow" id="N-{{.ID}}">
         <div class="tableTitle">{{.Title}}</div>
         <div class="tableButtons">
-          <div class="divButton"><a class="cambiar editbutton" onclick="EditNote({{.ID}})">Edit</a></div>
-          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteNote({{.ID}})">Delete</a></div>
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditNote('N-{{.ID}}')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteNote('{{.ID}}')">Delete</a></div>
         </div>
         <div class="data">
-          <div class="noteBlock" id={{.ID}}>
+          <div class="noteBlock" id=N-{{.ID}}>
+            <div class="id">{{.ID}}</div>
             <div class="noteTitle"> {{.Title}}</div>
             <div class="noteText">
               <p>{{.Text}}</p>
@@ -327,7 +337,7 @@
       {{end}}
     </div>
 
-    <form action="/Data/{{.Name}}/Tarea" method="POST" enctype="application/x-www-form-urlencoded" id="NotesForm">
+    <form action="/Crud/Notas/{{.Name}}" method="POST" enctype="application/x-www-form-urlencoded" id="NotesForm">
       <fieldset>
         <legend>Notas</legend>
         <div class="row">
@@ -343,16 +353,17 @@
             <label for="cuerpo"><strong>Texto:</strong></label>
           </div>
           <div class="inputCol">
-            <input type="text" name="cuerpo" placeholder="Nombre" id="notesTextForm" />
+            <textarea name="cuerpo" placeholder="Nombre" id="notesTextForm"></textarea>
           </div>
         </div>  
-        <input type="hidden" name="id" value=''>
+        <input type="hidden" name="id" id="note_id" value=''>
         <input type="submit" value="Submit" />
       </fieldset>
     </form>
   </div>
+  <!-- /////////////////////////////////////////////////////////////////////// -->
   <div id="section_Palette">
-    <form action="/Data/{{.Name}}/" method="PUT" enctype="application/x-www-form-urlencoded" id="PaletteForm">
+    <form action="/Crud/{{.Name}}/" method="PUT" enctype="application/x-www-form-urlencoded" id="PaletteForm">
       <fieldset>
         <legend>
           Paleta de colores
@@ -423,8 +434,8 @@
     </table>
     <br />
 
-    <form action="/Data" method="PUT" enctype="multipart/form-data" id="ProjectForm">
-      <fieldset class="container">
+    <form action="/Crud" method="PUT" enctype="multipart/form-data" id="ProjectForm">
+      <fieldset>
         <legend>Inforacion Basica</legend>
 
         <div class="row" id="nombre_container">

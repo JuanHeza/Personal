@@ -12,9 +12,6 @@
   
 
 body {
-	/* background-image: url("BFBC2.png");
-    background-repeat: repeat-x;
-	font-family: 'open sans', sans-serif; */
 	width: 100%;
 	background-color: var(--background_color);
     margin: 0px auto;
@@ -22,13 +19,8 @@ body {
 
 /* 1em = 10 px */
 
-/* .jumbotron-ar {
-	background:transparent;
-	padding: 0;
-} */
 
-a
-{
+a{
 	text-decoration: none;
 }
 
@@ -58,8 +50,7 @@ a
   right: 0;
 }
 
-.avatar
-{
+.avatar{
 	position: relative;
 	width: 120px;
 	height: 120px;
@@ -81,15 +72,13 @@ a
     background-position:center;
 }
 
-footer
-{
+footer{
 	position: relative;
 	width: 100%;
 	background-color: var(--background_color);
 }
 
-#footer-container
-{
+#footer-container{
 	position: relative;
 	width: 100%;/*1200px;*/
 	margin-left: auto;
@@ -98,30 +87,54 @@ footer
 	background-color: var(--background_color);
 }
 
-.footer-column
-{
+.footer-column{
 	position: relative;
 	width: 30%;
 	margin-right: 60px;
 	margin-top: 40px;
 	margin-bottom: 40px;
 	float: left;
+	text-align: justify;
 }
 
-.footer-column-last
-{
+.footer-column-last{
 	margin-right: 0px;
 }
+@media screen and (max-width: 511px) {
+	.footer-column{
+		width: 35%;
+	}
+	.footer-column-last{
+		width: 100%;
+	}
+	.footer-column>.avatar{
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@media screen and (min-width: 512px) and (max-width: 1023px) {
+	.footer-column{
+		width: 25%;
+	}
+	.footer-column>.avatar{
+		float: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@media screen and (min-width: 1024px) {
+	.footer-column{
+		width: 28%;
+	}
+}
 
-header
-{
+header{
 	position: relative;
 	width: 100%;
 	background-color: var(--background_color);
 }
 
-#header-container
-{
+#header-container{
 	position: relative;
 
   height: 50px;
@@ -131,8 +144,7 @@ header
   padding: 0% 5% 0% 5%;
 }
 
-.icon
-{
+.icon{
 	position: relative;
 	width: 32px;
 	height: 32px;
@@ -141,13 +153,11 @@ header
   background-color:var(--placeHolder);
 }
 
-.icon-last
-{
+.icon-last{
 	margin-right: 0px;
 }
 
-#icons-container-right
-{
+#icons-container-right{
 	position: relative;
 	top: 10px;
 	float: right;
@@ -161,16 +171,14 @@ header
     padding: 0% 15% 0% 15%;
 }
 
-.portfolio
-{
+.portfolio{
 	position: relative;
 	width: 100%;
 	height: 400px;
     background-color: var(--placeHolder)
 }
 
-.portfolio-container
-{
+.portfolio-container{
 	position: relative;
 	width: 100%;
 	height: 400px;
@@ -178,8 +186,7 @@ header
 	margin-right: auto;
 }
 
-.portfolio-text-body
-{
+.portfolio-text-body{
 	position: relative;
 	font-family: Arial;
 	color: #ffffff;
@@ -188,8 +195,7 @@ header
 	margin-bottom: 20px;
 }
 
-.portfolio-text-button, .portfolio-text-button:link, .portfolio-text-button:visited 
-{
+.portfolio-text-button, .portfolio-text-button:link, .portfolio-text-button:visited {
 	position: relative;
 	display: inline-block;
 	padding: 15px;
@@ -207,26 +213,24 @@ header
   justify-content: center;
 }
 
-.portfolio-text-container
-{
+.portfolio-text-container{
 	position: absolute;
 	width: 360px;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.portfolio-text-container-left
-{
-	left: 0px;
+.portfolio-text-container-left{
+	left: 10px;
+	text-align: left;
 }
 
-.portfolio-text-container-right
-{
-	right: 0px;
+.portfolio-text-container-right{
+	text-align: right;
+	right: 10px;
 }
 
-.portfolio-text-title
-{
+.portfolio-text-title{
 	position: relative;
 	font-family: miso-bold;
 	color: #ffffff;
@@ -235,8 +239,7 @@ header
 	margin-bottom: 18px;
 }
 
-.text
-{
+.text{
 	position: relative;
 	font-family: Arial;
 	font-size: 14px;
@@ -245,24 +248,21 @@ header
 	margin-bottom: 18px;
 }
 
-.text a
-{
+.text a{
 	font-weight: bold;
 	text-decoration: none;
 	color: #ffffff;
 }
 
-.title
-{
+.title{
 	position: relative;
 	font-family: miso-bold;
 	color: #ffffff;
 	font-size: 30px;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 }
 
-#title-robby
-{
+#title-robby{
 	top: 12px;
 	float: left;
 }

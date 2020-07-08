@@ -3,12 +3,13 @@ package main
 import (
 	"bytes"
 	_ "encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strconv"
 	"testing"
-	"log"
+
 	"github.com/gorilla/mux"
 )
 
@@ -43,21 +44,21 @@ type variable struct {
 
 func router() *mux.Router {
 	router := mux.NewRouter()
-	router.HandleFunc("/Data/{proyecto}/Funcion", createFunctionHandler).Methods("POST")
-	router.HandleFunc("/Data/{proyecto}/Funcion", updateFunctionHandler).Methods("PUT")
-	router.HandleFunc("/Data/{proyecto}/Funcion/{id}", deleteFunctionHandler).Methods("DELETE")
+	router.HandleFunc("/Crud/Funcion", createFunctionHandler).Methods("POST")
+	router.HandleFunc("/Crud/Funcion", updateFunctionHandler).Methods("PUT")
+	router.HandleFunc("/Crud/Funcion/{id}", deleteFunctionHandler).Methods("DELETE")
 
-	router.HandleFunc("/Data/{proyecto}/Modelo", createModelHandler).Methods("POST")
-	router.HandleFunc("/Data/{proyecto}/Modelo", updateModelHandler).Methods("PUT")
-	router.HandleFunc("/Data/{proyecto}/Modelo/{id}", deleteModelHandler).Methods("DELETE")
+	router.HandleFunc("/Crud/Modelo", createModelHandler).Methods("POST")
+	router.HandleFunc("/Crud/Modelo", updateModelHandler).Methods("PUT")
+	router.HandleFunc("/Crud/Modelo/{id}", deleteModelHandler).Methods("DELETE")
 
-	router.HandleFunc("/Data/{proyecto}/Notas", createNotasHandler).Methods("POST")
-	router.HandleFunc("/Data/{proyecto}/Notas", updateNotasHandler).Methods("PUT")
-	router.HandleFunc("/Data/{proyecto}/Notas/{id}", deleteNotasHandler).Methods("DELETE")
+	router.HandleFunc("/Crud/Notas", createNotasHandler).Methods("POST")
+	router.HandleFunc("/Crud/Notas", updateNotasHandler).Methods("PUT")
+	router.HandleFunc("/Crud/Notas/{id}", deleteNotasHandler).Methods("DELETE")
 
-	router.HandleFunc("/Data/{proyecto}/Tarea", createTareasHandler).Methods("POST")
-	router.HandleFunc("/Data/{proyecto}/Tarea", updateTareasHandler).Methods("PUT")
-	router.HandleFunc("/Data/{proyecto}/Tarea/{id}", deleteTareasHandler).Methods("DELETE")
+	router.HandleFunc("/Crud/Tarea", createTareasHandler).Methods("POST")
+	router.HandleFunc("/Crud/Tarea", updateTareasHandler).Methods("PUT")
+	router.HandleFunc("/Crud/Tarea/{id}", deleteTareasHandler).Methods("DELETE")
 	return router
 }
 
@@ -80,7 +81,7 @@ func Test_updateModelHandler(t *testing.T) { //PASSED
 	mockStore.On("UpdateModel", &Model{Title: "Test", Data: []Data{Data{Name: "Campo 1", DataType: "Dato 1"}, Data{Name: "Campo 2", DataType: "Dato 2"}}}, "Personal").Return(nil).Once()
 	testData.form = NewModelForm()
 	testData.id = "Personal"
-	req, err := http.NewRequest("PUT", "/Data/"+testData.id+"/Modelo", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("PUT", "/Crud/"+testData.id+"/Modelo", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -102,7 +103,7 @@ func Test_createModelHandler(t *testing.T) { //PASSED
 	mockStore.On("CreateModel", &Model{Title: "Test", Data: []Data{Data{Name: "Campo 1", DataType: "Dato 1"}, Data{Name: "Campo 2", DataType: "Dato 2"}}}, "Personal").Return(nil).Once()
 	testData.form = NewModelForm()
 	testData.id = "Personal"
-	req, err := http.NewRequest("POST", "/Data/"+testData.id+"/Modelo", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("POST", "/Crud/"+testData.id+"/Modelo", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -119,10 +120,10 @@ func Test_createModelHandler(t *testing.T) { //PASSED
 }
 func Test_deleteModelHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
-	testData := prueba{id: "personal"}
+	// testData := prueba{id: "personal"}
 
-	mockStore.On("DeleteModel", &Model{Title: "Test"}, "Personal").Return(nil).Once()
-	req, err := http.NewRequest("DELETE", "/Data/"+testData.id+"/Modelo/"+"Test", nil)
+	mockStore.On("DeleteModel", &Model{ID: 6}).Return(nil).Once()
+	req, err := http.NewRequest("DELETE", "/Crud/Modelo/6", nil)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -159,7 +160,7 @@ func Test_createFunctionHandler(t *testing.T) { //PASSED
 	testData := function
 
 	mockStore.On("CreateFunction", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("POST", "/Data/"+testData.id+"/Funcion", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("POST", "/Crud/"+testData.id+"/Funcion", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -176,11 +177,11 @@ func Test_createFunctionHandler(t *testing.T) { //PASSED
 func Test_deleteFunctionHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
 	testData := pruebaF{
-		id:      "personal",
-		spected: &Function{ID: 0, Call: "", Return: "", Description: "", Codigo: ""},
+		// id:      "personal",
+		spected: &Function{ID: 6},
 	}
-	mockStore.On("DeleteFunction", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("DELETE", "/Data/"+(testData.id)+"/Funcion/"+strconv.Itoa(testData.spected.ID), nil)
+	mockStore.On("DeleteFunction", testData.spected).Return(nil).Once()
+	req, err := http.NewRequest("DELETE", "/Crud/Funcion/"+strconv.Itoa(testData.spected.ID), nil)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -198,7 +199,7 @@ func Test_updateFunctionHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
 	testData := function
 	mockStore.On("UpdateFunction", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("PUT", "/Data/"+testData.id+"/Funcion", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("PUT", "/Crud/"+testData.id+"/Funcion", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -232,7 +233,7 @@ func Test_createNotasHandler(t *testing.T) { //PASSED
 	testData := nota
 
 	mockStore.On("CreateNotas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("POST", "/Data/"+testData.id+"/Notas", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("POST", "/Crud/"+testData.id+"/Notas", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -253,7 +254,7 @@ func Test_deleteNotasHandler(t *testing.T) { //PASSED
 		spected: &Note{ID: 0, Title: "", Text: ""},
 	}
 	mockStore.On("DeleteNotas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("DELETE", "/Data/"+(testData.id)+"/Notas/"+strconv.Itoa(testData.spected.ID), nil)
+	req, err := http.NewRequest("DELETE", "/Crud/"+(testData.id)+"/Notas/"+strconv.Itoa(testData.spected.ID), nil)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -271,7 +272,7 @@ func Test_updateNotasHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
 	testData := nota
 	mockStore.On("UpdateNotas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("PUT", "/Data/"+testData.id+"/Notas", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("PUT", "/Crud/"+testData.id+"/Notas", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -301,12 +302,12 @@ var tarea = pruebaT{
 	form:    newTaskForm(),
 }
 
-func Test_createTareasHandler(t *testing.T) {	//PASSED
+func Test_createTareasHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
 	testData := tarea
 	log.Println(testData)
 	mockStore.On("CreateTareas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("POST", "/Data/"+testData.id+"/Tarea", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("POST", "/Crud/"+testData.id+"/Tarea", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -324,10 +325,10 @@ func Test_deleteTareasHandler(t *testing.T) { //PASSED
 	mockStore := InitMockStore()
 	testData := pruebaT{
 		id:      "Personal",
-		spected: &Task{ID: 0},
+		spected: &Task{ID: 6},
 	}
 	mockStore.On("DeleteTareas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("DELETE", "/Data/"+(testData.id)+"/Tarea/"+strconv.Itoa(testData.spected.ID), nil)
+	req, err := http.NewRequest("DELETE", "/Crud/"+(testData.id)+"/Tarea/"+strconv.Itoa(testData.spected.ID), nil)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)
@@ -345,7 +346,7 @@ func Test_updateTareasHandler(t *testing.T) {
 	mockStore := InitMockStore()
 	testData := tarea
 	mockStore.On("UpdateTareas", testData.spected, testData.id).Return(nil).Once()
-	req, err := http.NewRequest("PUT", "/Data/"+testData.id+"/Tarea", bytes.NewBufferString(testData.form.Encode()))
+	req, err := http.NewRequest("PUT", "/Crud/"+testData.id+"/Tarea", bytes.NewBufferString(testData.form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		t.Fatal(err)

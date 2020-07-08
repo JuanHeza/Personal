@@ -33,7 +33,7 @@
       </div>
       {{else}}<p class="">Time Not Initialized</p> {{end}}
     </div>
-    <div class="proyectProgress bottomColumn" style="width: 40%;" id="proyectProgress">
+    <div class="proyectProgress bottomColumn" id="proyectProgress">
       <div class="ProgressText">
         Progreso
         <div id="value"></div>
@@ -80,13 +80,14 @@
     <div class="functionHeader" onclick="Show('.FunctionIndex')">
       <div class="functionCall">{{.Call}}</div>
       <div class="functionReturn">{{.Return}}</div>
+      <div class="hiddenCode" style='display: none;'>{{.Code}}</div>
     </div>
     <div class="functionDescription" id=".FunctionIndex">{{.Description}}</div>
   {{end}}
   </div>
-  <div class="FunctionCode">
-    <p class="code">
-      .FunctionCode
+  <div class="functionCode">
+
+    <p id="code">
     </p>
   </div>
 
@@ -122,7 +123,7 @@
   {{range .}}
     {{if eq .Done false}}
     <div class="undone">
-      <div class="taskTitle"> Pendientes</div>
+      <div class="taskTitle"> Completados</div>
       <div class="task">
           <div class="checkedBox">
             <div class="check"></div>

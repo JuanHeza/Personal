@@ -29,6 +29,7 @@ type Projects struct {
 
 //Model of the data in the proyect
 type Model struct {
+	ID    int
 	Title string `json:"title,omitempty"`
 	Data  []Data `json:"data,omitempty"`
 }
@@ -42,7 +43,7 @@ type Data struct {
 
 //Function is something
 type Function struct {
-	ID int
+	ID          int
 	Call        string `json:"call,omitempty"`
 	Return      string `json:"return,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -51,14 +52,14 @@ type Function struct {
 
 //Task is something
 type Task struct {
-	ID int
+	ID   int
 	Done bool   `json:"done,omitempty"`
 	Text string `json:"text,omitempty"`
 }
 
 //Note is something
 type Note struct {
-	ID int
+	ID    int
 	Title string `json:"title,omitempty"`
 	Text  string `json:"text,omitempty"`
 }

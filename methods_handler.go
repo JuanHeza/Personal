@@ -57,14 +57,14 @@ func getOneProjectHandler(w http.ResponseWriter, r *http.Request) {
 // 		fmt.Println(err)
 // 		http.Redirect(w, r, "/Error", http.StatusFound)
 // 	}
-// 	http.Redirect(w, r, "/Crud", http.StatusFound)
+// 	http.Redirect(w, r, "/Edit", http.StatusFound)
 // }
 
 func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
 	proyect := mux.Vars(r)
 	err := store.DeleteProject(proyect["id"])
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud", http.StatusFound)
+	http.Redirect(w, r, "/Edit", http.StatusFound)
 }
 
 func createProyectHandler(w http.ResponseWriter, r *http.Request) {
@@ -123,7 +123,7 @@ func createProject(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	http.Redirect(w, r, "/Crud", http.StatusFound)
+	http.Redirect(w, r, "/Edit", http.StatusFound)
 }
 
 func folderExist(folder string) string {
@@ -183,10 +183,48 @@ func uploadImage(folder string, name string, file multipart.File, handler *multi
 }
 
 func updateProjectHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "updateProjectHandler")
+	proyect := Projects{}
+	err := r.ParseMultipartForm(10 << 20) //
+	if err != nil {
+		err = r.ParseForm()
+	}
+
+	if err != nil {
+		fmt.Println(fmt.Errorf("Error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	proyect.Name = r.Form.Get("nombre")
+	proyect.Language = r.Form["lenguaje[]"]
+	proyect.Introduccion = r.Form.Get("introduccion")
+	proyect.Description = r.Form.Get("descripcion")
+	val, err := strconv.Atoi(r.Form.Get("progreso"))
+	if err != nil {
+		panic(err)
+	}
+	proyect.Progress = val
+
+	folder := folderExist(proyect.Name)
+
+	icon, handler, err := r.FormFile("icon")
+	uploadImage(folder, "Icon.png", icon, handler, err)
+	proyect.Icon = fmt.Sprintf("%sIcon.png", folder)
+
+	banner, handler, err := r.FormFile("banner")
+	uploadImage(folder, "Banner.png", banner, handler, err)
+	proyect.Banner = fmt.Sprintf("%sBanner.png", folder)
+
+	err = store.UpdateProject(&proyect)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// http.Redirect(w, r, "/Edit", http.StatusFound)
 }
 
 func createModelHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init CreateModel")
 	model := Model{}
 	dat := Data{}
 	proyect := mux.Vars(r)
@@ -200,39 +238,43 @@ func createModelHandler(w http.ResponseWriter, r *http.Request) {
 		dat.DataType = datos[i]
 		model.Data = append(model.Data, dat)
 	}
-	fmt.Println("Model: ", model, "Proyecto", proyect["proyecto"])
+	log.Println("Model: ", model, "Proyecto", proyect["proyecto"])
 	err = store.CreateModel(&model, proyect["proyecto"])
 	IfErr(err, w, r)
-	fmt.Println("redirect", err)
-	http.Redirect(w, r, "/Crud/"+proyect["proyecto"], http.StatusFound)
+	http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+	log.Println("Close CreateModel")
 }
 func updateModelHandler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println("Request: ", r.Body, r.URL)
+	log.Println("Init UpdateModel")
 	model := Model{}
+
 	dat := Data{}
-	proyect := mux.Vars(r)
-	fmt.Println(proyect)
 	err := r.ParseForm()
+
 	IfErr(err, w, r)
 	model.Title = r.FormValue("titulo")
 	campos := r.Form["campo[]"]
 	datos := r.Form["dato[]"]
+	model.ID, _ = strconv.Atoi(r.FormValue("id"))
 	for i := range campos {
 		dat.Name = campos[i]
 		dat.DataType = datos[i]
 		model.Data = append(model.Data, dat)
 	}
-	fmt.Println("Model: ", model, "Proyecto", proyect["proyecto"])
-	err = store.UpdateModel(&model, proyect["proyecto"])
+	log.Println("Model: ", model)
+	err = store.UpdateModel(&model)
 	IfErr(err, w, r)
-	fmt.Println("redirect", err, r)
-	http.Redirect(w, r, "/Crud/"+proyect["proyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+	log.Println("Close UpdateModel")
 }
 func deleteModelHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init DeleteModel")
 	proyect := mux.Vars(r)
-	err := store.DeleteModel(&Model{Title: proyect["id"]}, proyect["proyecto"])
+	id, err := strconv.Atoi(proyect["id"])
+	err = store.DeleteModel(&Model{ID: id})
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud/"+proyect["proyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+	log.Println("Close DeleteModel")
 }
 
 func parseFuncion(fn *Function, r *http.Request) {
@@ -240,72 +282,102 @@ func parseFuncion(fn *Function, r *http.Request) {
 	fn.Description = r.Form.Get("funcion")
 	fn.Return = r.Form.Get("return")
 	fn.Codigo = r.Form.Get("codigo")
+	var err error
+	fn.ID, err = strconv.Atoi(r.Form.Get("id"))
+	if err != nil {
+		panic(err)
+	}
 }
 func createFunctionHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init CreateFunction")
 	function := Function{}
 	proyect := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseFuncion(&function, r)
-	fmt.Println("Funcion: ", function, "Proyecto: ", proyect["proyecto"])
+	log.Println("Funcion: ", function, "Proyecto: ", proyect["proyecto"])
 	err = store.CreateFunction(&function, proyect["proyecto"])
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud/"+proyect["proyecto"], http.StatusFound)
+	http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+	log.Println("Close CreateFunction")
 }
 func updateFunctionHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init UpdateFunction")
 	funcion := Function{}
 	proyect := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseFuncion(&funcion, r)
-	fmt.Println("Funcion: ", funcion, "Proyecto: ", proyect["proyecto"])
-	err = store.UpdateFunction(&funcion, proyect["proyecto"])
+	log.Println("Funcion: ", funcion, "Proyecto: ", proyect["proyecto"])
+	err = store.UpdateFunction(&funcion)
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud/"+proyect["prtoyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+	log.Println("Close UpdateFunction")
 }
 func deleteFunctionHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init DeleteFunction")
 	proyect := mux.Vars(r)
 	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteFunction(&Function{ID: id}, proyect["proyecto"])
+	err = store.DeleteFunction(&Function{ID: id})
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud", http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+	log.Println("Close DeleteFunction")
 }
 
 func parseNota(nt *Note, r *http.Request) {
 	nt.Title = r.Form.Get("nota")
 	nt.Text = r.Form.Get("cuerpo")
+	var err error
+	nt.ID, err = strconv.Atoi(r.Form.Get("id"))
+	if err != nil {
+		panic(err)
+	}
 }
 func createNotasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init CreateNota")
 	nota := Note{}
 	vars := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseNota(&nota, r)
+	log.Println("Nota: ", nota)
 	err = store.CreateNotas(&nota, vars["proyecto"])
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud/"+vars["proyecto"], http.StatusFound)
+	http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+	log.Println("Close CreateNota")
 }
 func updateNotasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init UpdateNota")
 	nota := Note{}
-	vars := mux.Vars(r)
+	// vars := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseNota(&nota, r)
-	err = store.UpdateNotas(&nota, vars["proyecto"])
+	log.Println("Nota: ", nota)
+	err = store.UpdateNotas(&nota)
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud/"+vars["proyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+	log.Println("Close UpdateNota")
 }
 func deleteNotasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init DeleteNota")
 	proyect := mux.Vars(r)
 	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteNotas(&Note{ID: id}, proyect["proyecto"])
+	err = store.DeleteNotas(&Note{ID: id})
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud"+proyect["proyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit"+proyect["proyecto"], http.StatusFound)
+	log.Println("Close DeleteNota")
 }
 
 func parseTask(ts *Task, r *http.Request) {
 	ts.Text = r.Form.Get("tarea")
 	Done := r.Form.Get("completo")
+	var err error
+	ts.ID, err = strconv.Atoi(r.Form.Get("id"))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(Done)
 	if Done == "true" {
 		ts.Done = true
 	} else {
@@ -313,33 +385,39 @@ func parseTask(ts *Task, r *http.Request) {
 	}
 }
 func createTareasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init CreateTarea")
 	tarea := Task{}
 	vars := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseTask(&tarea, r)
-	fmt.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
+	log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
 	err = store.CreateTareas(&tarea, vars["proyecto"])
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud"+vars["proyecto"], http.StatusFound)
+	http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+	log.Println("Close CreateTarea")
 }
 func updateTareasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init UpdateTarea")
 	tarea := Task{}
 	vars := mux.Vars(r)
 	err := r.ParseForm()
 	IfErr(err, w, r)
 	parseTask(&tarea, r)
-	fmt.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
-	err = store.UpdateTareas(&tarea, vars["proyecto"])
+	log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
+	err = store.UpdateTareas(&tarea)
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud"+vars["proyecto"], http.StatusFound)
+	// http.Redirect(w, r, "/Edit"+vars["proyecto"], http.StatusFound)
+	log.Println("Close UpdateTarea")
 }
 func deleteTareasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Init DeleteTarea")
 	proyect := mux.Vars(r)
 	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteTareas(&Task{ID: id}, proyect["proyecto"])
+	err = store.DeleteTareas(&Task{ID: id})
 	IfErr(err, w, r)
-	http.Redirect(w, r, "/Crud", http.StatusFound)
+	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+	log.Println("Close DeleteTarea")
 }
 
 func deleteFolder(dir string) {}
