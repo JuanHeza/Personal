@@ -41,7 +41,7 @@
           <!-- <br><label id="add_button" onclick="addField()">add lenguage</label> -->
         </div>
         <div class="inputCol">
-          <input type="text" name="lenguaje[]" value="{{.Language}}" />
+          <input type="text" name="lenguaje[]" value="{{Join .Language}}" />
         </div>
       </div>
 
@@ -521,6 +521,9 @@
       <input type="submit" value="Submit" />
     </form>
 
+    {{template "StaticInfo"}}
+
+    {{template "PostEditor"}}
     {{end}}
 
     {{template "footer"}}

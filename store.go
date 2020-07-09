@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/lib/pq"
@@ -9,6 +10,7 @@ import (
 
 //Store get and create data
 type Store interface {
+	LogIn(us *Usuario) error
 	CreateProyect(pr *Proyect) error
 	CreateProject(pr *Projects) error
 	UpdateProject(pr *Projects) error
@@ -226,6 +228,23 @@ func (store *dbStore) UpdateNotas(nt *Note) error {
 func (store *dbStore) DeleteNotas(nt *Note) error {
 	_, err := store.db.Query("DELETE FROM notas WHERE id_nota=$1;", nt.ID)
 	return err
+}
+
+func (store *dbStore) LogIn(us *Usuario) error {
+	found := false
+	users, err := store.db.Query("SELECT * FROM usuarios WHERE id = $1 AND password = $2", us.Id, us.Password)
+	defer users.Close()
+
+	for users.Next() {
+		found = true
+		if err = users.Scan(&us.Id, &us.Password, &us.Admin); err != nil {
+			return err
+		}
+	}
+	if found {
+		return nil
+	}
+	return errors.New("NOT FOUND")
 }
 
 /*

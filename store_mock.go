@@ -115,6 +115,12 @@ func (m *MockStore) DeleteTareas(tr *Task) error {
 	return rets.Error(0)
 }
 
+//LogIn is something
+func (m *MockStore) LogIn(us *Usuario) error {
+	rets := m.Called(us)
+	return rets.Error(0)
+}
+
 //InitMockStore initialice the store
 func InitMockStore() *MockStore {
 	s := new(MockStore)

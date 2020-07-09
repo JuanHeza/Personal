@@ -8,11 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const (
-	//APIKey is the WakaTime key
-	APIKey = "502f3c9e-67d4-48ce-a6b9-77dbe3887e7c"
-)
-
 func proyectHandler(w http.ResponseWriter, r *http.Request) {
 	var actual *Projects
 	errorPage := Templates.Lookup("proyect")
@@ -20,9 +15,10 @@ func proyectHandler(w http.ResponseWriter, r *http.Request) {
 	//actual = ProyectData[vars["name"]]
 	data, err := store.GetProyect(vars["name"])
 	actual = data[0]
-	IfErr(err,w,r)
+	IfErr(err, w, r)
 	actual.Time = getWakaTime(vars["name"])
 	if err := errorPage.ExecuteTemplate(w, "proyect", actual); err != nil {
+		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

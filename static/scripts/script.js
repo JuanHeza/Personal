@@ -225,4 +225,12 @@ function projectForm(value, values) {
         x.style.display = "none"
     }
 }
+
+function openNav() {
+    document.getElementById("sidebar").style.width = "fit-content";
+  }
+  
+  function closeNav() {
+    document.getElementById("sidebar").style.width = "0";
+  }
     {/* https://www.w3schools.com/code/tryit.asp?filename=GFIVUL17L9WX */}

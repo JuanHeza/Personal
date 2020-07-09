@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -61,69 +62,81 @@ func getOneProjectHandler(w http.ResponseWriter, r *http.Request) {
 // }
 
 func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
-	proyect := mux.Vars(r)
-	err := store.DeleteProject(proyect["id"])
-	IfErr(err, w, r)
-	http.Redirect(w, r, "/Edit", http.StatusFound)
+	if IsAuthenticated() && IsAdmin() {
+		proyect := mux.Vars(r)
+		err := store.DeleteProject(proyect["id"])
+		IfErr(err, w, r)
+		http.Redirect(w, r, "/Edit", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 
 func createProyectHandler(w http.ResponseWriter, r *http.Request) {
-	proyect := Proyect{}
-	err := r.ParseForm()
+	if IsAuthenticated() && IsAdmin() {
+		proyect := Proyect{}
+		err := r.ParseForm()
 
-	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		if err != nil {
+			fmt.Println(fmt.Errorf("Error: %v", err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		proyect.Data = r.Form.Get("data")
+		proyect.Description = r.Form.Get("description")
+
+		err = store.CreateProyect(&proyect)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		http.Redirect(w, r, "/templates/", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
 	}
-
-	proyect.Data = r.Form.Get("data")
-	proyect.Description = r.Form.Get("description")
-
-	err = store.CreateProyect(&proyect)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	http.Redirect(w, r, "/templates/", http.StatusFound)
 }
 
 func createProject(w http.ResponseWriter, r *http.Request) {
-	proyect := Projects{}
-	err := r.ParseMultipartForm(10 << 20) //r.ParseForm()
+	if IsAuthenticated() && IsAdmin() {
+		proyect := Projects{}
+		err := r.ParseMultipartForm(10 << 20) //r.ParseForm()
 
-	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		if err != nil {
+			fmt.Println(fmt.Errorf("Error: %v", err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		proyect.Name = r.Form.Get("nombre")
+		proyect.Language = strings.Split(r.Form.Get("lenguaje[]"), ", ")
+		proyect.Introduccion = r.Form.Get("introduccion")
+		proyect.Description = r.Form.Get("descripcion")
+		val, err := strconv.Atoi(r.Form.Get("progreso"))
+		if err != nil {
+			panic(err)
+		}
+		proyect.Progress = val
+
+		folder := folderExist(proyect.Name)
+
+		icon, handler, err := r.FormFile("icon")
+		uploadImage(folder, "Icon.png", icon, handler, err)
+		proyect.Icon = fmt.Sprintf("%sIcon.png", folder)
+
+		banner, handler, err := r.FormFile("banner")
+		uploadImage(folder, "Banner.png", banner, handler, err)
+		proyect.Banner = fmt.Sprintf("%sBanner.png", folder)
+
+		err = store.CreateProject(&proyect)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		http.Redirect(w, r, "/Edit", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
 	}
-
-	proyect.Name = r.Form.Get("nombre")
-	proyect.Language = r.Form["lenguaje[]"]
-	proyect.Introduccion = r.Form.Get("introduccion")
-	proyect.Description = r.Form.Get("descripcion")
-	val, err := strconv.Atoi(r.Form.Get("progreso"))
-	if err != nil {
-		panic(err)
-	}
-	proyect.Progress = val
-
-	folder := folderExist(proyect.Name)
-
-	icon, handler, err := r.FormFile("icon")
-	uploadImage(folder, "Icon.png", icon, handler, err)
-	proyect.Icon = fmt.Sprintf("%sIcon.png", folder)
-
-	banner, handler, err := r.FormFile("banner")
-	uploadImage(folder, "Banner.png", banner, handler, err)
-	proyect.Banner = fmt.Sprintf("%sBanner.png", folder)
-
-	err = store.CreateProject(&proyect)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	http.Redirect(w, r, "/Edit", http.StatusFound)
 }
 
 func folderExist(folder string) string {
@@ -183,98 +196,112 @@ func uploadImage(folder string, name string, file multipart.File, handler *multi
 }
 
 func updateProjectHandler(w http.ResponseWriter, r *http.Request) {
-	proyect := Projects{}
-	err := r.ParseMultipartForm(10 << 20) //
-	if err != nil {
-		err = r.ParseForm()
+	if IsAuthenticated() && IsAdmin() {
+		proyect := Projects{}
+		err := r.ParseMultipartForm(10 << 20) //
+		if err != nil {
+			err = r.ParseForm()
+		}
+
+		if err != nil {
+			fmt.Println(fmt.Errorf("Error: %v", err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		proyect.Name = r.Form.Get("nombre")
+		proyect.Language = strings.Split(r.Form.Get("lenguaje[]"), ", ")
+		proyect.Introduccion = r.Form.Get("introduccion")
+		proyect.Description = r.Form.Get("descripcion")
+		val, err := strconv.Atoi(r.Form.Get("progreso"))
+		if err != nil {
+			panic(err)
+		}
+		proyect.Progress = val
+
+		folder := folderExist(proyect.Name)
+
+		icon, handler, err := r.FormFile("icon")
+		uploadImage(folder, "Icon.png", icon, handler, err)
+		proyect.Icon = fmt.Sprintf("%sIcon.png", folder)
+
+		banner, handler, err := r.FormFile("banner")
+		uploadImage(folder, "Banner.png", banner, handler, err)
+		proyect.Banner = fmt.Sprintf("%sBanner.png", folder)
+
+		err = store.UpdateProject(&proyect)
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
 	}
-
-	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	proyect.Name = r.Form.Get("nombre")
-	proyect.Language = r.Form["lenguaje[]"]
-	proyect.Introduccion = r.Form.Get("introduccion")
-	proyect.Description = r.Form.Get("descripcion")
-	val, err := strconv.Atoi(r.Form.Get("progreso"))
-	if err != nil {
-		panic(err)
-	}
-	proyect.Progress = val
-
-	folder := folderExist(proyect.Name)
-
-	icon, handler, err := r.FormFile("icon")
-	uploadImage(folder, "Icon.png", icon, handler, err)
-	proyect.Icon = fmt.Sprintf("%sIcon.png", folder)
-
-	banner, handler, err := r.FormFile("banner")
-	uploadImage(folder, "Banner.png", banner, handler, err)
-	proyect.Banner = fmt.Sprintf("%sBanner.png", folder)
-
-	err = store.UpdateProject(&proyect)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// http.Redirect(w, r, "/Edit", http.StatusFound)
 }
 
 func createModelHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init CreateModel")
-	model := Model{}
-	dat := Data{}
-	proyect := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	model.Title = r.Form.Get("titulo")
-	campos := r.Form["campo[]"]
-	datos := r.Form["dato[]"]
-	for i := range campos {
-		dat.Name = campos[i]
-		dat.DataType = datos[i]
-		model.Data = append(model.Data, dat)
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init CreateModel")
+		model := Model{}
+		dat := Data{}
+		proyect := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		model.Title = r.Form.Get("titulo")
+		campos := r.Form["campo[]"]
+		datos := r.Form["dato[]"]
+		for i := range campos {
+			dat.Name = campos[i]
+			dat.DataType = datos[i]
+			model.Data = append(model.Data, dat)
+		}
+		log.Println("Model: ", model, "Proyecto", proyect["proyecto"])
+		err = store.CreateModel(&model, proyect["proyecto"])
+		IfErr(err, w, r)
+		http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+		log.Println("Close CreateModel")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
 	}
-	log.Println("Model: ", model, "Proyecto", proyect["proyecto"])
-	err = store.CreateModel(&model, proyect["proyecto"])
-	IfErr(err, w, r)
-	http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
-	log.Println("Close CreateModel")
 }
 func updateModelHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init UpdateModel")
-	model := Model{}
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init UpdateModel")
+		model := Model{}
 
-	dat := Data{}
-	err := r.ParseForm()
+		dat := Data{}
+		err := r.ParseForm()
 
-	IfErr(err, w, r)
-	model.Title = r.FormValue("titulo")
-	campos := r.Form["campo[]"]
-	datos := r.Form["dato[]"]
-	model.ID, _ = strconv.Atoi(r.FormValue("id"))
-	for i := range campos {
-		dat.Name = campos[i]
-		dat.DataType = datos[i]
-		model.Data = append(model.Data, dat)
+		IfErr(err, w, r)
+		model.Title = r.FormValue("titulo")
+		campos := r.Form["campo[]"]
+		datos := r.Form["dato[]"]
+		model.ID, _ = strconv.Atoi(r.FormValue("id"))
+		for i := range campos {
+			dat.Name = campos[i]
+			dat.DataType = datos[i]
+			model.Data = append(model.Data, dat)
+		}
+		log.Println("Model: ", model)
+		err = store.UpdateModel(&model)
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+		log.Println("Close UpdateModel")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
 	}
-	log.Println("Model: ", model)
-	err = store.UpdateModel(&model)
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
-	log.Println("Close UpdateModel")
 }
 func deleteModelHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init DeleteModel")
-	proyect := mux.Vars(r)
-	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteModel(&Model{ID: id})
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
-	log.Println("Close DeleteModel")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init DeleteModel")
+		proyect := mux.Vars(r)
+		id, err := strconv.Atoi(proyect["id"])
+		err = store.DeleteModel(&Model{ID: id})
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+		log.Println("Close DeleteModel")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 
 func parseFuncion(fn *Function, r *http.Request) {
@@ -289,39 +316,51 @@ func parseFuncion(fn *Function, r *http.Request) {
 	}
 }
 func createFunctionHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init CreateFunction")
-	function := Function{}
-	proyect := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseFuncion(&function, r)
-	log.Println("Funcion: ", function, "Proyecto: ", proyect["proyecto"])
-	err = store.CreateFunction(&function, proyect["proyecto"])
-	IfErr(err, w, r)
-	http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
-	log.Println("Close CreateFunction")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init CreateFunction")
+		function := Function{}
+		proyect := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseFuncion(&function, r)
+		log.Println("Funcion: ", function, "Proyecto: ", proyect["proyecto"])
+		err = store.CreateFunction(&function, proyect["proyecto"])
+		IfErr(err, w, r)
+		http.Redirect(w, r, "/Edit/"+proyect["proyecto"], http.StatusFound)
+		log.Println("Close CreateFunction")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func updateFunctionHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init UpdateFunction")
-	funcion := Function{}
-	proyect := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseFuncion(&funcion, r)
-	log.Println("Funcion: ", funcion, "Proyecto: ", proyect["proyecto"])
-	err = store.UpdateFunction(&funcion)
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
-	log.Println("Close UpdateFunction")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init UpdateFunction")
+		funcion := Function{}
+		proyect := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseFuncion(&funcion, r)
+		log.Println("Funcion: ", funcion, "Proyecto: ", proyect["proyecto"])
+		err = store.UpdateFunction(&funcion)
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+		log.Println("Close UpdateFunction")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func deleteFunctionHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init DeleteFunction")
-	proyect := mux.Vars(r)
-	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteFunction(&Function{ID: id})
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
-	log.Println("Close DeleteFunction")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init DeleteFunction")
+		proyect := mux.Vars(r)
+		id, err := strconv.Atoi(proyect["id"])
+		err = store.DeleteFunction(&Function{ID: id})
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+		log.Println("Close DeleteFunction")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 
 func parseNota(nt *Note, r *http.Request) {
@@ -334,39 +373,51 @@ func parseNota(nt *Note, r *http.Request) {
 	}
 }
 func createNotasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init CreateNota")
-	nota := Note{}
-	vars := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseNota(&nota, r)
-	log.Println("Nota: ", nota)
-	err = store.CreateNotas(&nota, vars["proyecto"])
-	IfErr(err, w, r)
-	http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
-	log.Println("Close CreateNota")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init CreateNota")
+		nota := Note{}
+		vars := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseNota(&nota, r)
+		log.Println("Nota: ", nota)
+		err = store.CreateNotas(&nota, vars["proyecto"])
+		IfErr(err, w, r)
+		http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+		log.Println("Close CreateNota")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func updateNotasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init UpdateNota")
-	nota := Note{}
-	// vars := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseNota(&nota, r)
-	log.Println("Nota: ", nota)
-	err = store.UpdateNotas(&nota)
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
-	log.Println("Close UpdateNota")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init UpdateNota")
+		nota := Note{}
+		// vars := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseNota(&nota, r)
+		log.Println("Nota: ", nota)
+		err = store.UpdateNotas(&nota)
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+		log.Println("Close UpdateNota")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func deleteNotasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init DeleteNota")
-	proyect := mux.Vars(r)
-	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteNotas(&Note{ID: id})
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit"+proyect["proyecto"], http.StatusFound)
-	log.Println("Close DeleteNota")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init DeleteNota")
+		proyect := mux.Vars(r)
+		id, err := strconv.Atoi(proyect["id"])
+		err = store.DeleteNotas(&Note{ID: id})
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit"+proyect["proyecto"], http.StatusFound)
+		log.Println("Close DeleteNota")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 
 func parseTask(ts *Task, r *http.Request) {
@@ -385,39 +436,56 @@ func parseTask(ts *Task, r *http.Request) {
 	}
 }
 func createTareasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init CreateTarea")
-	tarea := Task{}
-	vars := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseTask(&tarea, r)
-	log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
-	err = store.CreateTareas(&tarea, vars["proyecto"])
-	IfErr(err, w, r)
-	http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
-	log.Println("Close CreateTarea")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init CreateTarea")
+		tarea := Task{}
+		vars := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseTask(&tarea, r)
+		log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
+		err = store.CreateTareas(&tarea, vars["proyecto"])
+		IfErr(err, w, r)
+		http.Redirect(w, r, "/Edit/"+vars["proyecto"], http.StatusFound)
+		log.Println("Close CreateTarea")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func updateTareasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init UpdateTarea")
-	tarea := Task{}
-	vars := mux.Vars(r)
-	err := r.ParseForm()
-	IfErr(err, w, r)
-	parseTask(&tarea, r)
-	log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
-	err = store.UpdateTareas(&tarea)
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit"+vars["proyecto"], http.StatusFound)
-	log.Println("Close UpdateTarea")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init UpdateTarea")
+		tarea := Task{}
+		vars := mux.Vars(r)
+		err := r.ParseForm()
+		IfErr(err, w, r)
+		parseTask(&tarea, r)
+		log.Println("Tarea", tarea, "Proyecto", vars["proyecto"])
+		err = store.UpdateTareas(&tarea)
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit"+vars["proyecto"], http.StatusFound)
+		log.Println("Close UpdateTarea")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
 }
 func deleteTareasHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Init DeleteTarea")
-	proyect := mux.Vars(r)
-	id, err := strconv.Atoi(proyect["id"])
-	err = store.DeleteTareas(&Task{ID: id})
-	IfErr(err, w, r)
-	// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
-	log.Println("Close DeleteTarea")
+	if IsAuthenticated() && IsAdmin() {
+		log.Println("Init DeleteTarea")
+		proyect := mux.Vars(r)
+		id, err := strconv.Atoi(proyect["id"])
+		err = store.DeleteTareas(&Task{ID: id})
+		IfErr(err, w, r)
+		// http.Redirect(w, r, "/Edit/"+proyect["prtoyecto"], http.StatusFound)
+		log.Println("Close DeleteTarea")
+	} else {
+		http.Redirect(w, r, "/Error", http.StatusFound)
+	}
+}
+
+//Join function to join a string array in one string
+func Join(in []string) string {
+	return strings.Join(in, ", ")
 }
 
 func deleteFolder(dir string) {}

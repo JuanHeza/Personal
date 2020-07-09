@@ -28,6 +28,17 @@ select * from notas;
 select * from modelos;
 delete from modelos where datos = '{"texto"}';
 
+  CREATE TABLE usuarios(
+    id text,
+    password text,
+    admin boolean,
+    primary key(id)
+  );
+
+  INSERT INTO usuarios(id, password, admin) values ('Juan Heza', 'JHZ697heza', true);
+  UPDATE usuarios set id='JuanHeza' WHERE id='Juan Heza'
+  SELECT * FROM usuarios WHERE id = 'JuanHeza' AND password = 'JHZ697heza';
+
 delete from funciones where proyecto='Personal';
 select  campos, datos, proyecto from modelos where modelo='Projects' join  
 insert into modelos (modelo, proyecto) values ('Test', 'Personal');

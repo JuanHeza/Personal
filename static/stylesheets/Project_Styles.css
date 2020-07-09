@@ -605,6 +605,17 @@ color: var(--text_color);
 text-align: center;
 }
 
+#SideBarMenu{
+	display: none;
+}
+.closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+	display: none;
+  }
 
 @media screen and (max-width: 511px) {
   .mainArea{
@@ -690,6 +701,21 @@ text-align: center;
     width: fit-content;
     margin-left: 10px;
   }
+	#SideBarMenu{
+		float: left;
+		display: block;
+		position: relative;
+		width: 32px;
+		height: 32px;
+		margin-right: 8px;
+		display: inline-block;
+		/* background-color: yellow; */
+		top:10px;
+		color: azure;
+	}
+	.closebtn{
+		display: block;
+	}
 }
 @media screen and (min-width: 512px) and (max-width: 1023px) {
   .mainArea{

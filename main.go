@@ -8,25 +8,19 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 )
 
-/*
-func newRouter() *mux.Router {
-	r := mux.NewRouter()
-	r.HandleFunc("/Home", handler).Methods("GET")
-	return r
-}
-*/
 const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
 	password = "JHZ697heza"
 	dbname   = "proyect_encyclopedia"
+	//APIKey is the WakaTime key
+	APIKey = "502f3c9e-67d4-48ce-a6b9-77dbe3887e7c"
 )
 
-var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html", "templates/crud.html"}
+var files = []string{"templates/base.html", "templates/footer.html", "templates/header.html", "templates/welcome-template.html", "templates/error.html", "templates/proyect.html", "templates/card.html", "templates/crud.html", "templates/login.html"}
 
 //ProyectFiles is the complete info about certain proyect or a general vieo of every project
 var ProyectFiles = map[string]string{
@@ -45,11 +39,20 @@ func newRouter() *mux.Router {
 	staticFileSheet := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
 	r.PathPrefix("/templates/").Handler(staticFileHandler).Methods("GET")
 	r.PathPrefix("/static/").Handler(staticFileSheet).Methods("GET")
-
-	Templates = template.Must(template.ParseFiles(files...))
+	TemplateFunctions := template.FuncMap{
+		"Session": IsAuthenticated,
+		"Admin":   IsAdmin,
+		"Links":   Links,
+		"Join": Join,
+	}
+	Templates = template.New("")
+	Templates = template.Must(Templates.Funcs(TemplateFunctions).ParseFiles(files...))
 
 	r.HandleFunc("/", welcomeHandler).Methods("GET")
 	r.HandleFunc("/Home", homeHandler).Methods("GET")
+	r.HandleFunc("/LogIn", logInHandler).Methods("GET")
+	r.HandleFunc("/LogIn", sessionHandler).Methods("POST")
+	r.HandleFunc("/LogOut", logOut)
 	r.HandleFunc("/Proyect/{name}", proyectHandler)
 	r.HandleFunc("/Error", errorHandler)
 	r.HandleFunc("/Edit", handler)
@@ -98,34 +101,6 @@ func main() {
 	log.Println("listening http://127.0.0.1:8080/Home")
 	http.ListenAndServe(":8080", r)
 	//welcome()
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	errorPage := Templates.Lookup("CRUD")
-	if err := errorPage.ExecuteTemplate(w, "CRUD", nil); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func updateProject(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	// fmt.Fprintf(w, Hi)
-	pr, err := store.GetProyect(id)
-	IfErr(err, w, r)
-	errorPage := Templates.Lookup("CRUD")
-	if err := errorPage.ExecuteTemplate(w, "CRUD", pr[0]); err != nil {
-		fmt.Println(len(pr))
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func errorHandler(w http.ResponseWriter, r *http.Request) {
-	errorPage := Templates.Lookup("error")
-	if err := errorPage.ExecuteTemplate(w, "error", nil); err != nil {
-		fmt.Println("Error/", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 }
 
 // IfErr is to check the error and redirect to error page if necessary
