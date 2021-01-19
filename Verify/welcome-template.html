@@ -1,0 +1,19 @@
+{{define "welcome"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/static/stylesheets/welcome-template.css" />
+
+    <title>Juan Heza Notebook</title>
+  </head>
+  <body>
+    <div class="welcome center">Welcome {{.Name}}, it is {{.Time}}</div>
+    <div class="buttons">
+      <a style="vertical-align: middle;" href="/Home/"><span>Español</span> </a> 
+      <a style="vertical-align: middle;" href="/Home/"><span>English</span> </a> 
+      <!-- <a style="vertical-align: middle;" href="/Home/"><span>Home</span> </a> -->
+    </div>
+  </body>
+</html>
+{{end}}

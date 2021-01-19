@@ -39,7 +39,7 @@
       display: none;
     }
 
-    .boxFile, input[name="icon"], input[name="banner"], input[name="gallery"] {
+    .boxFile, input[name="icon"], input[name="banner"], input[name="gallery"], input[name="avatar"], input[name="linkImage[]"] {
       width: 0.1px;
       height: 0.1px;
       opacity: 0;

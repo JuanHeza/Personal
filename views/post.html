@@ -1,0 +1,35 @@
+{{define "post"}}
+    {{template "header" .}}
+<body>
+    <!-- 
+		-->
+    <main class="content">
+        <div class="post">
+            <div class="postTitle">{{.Data.Titulo}}</div>
+            <div class="postMiddle">
+                <a {{if .Data.HasProjectID}} class="postLink" href="/Projects/{{.Data.ProjectID}}" {{end}}><div class="postProject">{{.Data.ProjectTitle}}</div></a>
+                <div class="postDate">{{fecha .Data.Fecha}}</div>
+                <div class="postLenguages">
+                    {{range .Data.Lenguajes}}
+                    <a href="/ProjectList/{{.ID}}">
+                        <div class="project-lenguage-button">{{.Titulo}}</div>
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+            <div class="postIntro">
+                {{.Data.Detalle}}
+            </div>
+            <hr class="">
+            <div class="postBody">
+                {{HTML .Data.Cuerpo}}
+            </div>
+             {{if  (ne .Data.Replit "") }} <a href="{{.Data.Replit}}"><div class="postReplit">Try It on Repl.It</div></a>{{end}}
+        </div>
+    </main>
+    {{template "footer"}}
+    <!-- 
+      -->
+</body>
+</html>
+{{end}}

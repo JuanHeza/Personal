@@ -1,0 +1,628 @@
+<html lang="en"><head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://malsup.github.com/jquery.form.js"></script> 
+  <script type="text/javascript" src="./static/scripts/script.js"></script>
+  <script type="text/javascript" src="./static/scripts/dragNdrop.js"></script>
+  <link rel="stylesheet" href="./static/stylesheets/estilos.css">
+  <link rel="stylesheet" href="./static/stylesheets/dragNdrop.css">
+  <link rel="icon" href="./static/stylesheets/icons/59.ico" type="image/x-icon">
+  <title>Juan Heza/Personal</title>
+</head>
+
+
+<body onload="init()"><header>
+  <div id="banner-image"></div>
+  <div id="header-container">
+    <div id="title-robby" class="title">Juan Heza</div>
+    <div id="icons-container-right">
+      <a href="#" target="_blank">
+        <div class="icon icon-facebook"></div>
+      </a>
+      <a href="#" target="_blank">
+        <div class="icon icon-linkedin"></div>
+      </a>
+      <a href="#">
+        <div class="icon icon-last icon-email"></div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+
+
+
+  
+  <form action="/Crud" method="PUT" enctype="multipart/form-data" id="ProjectForm">
+    <fieldset>
+      <legend>Inforacion Basica</legend>
+
+      <div class="row" id="nombre_container">
+        <div class="nameCol">
+          <label for="nombre"> <strong>Nombre:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="text" name="nombre" value="Personal">
+        </div>
+      </div>
+
+      <div class="row" id="lenguage_container">
+        <div class="nameCol">
+          <label for="lenguaje"> <strong>Lenguaje:</strong></label>
+          
+        </div>
+        <div class="inputCol">
+          <input type="text" name="lenguaje[]" value="[[Go]]">
+        </div>
+      </div>
+
+      <div class="row" id="progress_container">
+        <div class="nameCol">
+          <label for="progreso"><strong> Progreso:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="range" id="a" name="progreso" value="68">
+          <div id="ProgressValue">68</div>
+        </div>
+      </div>
+
+      <div class="row" id="introduction_container">
+        <div class="nameCol">
+          <label for="introduccion"><strong>Introduccion:</strong></label>
+        </div>
+        <div class="inputCol">
+          <textarea name="introduccion" rows="4" cols="30" maxlength="250">Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los que he trabajado</textarea>
+        </div>
+      </div>
+
+      <div class="row" id="description_container">
+        <div class="nameCol">
+          <label for="descripcion"><strong>Description:</strong></label>
+        </div>
+        <div class="inputCol">
+          <textarea name="descripcion" rows="10" cols="30">Este proyecto es la presente pagina web donde se almacenan y detallan algunos proyectos en los que he trabajado, desglozando algunas de sus funcionalidades y la estrtuctura de sus datos, asi como tambien imagenes y notas sobre lo que he aprendido o resulto desafiante en su momento</textarea>
+        </div>
+      </div>
+
+      <div class="row" id="icon_container">
+        <div class="nameCol">
+          <label for="icon"><strong>Icon (128 x 128)</strong></label>
+        </div>
+        <div class="nameCol">
+          <img src="./static/images/Personal/Icon.png" alt="Icon" >
+          <input type="file" name="icon">
+          <label for="icon" class="cambiar"><strong>Cambiar</strong></label>
+        </div>
+
+        <div class="nameCol">
+          <label for="banner"><strong>Banner (800 x 400)</strong></label>
+        </div>
+        <div class="nameCol">
+          <img src="./static/images/Personal/Banner.png" alt="Banner" >
+          <input type="file" name="banner">
+          <label for="banner" class="cambiar"><strong>Cambiar</strong></label>
+        </div>
+      </div>
+
+      <div class="row" id="gallery_container">
+        <div class="nameCol">
+          <label for="gallery"><strong>Imagenes:</strong></label>
+        </div>
+        <div class="inputCol">
+          <label for="gallery" class="cambiar"><strong>Agregar Galeria</strong></label>
+          <input type="file" name="gallery" id="gallery" multiple="">
+        </div>
+      </div>
+      <input type="hidden" name="table" value="general">
+      <input type="hidden" name="lastName" value="Personal">
+    <input type="submit" value="Submit">
+    </fieldset>
+  </form>
+
+  
+  
+  
+  
+  
+  
+  
+
+  <div id="menu">
+    <div class="option">
+      <button onclick="Show('section_Model')">Model</button>
+    </div>
+    <div class="option">
+      <button onclick="Show('section_Function')"> Function</button>
+    </div>
+    <div class="option">
+      <button onclick="Show('section_Task')">Task</button>
+    </div>
+    <div class="option">
+      <button onclick="Show('section_Note')">Note</button>
+    </div>
+    <div class="option">
+      <button onclick="Show('section_Palette')">Palette</button>
+    </div>
+  </div>
+  
+  <div id="section_Model">
+    <div class="table" id="ModelsTable">
+      
+      <div class="tableRow" id="M-1">
+        <div class="tableTitle">Project</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditModel('M-1')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteModel('1')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="structureCard">
+            <div class="name"> Project </div>
+            <div class="id">1</div>
+            
+            <div class="fields">
+              <div class="fieldName">Name</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Language</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Desription</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Icon</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Time</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Progress</div>
+              <div class="fieldType">float32</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Model</div>
+              <div class="fieldType">Models Array</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Side</div>
+              <div class="fieldType">int</div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="tableRow" id="M-2">
+        <div class="tableTitle">Models</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditModel('M-2')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteModel('2')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="structureCard">
+            <div class="name"> Models </div>
+            <div class="id">2</div>
+            
+            <div class="fields">
+              <div class="fieldName">Title</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Data</div>
+              <div class="fieldType">Data Array</div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="tableRow" id="M-3">
+        <div class="tableTitle">Data</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditModel('M-3')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteModel('3')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="structureCard">
+            <div class="name"> Data </div>
+            <div class="id">3</div>
+            
+            <div class="fields">
+              <div class="fieldName">Name</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">DataType</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+            <div class="fields">
+              <div class="fieldName">Description</div>
+              <div class="fieldType">string</div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <form action="/Crud/Modelo/Personal" method="POST" enctype="application/x-www-form-urlencoded" id="MethodsForm">
+      <fieldset>
+        <legend>Modelos</legend>
+        <div class="row">
+          <div class="nameCol">
+            <label for="titulo"><strong>Modelo:</strong></label>
+          </div>
+          <div class="nameCol">
+            <input type="text" name="titulo" placeholder="Titulo" id="modelsTitleForm" value="">
+          </div>
+          <div class="nameCol">
+            <div class="divButton"><a class="cambiar" onclick="addFields()">Agregar Fila</a></div>
+          </div>
+        </div>
+        <div class="modelsFields row">
+          <div class="nameCol">
+            <label for="campo[]"><strong>Campo:</strong></label>
+          </div>
+          <div class="nameCol">
+            <input type="text" name="campo[]" placeholder="Campo" id="modelsFiedForm" value="">
+          </div>
+          <div class="nameCol">
+            <label for="dato[]"><strong>Tipo de Dato:</strong></label>
+          </div>
+          <div class="nameCol">
+            <input type="text" name="dato[]" placeholder="Tipo" id="modelsDataForm" value="">
+          </div>
+        </div>
+        <input type="hidden" name="id" value="" id="model_id">
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+  </div>
+  
+  <div id="section_Function">
+    <div class="table" id="FunctionsTable">
+      
+      <div class="tableRow" id="F-1">
+        <div class="tableTitle">func getWakaTime(Project string)</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditFunction('F-1')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteFunction('1')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="functionHeader" onclick="Show('.FunctionIndex')">
+            <div class="id">1</div>
+            <div class="functionCall">func getWakaTime(Project string)</div>
+            <div class="functionReturn"> []string</div>
+          </div>
+          <div class="functionDescription" id=".FunctionIndex">Obtiene el tiempo trabajado en el proyecto utilizando la aplicacion WakaTime</div>
+          <div class="functionCode"> </div>
+        </div>
+      </div>
+      
+      <div class="tableRow" id="F-2">
+        <div class="tableTitle">func ReadJSON()</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditFunction('F-2')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteFunction('2')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="functionHeader" onclick="Show('.FunctionIndex')">
+            <div class="id">2</div>
+            <div class="functionCall">func ReadJSON()</div>
+            <div class="functionReturn"> </div>
+          </div>
+          <div class="functionDescription" id=".FunctionIndex">Lee el archivo JSON correspondiente al proyecto en cuestion</div>
+          <div class="functionCode"> </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <form action="/Crud/Funcion/Personal" method="POST" enctype="application/x-www-form-urlencoded" id="FunctionsForm">
+      <fieldset>
+        <legend>Funciones</legend>
+        <div class="row">
+          <div class="nameCol">
+            <label for="llamada"><strong>Llamada:</strong></label>
+          </div>
+          <div class="inputCol">
+            <input type="text" name="llamada" placeholder="Nombre" id="functionCallForm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="nameCol">
+            <label for="return"><strong>Return:</strong></label>
+          </div>
+          <div class="inputCol">
+            <input type="text" name="return" placeholder="Nombre" id="functionReturnForm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="nameCol">
+            <label for="funcion"><strong>Descripcion:</strong></label>
+          </div>
+          <div class="inputCol">
+            <textarea name="funcion" placeholder="Description" id="functionDescriptionForm"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nameCol">
+            <label for="codigo"><strong>Codigo:</strong></label>
+          </div>
+          <div class="inputCol">
+            <textarea name="codigo" placeholder="Description" id="functionCodeForm"></textarea>
+          </div>
+        </div>
+        <input type="hidden" name="id" id="function_id" value="">
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+  </div>
+  
+  <div id="section_Task">
+    <div class="table" id="TaskTable">
+      
+      <div class="tableRow" id="T-1">
+        <div class="tableTitle">Diseño Responsivo para todos los dispositivos</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditTask('T-1')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteTask('1')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="id">1</div>
+          <div>
+            <img height="16px" width="16px" class="taskImage" src="./static/stylesheets/Undone.png" alt="Undone">
+          </div>
+          <div class="text"> Diseño Responsivo para todos los dispositivos</div>
+        </div>
+      </div>
+      
+      <div class="tableRow" id="T-2">
+        <div class="tableTitle">Implementar la base de datos SQL para migrar todos los datos de JSON a algo mejor manejado</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditTask('T-2')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteTask('2')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="id">2</div>
+          <div>
+            <img height="16px" width="16px" class="taskImage" src="./static/stylesheets/Done.png" alt="Done">
+          </div>
+          <div class="text"> Implementar la base de datos SQL para migrar todos los datos de JSON a algo mejor manejado</div>
+        </div>
+      </div>
+      
+    </div>
+
+    <form action="/Crud/Tarea/Personal" method="POST" enctype="application/x-www-form-urlencoded" id="TaskForm">
+      <fieldset>
+        <legend>Tareas</legend>
+        <div class="row">
+          <div class="nameCol">
+            <label for="tarea"><strong> Tarea:</strong></label>
+          </div>
+          <div class="inputCol">
+            <textarea name="tarea" placeholder="Nombre" id="taskTextForm"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nameCol">
+            <label for="completo"><strong>Completado:</strong></label>
+            <input type="radio" name="completo" placeholder="Nombre" id="taskDoneForm" value="true">
+          </div>
+          <div class="nameCol">
+            <label for="completo"><strong>Pendiente:</strong></label>
+            <input type="radio" name="completo" placeholder="Nombre" id="taskUndoneForm" value="false">
+          </div>
+  
+        </div>
+        <input type="hidden" name="id" id="task_id" value="">
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+  </div>
+  
+  <div id="section_Note">
+    <div class="table" id="NoteTable">
+      
+      <div class="tableRow" id="N-1">
+        <div class="tableTitle">Go Templates</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditNote('N-1')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteNote('1')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="noteBlock" id="N-1">
+            <div class="id">1</div>
+            <div class="noteTitle"> Go Templates</div>
+            <div class="noteText">
+              <p>Durante todo el desarrollo de este proyecto he entendido a mayor detalle como funcionan las Templates en Go y lo utiles que pueden llegar a ser para organizar el codigo en las diferentes secciones que lo componen, asi como tambien se puede usar para llamar secciones que son constantes en todas las paginas como lo seria la cabecera y el pie de pagina, sin necesidad de escribirlos en cada pagina, corriendo el riesgo de cometer variar los datos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tableRow" id="N-2">
+        <div class="tableTitle">Api</div>
+        <div class="tableButtons">
+          <div class="divButton"><a class="cambiar editbutton" onclick="EditNote('N-2')">Edit</a></div>
+          <div class="divButton"><a class="cambiar deletebutton" onclick="DeleteNote('2')">Delete</a></div>
+        </div>
+        <div class="data">
+          <div class="noteBlock" id="N-2">
+            <div class="id">2</div>
+            <div class="noteTitle"> Api</div>
+            <div class="noteText">
+              <p>Tengo pensado implementar un api para administrar algunos dispositivos IoT o proyectos que se conecten a internet a traves de un servidor, como lo serian el proyecto Arrow con IoT y el proyecto Elements con el servidor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <form action="/Crud/Notas/Personal" method="POST" enctype="application/x-www-form-urlencoded" id="NotesForm">
+      <fieldset>
+        <legend>Notas</legend>
+        <div class="row">
+          <div class="nameCol">
+            <label for="nota"><strong>Titulo:</strong></label>
+          </div>
+          <div class="inputCol">
+            <input type="text" name="nota" placeholder="Nombre" id="notesTitleForm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="nameCol">
+            <label for="cuerpo"><strong>Texto:</strong></label>
+          </div>
+          <div class="inputCol">
+            <textarea name="cuerpo" placeholder="Nombre" id="notesTextForm"></textarea>
+          </div>
+        </div>  
+        <input type="hidden" name="id" id="note_id" value="">
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+  </div>
+  
+  <div id="section_Palette">
+    <form action="/Crud/Personal/" method="PUT" enctype="application/x-www-form-urlencoded" id="PaletteForm">
+      <fieldset>
+        <legend>
+          Paleta de colores
+        </legend>
+        <div style="width: 20%; float: left;">
+          <div class="row">
+            <div class="nameCol">
+              <label for="texto_color"><strong>Texto:</strong></label>
+            </div>
+            <div class="inputCol">
+              <input type="color" name="texto_color" id="texto_color" value="#ffffff" onchange="Recolor()">
+            </div>
+          </div>
+          <div class="row">
+            <div class="nameCol">
+              <label for="enfasis_color"><strong>Enfasis:</strong></label>
+            </div>
+            <div class="inputCol">
+              <input type="color" name="enfasis_color" id="enfasis_color" value="#607d8b" onchange="Recolor()">
+            </div>
+          </div>
+          <div class="row">
+            <div class="nameCol">
+              <label for="codigo_color"><strong>Codigo:</strong></label>
+            </div>
+            <div class="inputCol">
+              <input type="color" name="codigo_color" id="codigo_color" value="#1e90ff" onchange="Recolor()">
+            </div>
+          </div>
+        </div>
+        <div style="
+          background-image: url(/static/images/Personal/Banner.png);
+          background-size: cover;
+          width: 45%;
+          height: 150px;
+          background-color: #8a2be2;
+          float: left;
+          margin-left: 15%;
+        ">
+          <div id="testEnfasis" style="background-color: rgba(96, 125, 139, 0.5);">
+            <div id="testText" style="color: rgb(255, 255, 255);">Titulo</div>
+            <div id="testCode" style="color: rgb(30, 144, 255);">
+              <p>fmt.Println("Este Es Un Codigo de Prueba</p>
+            </div>
+          </div>
+          <li style="background-color: black;">
+            <a id="testButton" style="color: rgb(255, 255, 255); background-color: rgb(96, 125, 139);"> <span></span> Boton de Prueba</a>
+          </li>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  
+
+    
+<footer>
+  <div id="footer-container">
+    <div class="footer-column">
+      <div class="title">ABOUT</div>
+
+      <div class="avatar"></div>
+
+      <div class="text">
+        Lorem ipsum dolor sit amet consectetur adipiscing, elit tortor aliquet
+        at eleifend donec velit, etiam purus feugiat ac primis. Cum integer
+        blandit eros ridiculus habitasse curabitur condimentum vulputate litora
+        primis augue scelerisque auctor, porta platea non magnis praesent mauris
+        mus suspendisse curae urna bibendum.
+      </div>
+    </div>
+
+    <div class="footer-column">
+      <div class="title">TUTORIAL</div>
+
+      <div class="text">
+        Lorem ipsum dolor sit amet consectetur adipiscing, elit tortor aliquet
+        at eleifend donec velit, etiam purus feugiat ac primis. Cum integer
+        blandit eros ridiculus habitasse curabitur condimentum vulputate litora
+        primis augue scelerisque auctor, porta platea non magnis praesent mauris
+        mus suspendisse curae urna bibendum.<br>
+        <a href="/#" target="_blank">Design Portfolio</a><br>
+      </div>
+    </div>
+
+    <div class="footer-column footer-column-last">
+      <div class="title">CONTACT</div>
+
+      <div class="text">
+        Lorem ipsum dolor sit amet consectetur adipiscing, elit tortor aliquet
+        at eleifend donec velit, etiam purus feugiat ac primis.
+      </div>
+
+      <div>
+        <a href="/#" target="_blank">
+          <div class="icon icon-facebook"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-twitter"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-dribbble"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-linkedin"></div>
+        </a>
+
+        <a href="/#">
+          <div class="icon icon-last icon-email"></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+   
+  
+
+
+</body></html>

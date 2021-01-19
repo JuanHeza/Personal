@@ -1,0 +1,52 @@
+{{define "login"}}
+<!-- <html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/static/stylesheets/estilos.css" />
+	<link rel="stylesheet" href= />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Log In</title>
+<link rel="icon" href="./static/stylesheets/icons/59.ico" type="image/x-icon" />
+</head> -->
+	{{template "header" .}}
+<body>
+	
+	{{if .Data}}
+	<script>
+		console.Log({{.Data}})
+		alert("Error Al Iniciar Sesion");
+	</script>
+	{{end}}
+
+	<div class="forms">
+		<ul class="tab-group">
+			<li class="tab active"><a href="#login">Log In</a></li>
+			<!-- <li class="tab"><a href="#signup">Sign Up</a></li> -->
+		</ul>
+		<form action="/LogIn" id="login" method="POST">
+			  <h1>Iniciar Sesion</h1>
+			  <div class="input-field">
+				<input type="text" 		id="usuario" name="usuario" 		required="Usuario" 	placeholder="Usuario"/>
+				<input type="password" 	id="contraseña" name="contraseña" 	required 			placeholder="Contraseña"/>
+				<input type="submit" value="Ingresar" class="button"/>
+				<!-- <p class="text-p"> <a href="#">¿Olvidaste tu constrseña?</a> </p> -->
+			  </div>
+		  </form>
+		  <!-- <form action="ValRegistro.php" id="signup" method="post">
+			  <h1>Registrarte</h1>
+			  <div class="input-field">
+				<input type="text" id="nombre" name="nombre" 	required="nombre" 	 placeholder="Nombre"/>
+				<input type="text" id="matricula" name="matricula" required="matricula" placeholder="Matricula" pattern="[0-9]*"/>
+				<input type="text" id="rfc" name="rfc" 	required="rfc"  placeholder="RFC"	 />
+				<input  id="contraseña" name="contraseña" required placeholder="Contraseña"/>
+				<input  id="valcontraseña" name="valcontraseña" required placeholder="Confirmar Contraseña"/>
+				<input type="submit" value="Registrar" class="button" />
+			  </div>
+		  </form> -->
+	</div>
+	{{template "footer"}}
+</body>
+</html>
+{{end}}

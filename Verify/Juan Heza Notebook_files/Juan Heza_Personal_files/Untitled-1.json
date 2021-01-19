@@ -1,0 +1,524 @@
+//https://wakatime.com/api/v1/users/current/stats/last_year
+{
+  "data": {
+    "best_day": {
+      "created_at": "2020-06-22T18:43:56Z",
+      "date": "2020-06-16",
+      "id": "5e0e1062-6d9b-420c-81b5-3091634bd992",
+      "modified_at": null,
+      "text": "7 hrs 2 mins",
+      "total_seconds": 25342.249423
+    },
+    "categories": [
+      {
+        "digital": "65:36",
+        "hours": 65,
+        "minutes": 36,
+        "name": "Coding",
+        "percent": 100.0,
+        "text": "65 hrs 36 mins",
+        "total_seconds": 236208.392018
+      }
+    ],
+    "created_at": "2020-06-22T18:43:28Z",
+    "daily_average": 8141,
+    "daily_average_including_other_language": 8145,
+    "days_including_holidays": 365,
+    "days_minus_holidays": 29,
+    "dependencies": [
+      {
+        "digital": "2:03",
+        "hours": 2,
+        "minutes": 3,
+        "name": "android.os",
+        "percent": 23.8,
+        "text": "2 hrs 3 mins",
+        "total_seconds": 7439.441
+      },
+      {
+        "digital": "1:50",
+        "hours": 1,
+        "minutes": 50,
+        "name": "androidx.appcompat",
+        "percent": 21.16,
+        "text": "1 hr 50 mins",
+        "total_seconds": 6611.992
+      },
+      {
+        "digital": "1:29",
+        "hours": 1,
+        "minutes": 29,
+        "name": "android.widget",
+        "percent": 17.18,
+        "text": "1 hr 29 mins",
+        "total_seconds": 5367.664
+      },
+      {
+        "digital": "1:15",
+        "hours": 1,
+        "minutes": 15,
+        "name": "android.util",
+        "percent": 14.53,
+        "text": "1 hr 15 mins",
+        "total_seconds": 4540.215
+      },
+      {
+        "digital": "0:42",
+        "hours": 0,
+        "minutes": 42,
+        "name": "kotlin.android",
+        "percent": 8.22,
+        "text": "42 mins",
+        "total_seconds": 2567.722
+      },
+      {
+        "digital": "0:32",
+        "hours": 0,
+        "minutes": 32,
+        "name": "kotlinx.android",
+        "percent": 6.31,
+        "text": "32 mins",
+        "total_seconds": 1972.493
+      },
+      {
+        "digital": "0:13",
+        "hours": 0,
+        "minutes": 13,
+        "name": "android.support",
+        "percent": 2.65,
+        "text": "13 mins",
+        "total_seconds": 827.449
+      },
+      {
+        "digital": "0:13",
+        "hours": 0,
+        "minutes": 13,
+        "name": "android.view",
+        "percent": 2.65,
+        "text": "13 mins",
+        "total_seconds": 827.449
+      },
+      {
+        "digital": "0:09",
+        "hours": 0,
+        "minutes": 9,
+        "name": "\"math/rand\"",
+        "percent": 1.76,
+        "text": "9 mins",
+        "total_seconds": 548.642399
+      },
+      {
+        "digital": "0:09",
+        "hours": 0,
+        "minutes": 9,
+        "name": "\"log\"",
+        "percent": 1.76,
+        "text": "9 mins",
+        "total_seconds": 548.642399
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "org.junit",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 0.382
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "androidx.test",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 0.174
+      }
+    ],
+    "editors": [
+      {
+        "digital": "61:20",
+        "hours": 61,
+        "minutes": 20,
+        "name": "VS Code",
+        "percent": 93.5,
+        "text": "61 hrs 20 mins",
+        "total_seconds": 220857.174018
+      },
+      {
+        "digital": "4:15",
+        "hours": 4,
+        "minutes": 15,
+        "name": "Android Studio",
+        "percent": 6.5,
+        "text": "4 hrs 15 mins",
+        "total_seconds": 15351.218
+      }
+    ],
+    "end": "2020-06-22T04:59:59Z",
+    "holidays": 336,
+    "human_readable_daily_average": "2 hrs 15 mins",
+    "human_readable_daily_average_including_other_language": "2 hrs 15 mins",
+    "human_readable_total": "65 hrs 34 mins",
+    "human_readable_total_including_other_language": "65 hrs 36 mins",
+    "id": "6a00d9b4-2ddf-4ecd-94e8-b2a0b60e04df",
+    "is_already_updating": false,
+    "is_coding_activity_visible": false,
+    "is_including_today": false,
+    "is_other_usage_visible": true,
+    "is_stuck": false,
+    "is_up_to_date": true,
+    "languages": [
+      {
+        "digital": "21:03",
+        "hours": 21,
+        "minutes": 3,
+        "name": "Go",
+        "percent": 32.1,
+        "text": "21 hrs 3 mins",
+        "total_seconds": 75811.254609
+      },
+      {
+        "digital": "13:58",
+        "hours": 13,
+        "minutes": 58,
+        "name": "HTML",
+        "percent": 21.3,
+        "text": "13 hrs 58 mins",
+        "total_seconds": 50307.080042
+      },
+      {
+        "digital": "12:30",
+        "hours": 12,
+        "minutes": 30,
+        "name": "CSS",
+        "percent": 19.07,
+        "text": "12 hrs 30 mins",
+        "total_seconds": 45039.090057
+      },
+      {
+        "digital": "5:32",
+        "hours": 5,
+        "minutes": 32,
+        "name": "Ruby",
+        "percent": 8.45,
+        "text": "5 hrs 32 mins",
+        "total_seconds": 19971.092209
+      },
+      {
+        "digital": "4:01",
+        "hours": 4,
+        "minutes": 1,
+        "name": "JSON",
+        "percent": 6.13,
+        "text": "4 hrs 1 min",
+        "total_seconds": 14484.280579
+      },
+      {
+        "digital": "2:25",
+        "hours": 2,
+        "minutes": 25,
+        "name": "JavaScript",
+        "percent": 3.69,
+        "text": "2 hrs 25 mins",
+        "total_seconds": 8715.670429
+      },
+      {
+        "digital": "2:05",
+        "hours": 2,
+        "minutes": 5,
+        "name": "Kotlin",
+        "percent": 3.18,
+        "text": "2 hrs 5 mins",
+        "total_seconds": 7508.360901
+      },
+      {
+        "digital": "1:56",
+        "hours": 1,
+        "minutes": 56,
+        "name": "XML",
+        "percent": 2.95,
+        "text": "1 hr 56 mins",
+        "total_seconds": 6966.1
+      },
+      {
+        "digital": "1:06",
+        "hours": 1,
+        "minutes": 6,
+        "name": "PHP",
+        "percent": 1.68,
+        "text": "1 hr 6 mins",
+        "total_seconds": 3972.753473
+      },
+      {
+        "digital": "0:13",
+        "hours": 0,
+        "minutes": 13,
+        "name": "Java",
+        "percent": 0.35,
+        "text": "13 mins",
+        "total_seconds": 827.449
+      },
+      {
+        "digital": "0:12",
+        "hours": 0,
+        "minutes": 12,
+        "name": "Arduino",
+        "percent": 0.32,
+        "text": "12 mins",
+        "total_seconds": 761.709059
+      },
+      {
+        "digital": "0:11",
+        "hours": 0,
+        "minutes": 11,
+        "name": "Markdown",
+        "percent": 0.29,
+        "text": "11 mins",
+        "total_seconds": 695.121388
+      },
+      {
+        "digital": "0:07",
+        "hours": 0,
+        "minutes": 7,
+        "name": "C#",
+        "percent": 0.2,
+        "text": "7 mins",
+        "total_seconds": 463.992829
+      },
+      {
+        "digital": "0:06",
+        "hours": 0,
+        "minutes": 6,
+        "name": "Text",
+        "percent": 0.16,
+        "text": "6 mins",
+        "total_seconds": 387.03012
+      },
+      {
+        "digital": "0:02",
+        "hours": 0,
+        "minutes": 2,
+        "name": "Groovy",
+        "percent": 0.07,
+        "text": "2 mins",
+        "total_seconds": 157.482
+      },
+      {
+        "digital": "0:02",
+        "hours": 0,
+        "minutes": 2,
+        "name": "Other",
+        "percent": 0.05,
+        "text": "2 mins",
+        "total_seconds": 128.691588
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "GAS",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 8.215735
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "Properties",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 2.712
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "Git Config",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 0.199
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "Prolog",
+        "percent": 0.0,
+        "text": "0 secs",
+        "total_seconds": 0.107
+      }
+    ],
+    "machines": [
+      {
+        "digital": "65:36",
+        "hours": 65,
+        "machine": {
+          "created_at": "2020-02-21T07:58:27Z",
+          "id": "225a3a32-5b73-43a6-957f-3be8e2bf8403",
+          "ip": "189.159.248.67",
+          "last_seen_at": "2020-02-23T06:28:11Z",
+          "name": "BISHOP",
+          "value": "BISHOP"
+        },
+        "minutes": 36,
+        "name": "BISHOP",
+        "percent": 100.0,
+        "text": "65 hrs 36 mins",
+        "total_seconds": 236208.392018
+      }
+    ],
+    "modified_at": "2020-06-22T18:43:56Z",
+    "operating_systems": [
+      {
+        "digital": "65:36",
+        "hours": 65,
+        "minutes": 36,
+        "name": "Windows",
+        "percent": 100.0,
+        "text": "65 hrs 36 mins",
+        "total_seconds": 236208.392018
+      }
+    ],
+    "project": null,
+    "projects": [
+      {
+        "digital": "45:10",
+        "hours": 45,
+        "minutes": 10,
+        "name": "Personal",
+        "percent": 68.86,
+        "text": "45 hrs 10 mins",
+        "total_seconds": 162641.433079
+      },
+      {
+        "digital": "7:31",
+        "hours": 7,
+        "minutes": 31,
+        "name": "Webs",
+        "percent": 11.47,
+        "text": "7 hrs 31 mins",
+        "total_seconds": 27103.085013
+      },
+      {
+        "digital": "3:57",
+        "hours": 3,
+        "minutes": 57,
+        "name": "Hungry Ajolote",
+        "percent": 6.04,
+        "text": "3 hrs 57 mins",
+        "total_seconds": 14259.871
+      },
+      {
+        "digital": "3:11",
+        "hours": 3,
+        "minutes": 11,
+        "name": "RubyGTK",
+        "percent": 4.86,
+        "text": "3 hrs 11 mins",
+        "total_seconds": 11478.926433
+      },
+      {
+        "digital": "2:58",
+        "hours": 2,
+        "minutes": 58,
+        "name": "Unknown Project",
+        "percent": 4.54,
+        "text": "2 hrs 58 mins",
+        "total_seconds": 10730.97673
+      },
+      {
+        "digital": "0:50",
+        "hours": 0,
+        "minutes": 50,
+        "name": "pokemon tcg",
+        "percent": 1.27,
+        "text": "50 mins",
+        "total_seconds": 3000.662336
+      },
+      {
+        "digital": "0:41",
+        "hours": 0,
+        "minutes": 41,
+        "name": "telegramdominosbot",
+        "percent": 1.05,
+        "text": "41 mins",
+        "total_seconds": 2482.983566
+      },
+      {
+        "digital": "0:29",
+        "hours": 0,
+        "minutes": 29,
+        "name": "Life",
+        "percent": 0.75,
+        "text": "29 mins",
+        "total_seconds": 1760.730817
+      },
+      {
+        "digital": "0:13",
+        "hours": 0,
+        "minutes": 13,
+        "name": "My Application",
+        "percent": 0.35,
+        "text": "13 mins",
+        "total_seconds": 827.449
+      },
+      {
+        "digital": "0:12",
+        "hours": 0,
+        "minutes": 12,
+        "name": "juanheza.github.io",
+        "percent": 0.31,
+        "text": "12 mins",
+        "total_seconds": 727.269198
+      },
+      {
+        "digital": "0:07",
+        "hours": 0,
+        "minutes": 7,
+        "name": "elements",
+        "percent": 0.2,
+        "text": "7 mins",
+        "total_seconds": 463.992829
+      },
+      {
+        "digital": "0:06",
+        "hours": 0,
+        "minutes": 6,
+        "name": "hungry-ajolote",
+        "percent": 0.16,
+        "text": "6 mins",
+        "total_seconds": 375.089901
+      },
+      {
+        "digital": "0:05",
+        "hours": 0,
+        "minutes": 5,
+        "name": "FreeCodeCamp",
+        "percent": 0.13,
+        "text": "5 mins",
+        "total_seconds": 318.079525
+      },
+      {
+        "digital": "0:00",
+        "hours": 0,
+        "minutes": 0,
+        "name": "FetlifeBot",
+        "percent": 0.02,
+        "text": "0 secs",
+        "total_seconds": 37.842591
+      }
+    ],
+    "range": "last_year",
+    "start": "2019-06-23T05:00:00Z",
+    "status": "ok",
+    "timeout": 10,
+    "timezone": "America/Mexico_City",
+    "total_seconds": 236079.70043,
+    "total_seconds_including_other_language": 236208.392018,
+    "user_id": "e779c06a-3302-444c-a0f6-d608f1ce11de",
+    "username": null,
+    "writes_only": false
+  }
+}

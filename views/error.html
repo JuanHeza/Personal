@@ -1,0 +1,36 @@
+{{define "error"}}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <link rel="stylesheet" href="static/stylesheets/estilos.css">
+    <script src="js/JSAM.js"></script>
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+    ></script>
+    <link rel="icon" href="static/stylesheets/icons/59.ico" type="image/x-icon" />
+
+  </head>
+
+  <body>
+    {{template "header" .}}
+    <section class="main container">
+      <div class="container">
+          <img class="errorImage" src="src/SadAjolote" alt="SadAjolote" style="width: 304px; height: 228px;" />
+          <p class="post-contenido text-justify">
+            LO SENTIMOS SE HA DETECTADO UN ERROR
+            <p class ="error">{{.Data}}</p>
+            POR FAVOR INTENTARLO MAS TARDE  
+          </p>
+      </div>
+    </section>
+    {{template "footer"}}
+  </body>
+</html>
+{{end}}

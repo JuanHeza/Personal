@@ -1,0 +1,192 @@
+{{define "projectForm"}}
+{{template "header" .}}
+{{if .Data}}
+    <form action="/Update/Project/{{.Data.ID}}" method="PUT" enctype="multipart/form-data" id="ProjectForm">
+{{else}}
+    <form action="/Create/Project" method="POST" enctype="multipart/form-data" id="ProjectForm">
+{{end}}
+    <fieldset>
+      <legend>Inforacion Basica</legend>
+
+      <div class="row" id="nombre_container">
+        <div class="nameCol">
+          <label for="nombre"> <strong>Nombre:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="text" name="nombre" value="{{if .Data}}{{.Data.Titulo}}{{end}}" />
+        </div>
+      </div>
+      
+      <div class="row" id="link_container">
+        <div class="nameCol">
+          <label for="github"> <strong>Github:</strong></label>
+        </div>
+        <div class="nameCol">
+          <input type="text" name="github" value="{{if .Data}}{{.Data.Github}}{{end}}" />
+        </div>
+        <div class="nameCol">
+          <label for="link"> <strong>Website:</strong></label>
+        </div>
+        <div class="nameCol">
+          <input type="text" name="link" value="{{if .Data}}{{.Data.Link}}{{end}}" />
+        </div>
+      </div>
+
+      <div class="row" id="waka_container">
+        <div class="nameCol">
+          <label for="wakalinks"> <strong>WakatimeProject:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="text" name="wakalinks" value="{{if .Data}}{{ range .Data.WakaLinks}}{{.}},{{end}}{{end}}" />
+        </div>
+      </div>
+
+      <div class="row" id="lenguage_container">
+        <div class="nameCol">
+          <label for="lenguaje"> <strong>Lenguaje:</strong></label>
+        </div>
+        <div class="inputCol">
+          <!-- <input type="text" name="lenguaje[]" value="{{if .}} Join .Lenguajes {{end}}" /> -->
+          <select id='tags' class="js-example-basic-multiple" name="lenguajes[]" multiple="multiple" style="width: 100%;">
+            {{if .Data}}{{range .Data.Lenguajes}}
+            <option selected="selected" value="{{.Titulo}}">{{.Titulo}}</option>
+            {{end}}{{end}}
+            </select>
+        </div>
+      </div>
+
+      <div class="row" id="progress_container">
+        <div class="nameCol">
+          <label for="progreso"><strong> Progreso:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="range" id="a" name="progreso" value="{{if .Data}}{{.Data.Progreso}}{{else}}0{{end}}" />
+          <div id="ProgressValue">{{if .Data}}{{.Data.Progreso}}{{end}}</div>
+        </div>
+      </div>
+
+      <div class="row" id="introduction_container">
+        <div class="nameCol">
+          <label for="detalle"><strong>Introduccion:</strong></label>
+        </div>
+        <div class="inputCol">
+          <textarea name="detalle" rows="4" cols="30" maxlength="250">{{if .Data}}{{.Data.Detalle}}{{end}}</textarea>
+        </div>
+      </div>
+
+      <div class="row" id="description_container">
+        <div class="nameCol">
+          <label for="descripcion"><strong>Description:</strong></label>
+        </div>
+        <div class="inputCol">
+          <textarea name="descripcion" rows="10" cols="30">{{if .Data}}{{.Data.Descripcion}}{{end}}</textarea>
+        </div>
+      </div>
+
+      <div class="row" id="icon_container">
+        <div class="nameCol">
+          <label for="icon"><strong>Icon (128 x 128)</strong></label>
+        </div>
+        <div class="nameCol">
+          <img src="{{if .Data}} /static/images/{{.Data.ID}}/Icon.png {{end}}" alt="Icon" width="128px" height="128px">
+          <input type="file" name="icon" />
+          <label for="icon" class="cambiar"><strong>Cambiar</strong></label>
+        </div>
+
+        <div class="nameCol">
+          <label for="banner"><strong>Banner (800 x 400)</strong></label>
+        </div>
+        <div class="nameCol">
+          <img src="{{if .Data}} /static/images/{{.Data.ID}}/Banner.png {{end}}" alt="Banner" width="256px" height="128px">
+          <input type="file" name="banner" />
+          <label for="banner" class="cambiar"><strong>Cambiar</strong></label>
+        </div>
+      </div>
+
+      <div class="row" id="gallery_container">
+        <div class="nameCol">
+          <label for="gallery"><strong>Imagenes:</strong></label>
+        </div>
+        <div class="inputCol">
+          <label for="gallery"><strong>Agregar Galeria</strong></label>
+          <div class="box">
+            <div class="boxInput" id="imageBox">
+              <input type="file" class="boxFile" name="gallery[]" id="file" data-multiple-caption="{count} files selected"
+                multiple onchange='readURL(this)'>
+              <label for="file"> <strong>escoge un archivo</strong><span class="boxDragndrop"> o ponelo aqui</span>.</label>
+              <div id="plantilla" class="ImageCard">
+                <img src="" id="foto" alt=""></img>
+                <input type="text" name="caption[]"/>
+              </div>
+            </div>
+            <!-- <div class="boxUploading">Espera</div>
+            <div class="boxSuccess">Listo</div>
+            <div class="boxError">Error</div> -->
+          </div>
+        </div>
+      </div>
+      {{if .Data}}
+        {{range .Data.Galeria}}
+          {{template "image_block" .}}
+        {{end}}
+        <div onclick='AddNote()'class="cambiar editbutton aceptar" >ADD NOTE</div>
+        {{range .Data.Notas}}
+          {{template "note_block" .}}
+        {{end}}
+      {{else}}
+        {{template "note_block"}}
+      {{end}}
+      <input type="hidden" name="project_id" value="{{if .Data}}{{.Data.ID}}{{else}}0{{end}}">
+    </fieldset>
+
+
+    <input type="submit" value="Submit" />
+  </form>
+  {{template "footer"}}
+
+</body>
+
+</html>
+{{end}}
+
+{{define "note_block"}}
+<div id="note_block">
+  <div class="row">
+    <div class="nameCol">
+    <label for="note_title">Titulo</label>
+  </div>
+  <div class="nameCol">
+    <input type="text" name="note_title[]" id="note_title" value="{{if .}}{{.Titulo}}{{end}}">
+  </div>
+  <div class="nameCol">
+    <label for="note_date">Fecha</label>
+  </div>
+  <div class="nameCol">
+    <input type="date" name="note_date[]" id="note_date" value="{{if .}}{{- fecha .Fecha true -}}{{else}}{{today}}{{end}}">
+  </div>
+</div>
+  <div class="row">
+    <div class="nameCol">
+      <label for="note_body">Cuerpo</label>
+    </div>
+    <div class="inputCol">
+      <textarea name="note_body[]" id="note_body" cols="30" rows="10">{{if .}}{{.Detalle}}{{end}}</textarea>
+    </div>
+  </div>
+  <input type="hidden" name="note_id[]" value="{{if .}}{{.ID}}{{else}}0{{end}}">
+</div>
+{{end}}
+
+{{define "image_block"}}
+<div id="image_block">
+  <div class="projectImage">
+    <img class="imageContainer" src="/static/images/{{.ProjectID}}/{{.Titulo}}" alt="{{.Titulo}}" id="Img-{{- .ID}}" style="height: 400px;" onclick="maximize('Img-{{- .ID}}')"></image>
+  </div>
+  <div class="imageFooter">
+    <div><label for="update_caption[]">Caption:</label></div>
+    <div><input type="text" name="update_caption[]" id="update_caption" value="{{.Detalle}}"></div>
+  </div>
+  <input type="hidden" name="update_title[]" value="{{.Titulo}}">
+  <input type="hidden" name="update_index[]" value="{{.ID}}">
+</div>
+{{end}}

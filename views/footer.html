@@ -1,0 +1,75 @@
+{{define "footer"}}
+<footer>
+  <div id="footer-container">
+    <div class="footer-column">
+      <div class="title">ABOUT</div>
+
+      <div class="avatar"></div>
+
+      <div class="text">
+        {{StaticData 2}}
+      </div>
+    </div>
+
+    <div class="footer-column">
+      <div class="title">TUTORIAL</div>
+
+      <div class="text">
+        {{StaticData 3}}<br />
+        <div class="columnList">
+          <div class="lists">
+            <a href="/ProjectList/" target=""><div>Proyectos</div></a>
+            <a href="/PostList/" target=""><div>Posts</div></a>
+          </div>
+          <div class="lenguagesList">
+            {{range Lenguajes}}
+            <a href="/ProjectList/{{.ID}}">
+              <div class="project-lenguage-button">
+                <span>{{.Titulo}}</span>
+              </div>
+            </a>
+            {{end}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-column footer-column-last">
+      <div class="title">CONTACT</div>
+
+      <div class="text">
+        {{StaticData 4}}
+      </div>
+
+      <div>
+        <!-- <a href="/#" target="_blank">
+          <div class="icon icon-facebook"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-twitter"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-dribbble"></div>
+        </a>
+
+        <a href="/#" target="_blank">
+          <div class="icon icon-linkedin"></div>
+        </a>
+
+        <a href="/#">
+          <div class="icon icon-last icon-email"></div>
+        </a> -->
+
+        {{range Links}}
+        <a href="{{.Link}}">
+          <div class="icon" style='background-image: url(/static/stylesheets/icons/{{.Icon}} )'></div>
+        </a>
+        {{end}}
+      </div>
+    </div>
+  </div>
+</footer>
+{{end}}

@@ -1,0 +1,197 @@
+{{define "postEditor"}}
+{{template "header" .}}
+<script>
+  $(document).ready(function() {
+    SetVariables()
+  });
+</script>
+{{if .Data}}
+    <form action="/Update/Post/{{.Data.ID}}" method="PUT" id="PostForm">
+{{else}}
+    <form action="/Create/Post" method="POST" id="PostForm">
+{{end}}
+    <fieldset>
+      <legend>Inforacion Basica</legend>
+
+      
+      <div class="row" id="title_container">
+        <div class="nameCol">
+          <label for="title"> <strong>Titulo:</strong></label>
+        </div>
+        <div class="inputCol">
+          <input type="text" name="nombre" value="{{if .Data}}{{.Data.Titulo}}{{end}}" />
+        </div>
+      </div>
+
+      <div class="row" id="lenguage_container">
+        <div class="nameCol">
+          <label for="lenguaje"> <strong>Lenguaje:</strong></label>
+        </div>
+        <div class="inputCol">
+          <!-- <input type="text" name="lenguaje[]" value="{{if .}} Join .Lenguajes {{end}}" /> -->
+          <select id='tags' class="js-example-basic-multiple" name="lenguajes[]" multiple="multiple" style="width: 100%;">
+            {{if .Data}}{{range .Data.Lenguajes}}
+            <option selected="selected" value="{{.Titulo}}">{{.Titulo}}</option>
+            {{end}}{{end}}
+            </select>
+        </div>
+      </div>
+      <div class="row" id="projects_container">
+        <div class="nameCol">
+          <label for="projecto"> <strong>Projecto:</strong></label>
+        </div>
+        <div class="inputCol">
+          <!-- <input type="text" name="lenguaje[]" value="{{if .}} Join .Lenguajes {{end}}" /> -->
+          <select id='tags' class="js-example-basic-multiple" name="project" style="width: 100%;">
+            {{if .Data}}
+            <option selected="selected" value="{{.Data.ProjectID}}">{{if eq .Data.ProjectID 0}}Ninguno{{else}}{{.Data.ProjectTitle}}{{end}}</option>
+            {{else}} <option selected="selected" value="0">Ninguno</option>{{end}}
+            </select>
+        </div>
+      </div>
+
+      <div class="row" id="link_container">
+        <div class="nameCol">
+          <label for="fecha">Fecha</label>
+        </div>
+        <div class="nameCol">
+          <input type="date" name="fecha" id="note_date" value="{{if .Data}}{{- fecha .Data.Fecha true -}}{{else}}{{today}}{{end}}">
+        </div>
+        <div class="nameCol">
+          <label for="link"> <strong>Website:</strong></label>
+        </div>
+        <div class="nameCol">
+          <input type="text" name="link" value="{{if .Data}}{{.Data.Replit}}{{end}}" />
+        </div>
+      </div>
+
+      <div class="row" id="introduction_container">
+        <div class="nameCol">
+          <label for="detalle"><strong>Introduccion:</strong></label>
+        </div>
+        <div class="inputCol">
+          <textarea name="detalle" rows="4" cols="30" maxlength="250">{{if .Data}}{{.Data.Detalle}}{{end}}</textarea>
+        </div>
+      </div>
+
+<div class="editor">
+  <!--  onload="SetVariables()" -->
+  <div class="toolbar">
+    <div class="line">
+
+      <div class="box">
+        <span class="btn icon smaller" data-action="bold" title="Bold">
+          <img src="https://image.flaticon.com/icons/svg/25/25432.svg">
+        </span>
+        <span class="btn icon smaller" data-action="italic" title="Italic">
+          <img src="https://image.flaticon.com/icons/svg/25/25392.svg">
+        </span>
+        <span class="btn icon smaller" data-action="underline" title="Underline">
+          <img src="https://image.flaticon.com/icons/svg/25/25433.svg">
+        </span>
+        <span class="btn icon smaller" data-action="strikeThrough" title="Strike through">
+          <img src="https://image.flaticon.com/icons/svg/25/25626.svg">
+        </span>
+      </div>
+
+      <div class="box">
+        <span class="btn icon has-submenu">
+          <img src="https://image.flaticon.com/icons/svg/25/25351.svg">
+          <div class="submenu">
+            <span class="btn icon" data-action="justifyLeft" title="Justify left">
+              <img src="https://image.flaticon.com/icons/svg/25/25351.svg">
+            </span>
+            <span class="btn icon" data-action="justifyCenter" title="Justify center">
+              <img src="https://image.flaticon.com/icons/svg/25/25440.svg">
+            </span>
+            <span class="btn icon" data-action="justifyRight" title="Justify right">
+              <img src="https://image.flaticon.com/icons/svg/25/25288.svg">
+            </span>
+            <span class="btn icon" data-action="formatBlock" title="Justify block">
+              <img src="https://image.flaticon.com/icons/svg/25/25181.svg">
+            </span>
+          </div>
+        </span>
+        <span class="btn icon" data-action="insertOrderedList" title="Insert ordered list">
+          <img src="https://image.flaticon.com/icons/svg/25/25242.svg">
+        </span>
+        <span class="btn icon" data-action="insertUnorderedList" title="Insert unordered list">
+          <img src="https://image.flaticon.com/icons/svg/25/25648.svg">
+        </span>
+        <span class="btn icon" data-action="outdent" title="Outdent">
+          <img src="https://image.flaticon.com/icons/svg/25/25410.svg">
+        </span>
+        <span class="btn icon" data-action="indent" title="Indent">
+          <img src="https://image.flaticon.com/icons/svg/25/25233.svg">
+        </span>
+
+      </div>
+      <div class="box">
+        <span class="btn icon" data-action="insertHorizontalRule" title="Insert horizontal rule">
+          <img src="https://image.flaticon.com/icons/svg/25/25232.svg">
+        </span>
+      </div>
+
+      <div class="box">
+        <span class="btn icon smaller" data-action="undo" title="Undo">
+          <img src="https://image.flaticon.com/icons/svg/25/25249.svg">
+        </span>
+        <span class="btn icon" data-action="removeFormat" title="Remove format">
+          <img src="https://image.flaticon.com/icons/svg/25/25454.svg">
+        </span>
+      </div>
+
+      <div class="box">
+        <span class="btn icon smaller" data-action="createLink" title="Insert Link">
+          <img src="https://image.flaticon.com/icons/svg/25/25385.svg">
+        </span>
+        <span class="btn icon smaller" data-action="unlink" title="Unlink">
+          <img src="https://image.flaticon.com/icons/svg/25/25341.svg">
+        </span>
+      </div>
+
+      <div class="box">
+        <span class="btn icon" data-action="code" title="Show HTML-Code">
+          <img src="https://image.flaticon.com/icons/svg/25/25185.svg">
+        </span>
+      </div>
+
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="visuell-view" contenteditable>
+      {{if .Data}}{{.Data.Cuerpo}}{{else}}<p style="text-align: center;">AQUI <b>PUEDES</b> COMENZAR <i>A ESCRIBIR</i>.</p>{{end}}
+      <hr>
+      <p style="text-align: center;"><b>Tutorial available <a
+            href="https://webdeasy.de/en/program-your-own-wysiwyg-editor-in-10-minutes/?referer=cp-YoVmBx">here</a>!
+          😋</b></p>
+    </div>
+    <textarea class="html-view"  name="cuerpo"> {{if .Data}}{{.Data.Cuerpo}}{{else}}<p style="text-align: center;">AQUI <b>PUEDES</b> COMENZAR <i>A ESCRIBIR</i>.</p>{{end}}</textarea>
+  </div>
+</div>
+
+<div class="modal">
+  <div class="modal-bg"></div>
+  <div class="modal-wrapper">
+    <div class="modal-content" id="modalCreateLink">
+      <h3>Insert Link</h3>
+      <input type="text" id="linkValue" placeholder="Link (example: https://webdeasy.de/)">
+      <div class="row">
+        <input type="checkbox" id="new-tab">
+        <label for="new-tab">Open in new Tab?</label>
+      </div>
+      <button class="done">Done</button>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" name="post_id" value="{{if .Data}}{{.Data.ID}}{{else}}0{{end}}">
+</fieldset>
+<input type="submit" value="Submit" />
+</form>
+{{template "footer"}}
+
+</body>
+
+</html>
+{{end}}

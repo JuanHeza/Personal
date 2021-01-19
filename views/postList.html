@@ -1,0 +1,37 @@
+{{define "postList"}}
+    {{template "header" .}}
+<body>
+    <!-- 
+		-->
+    <main class="content">
+        {{range .Data}}
+        <div class="post">
+            <a href="../Post/{{.ID}}">
+                <div class="postTitle">{{.Titulo}}</div>
+            </a>
+            <div class="postMiddle">
+                <a {{if ne .ProjectID 0}} href="../Projects/{{.ProjectID}}" {{end}}><div class="postProject">{{.ProjectTitle}}</div></a>
+                <div class="postDate">{{fecha .Fecha}}</div>
+            </div>
+            <div class="postLenguages">
+                {{range .Lenguajes}}
+                <a href="../ProjectList/{{.ID}}">
+                    <div class="project-lenguage-button">{{.Titulo}}</div>
+                </a>
+                {{end}}
+            </div>
+            <a href="../Post/{{.ID}}">
+                <div class="postBody">
+                    {{.Detalle}}
+                </div>
+            </a>
+        </div>
+        {{end}}
+    </main>
+    {{template "footer"}}
+    <!-- 
+      -->
+</body>
+
+</html>
+{{end}}

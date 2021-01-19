@@ -1,0 +1,52 @@
+{{define "home"}}
+  {{template "header" .}}
+  <body>
+    <!-- 
+      -->
+  
+  <main class="content">
+    <div class="introduction">
+      <Section>
+        <p>{{StaticData 1}}</p>
+      </Section>
+    </div>
+{{range .Data}}
+    <div class="portfolio">
+      <div class="portfolio-container" style="background-image: url(/static/images/{{.ID}}/Banner.png);">
+        {{if mod .ID}}
+        <div class="portfolio-text-container portfolio-text-container-left">
+        {{else}}
+        <div class="portfolio-text-container portfolio-text-container-right">
+        {{end}}
+          <div class="portfolio-text-title">{{.Titulo}}</div>
+
+          <div class="portfolio-text-lenguages">
+            {{range .Lenguajes}}
+            <a href="/ProjectList/{{.ID}}">
+              <div  class="project-lenguage-button">
+                  <span>{{.Titulo}}</span>
+              </div>
+            </a>
+            {{end}}
+          </div>
+          <div class="portfolio-text-body">
+            {{.Detalle}}
+          </div>
+
+          <a href="/Project/{{.ID}}"  class="portfolio-text-button">
+            <span>Visit</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    {{end}}
+
+  </main>
+  {{template "footer"}}
+  <!-- 
+		-->
+</body>
+
+</html>
+{{end}}

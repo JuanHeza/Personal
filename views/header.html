@@ -1,0 +1,44 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <title>Juan Heza Notebook</title>
+  <link rel="icon" href="/static/stylesheets/icons/59.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/stylesheets/estilos.css">
+  {{if .CSS}} {{range .CSS}}  <link rel="stylesheet" href="{{.}}">{{end}}{{end}}
+  {{if .JS}}   {{range .JS}}  <script type="text/javascript"  src="{{.}}"></script>       {{end}}{{end}}
+</head>
+
+<header>
+  <div id="banner-image"></div>
+  <div id="header-container">
+    <a href="/Home/"><div id="title-robby" class="title">Juan Heza</div></a>
+    <div id="icons-container-right">
+      
+      {{ $credential := IsAdminAutenticathed }}
+      {{if eq $credential.Auth true}}
+      <a href="/LogOut">
+        <div class="icon icon-logOut" style="background-image: url(/static/stylesheets/icons/lock.png)"></div>
+      </a>
+      {{if eq $credential.Admin true}} 
+      <a href="/Edit/">
+        <div class="icon icon-gear" style="background-image: url(/static/stylesheets/icons/settings.png)"></div>
+      </a>
+        {{end}} 
+      {{else}}
+      <a href="/LogIn">
+        <div class="icon icon-logIn" style="background-image: url(/static/stylesheets/icons/key.png)"></div>
+      </a>
+      {{end}}
+      {{range Links}}
+      <a href="{{.Link}}">
+        <div class="icon" style='background-image: url(/static/stylesheets/icons/{{.Icon}} )'></div>
+      </a>
+      {{end}}
+    </div>
+  </div>
+</header>
+{{end}}

@@ -5,6 +5,10 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+body {
+	background: url(Back.jpg); 
+	font-family: 'open sans', sans-serif;
+}
 .forms {
 	background: #fff;
 	box-shadow: 0 0 3px #000;
@@ -23,7 +27,7 @@
 	text-align: center;
 }
 .forms form { padding: 30px; }
-/* #signup { display: none; } */
+#signup { display: none; }
 .forms .tab-group {
 	list-style: none;
 	padding: 0;

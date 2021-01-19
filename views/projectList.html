@@ -1,0 +1,34 @@
+{{define "projectList"}}
+    {{template "header" .}}
+<body>
+    <!-- 
+		-->
+    <main class="content">
+        {{range .Data}}
+        <div class="project">
+            <a href="../Project/{{.ID}}" class="projectHead">
+                <image class="projectIcon" src="/static/images/{{.ID}}/Icon.png"></image>
+                <div class="projectTitle">{{.Titulo}}</div>
+            </a>
+            <div class="projectLenguages">
+                {{range .Lenguajes}}
+                <a href="../ProjectList/{{.Titulo}}">
+                    <div class="project-lenguage-button">{{.Titulo}}</div>
+                </a>
+                {{end}}
+            </div>
+            <a href="../Project/{{.ID}}">
+                <div class="projectBody">
+                    {{.Detalle}}
+                </div>
+            </a>
+        </div>
+        {{end}}
+    </main>
+    {{template "footer"}}
+    <!-- 
+      -->
+</body>
+
+</html>
+{{end}}

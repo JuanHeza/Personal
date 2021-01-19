@@ -1,0 +1,62 @@
+{{define "Edit"}}
+{{template "header" .}}
+<script>
+</script>
+  <body onload="formUpdate('StaticData', '/Update/Data')">
+  <a href="./Project/">
+      <div class="lenguageButton">Add Project</div>
+  </a>
+  <a href="./Post/">
+    <div class="lenguageButton">Add Post</div>
+  </a>
+    <div>
+    <div id="projectList"><table id="Projectlist" class="table"> 
+      <caption>Projectos</caption>
+      <tr>
+        <th id="tableIcon">Icono</th>
+        <th id="tableNime">Nombre</th>
+        <th id="tableDescription">Introduccion</th>
+        <th id="tableProgress">Progreso</th>
+        <th id="tableEdit">Editar</th>
+        <th id="TableDelete">Eliminar</th>
+      </tr>
+      {{range .Data.Projects}}
+      <tr style="background-image: url(/static/images/{{.ID}}/Banner.png);">
+        <td style="background-image: url(/static/images/{{.ID}}/Icon.png);"></td>Icono</td>
+        <td><a href="../Project/{{.ID}}">{{.Titulo}}</a></td>
+        <td>{{.Detalle}}</td>
+        <td>{{.Progreso}}</td>
+        <td><a href="./Project/{{.ID}}"><button class="editButton">Editar</button></a></td>
+        <td><button class="editButton" onclick="Delete('/Delete/Project/','{{.ID}}')">Eliminar</button></td>
+      </tr>
+      {{end}}
+    </table></div>
+    <div id="PostList"><table id="PostList" class="table"> 
+      <caption>Posts</caption>
+      <tr>
+        <th id="tableNime">Nombre</th>
+        <th id="tableDescription">Introduccion</th>
+        <th id="tableProgress">Progreso</th>
+        <th id="tableEdit">Editar</th>
+        <th id="TableDelete">Eliminar</th>
+      </tr>
+      {{range .Data.Posts}}
+      <tr>
+        <td><a href="../Post/{{.ID}}">{{.Titulo}}</a></td>
+        <td>{{.Detalle}}</td>
+        <td>{{.Fecha}}</td>
+        <td><a class="editButton" href="./Post/{{.ID}}"><button class="editButton">Editar</button></a></td>
+        <td><button class="editButton" onclick="Delete('/Delete/Post/','{{.ID}}')">Eliminar</button></td>
+      </tr>
+      {{end}}
+    </table></div>
+  </div>
+    
+    {{template "StaticInfo"}}
+
+    {{template "footer"}}
+   
+  </body>
+
+</html>
+{{end}}

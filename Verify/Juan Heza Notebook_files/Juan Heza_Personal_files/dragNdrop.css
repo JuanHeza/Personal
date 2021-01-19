@@ -1,0 +1,38 @@
+
+    .boxDragndrop,
+    .boxUploading,
+    .boxSuccess,
+    .boxError {
+      display: none;
+    }
+
+    .boxFile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+    }
+
+    .box.hasAdvancedUpload {
+      background-color: aquamarine;
+      outline-offset: -10px;
+      outline: 2px dashed black;
+      padding: 20px;
+      width: 400px;
+      height: 200px;
+    }
+
+    .box.hasAdvancedUpload .boxDragndrop {
+      display: inline;
+    }
+
+    .box.is-dragover {
+      background-color: aqua;
+    }
+
+    .box.is-uploading .boxInput {
+      visibility: none;
+    }
+
+    .box.box.is-uploading .boxUploading {
+      display: block;
+    }

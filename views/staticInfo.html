@@ -1,0 +1,69 @@
+{{ define "StaticInfo"}}
+<fieldset>
+  <form action="/Update/Data" method="PUT" enctype="multipart/form-data" id="StaticForm">
+    <legend>Informacion Estatica</legend>
+    <div class="row">
+      <div class="nameCol"><label for="introduccion"><strong>introduccion:</strong></label></div>
+      <div class="inputCol"><textarea name="introduccion" rows="4" cols="30" maxlength="250">{{StaticData 1}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="nameCol"><label for="about"><strong>Descripcion:</strong></label></div>
+      <div class="inputCol"><textarea name="about" rows="4" cols="30" maxlength="250">{{StaticData 2}}</textarea></div>
+    </div>
+    <div class="row">
+      <div class="nameCol"><label for="tutorial"><strong>Tutorial:</strong></label></div>
+      <div class="inputCol"><textarea name="tutorial" rows="4" cols="30" maxlength="250">{{StaticData 3}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="nameCol"><label for="contact"><strong>Contacto:</strong></label></div>
+      <div class="inputCol"><textarea name="contact" rows="4" cols="30" maxlength="250">{{StaticData 4}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="nameCol"><label for="banner"><strong>Banner image:</strong></label></div>
+      <div class="nameCol"><input type="file" name="banner" value="" /><label
+          for="banner"><strong>Upload</strong></label>
+        <img src='/static/stylesheets/icons/background.jpg' style=' width: 200px; height: 100px;' alt="Banner"></img></div>
+      <div class="nameCol"><label for="avatar"><strong>Avatar image:</strong></label></div>
+      <div class="nameCol"><input type="file" name="avatar" value="" /><label
+          for="avatar"><strong>Upload</strong></label>
+        <img src='/static/stylesheets/icons/avatar.jpg' style=' width: 128px; height: 128px;'alt="Avatar"></img></div>
+    </div>
+    <div class="row" id="LinkForm">
+      <div class="nameCol"><label for="links"><strong>Links:</strong></label></div>
+      <div class="nameCol"><input type="text" name="links[]" value="" /></div>
+      <div class="nameCol"><label for="linkImage"><strong>Link Icon:</strong></label></div>
+      <div class="nameCol"><input type="file" name="linkImage[]" value="" /><label
+          for="linkImage[]"><strong>Upload</strong></label>
+        <img class='icon' style="width: 32px; height: 32px;"alt="link"></img>
+        <a onclick="AddLink()">Add Field</a>
+      </div>
+    </div>
+    <input type="hidden" name="leng" value="{{StaticData 5}}"/>
+    <input type="submit" value="Submit" />
+  </form>
+  {{range Links}}
+  <div class="row" >
+    <form id="L-{{.ID}}" method="POST" action="/Crud/Link/{{.ID}}" enctype="multipart/form-data" >
+      <!-- <div class="nameCol"><label for="links"><strong>Links:</strong></label></div> -->
+      <div class="nameCol"><input type="text" name="links" value="{{.Link}}" disabled="disabled" /></div>
+      <!-- <div class="nameCol"><label for="linkImage"><strong>Link Icon:</strong></label></div> -->
+      <div class="nameCol"><input type="file" name="linkImage" value="" />
+        <label for="linkImage"><strong>Upload</strong></label>
+        <img class='icon' src='/static/stylesheets/icons/{{.Icon}}' style="width: 32px; height: 32px;" alt="link"></img>
+        <input type="hidden" name="icon" value="/static/stylesheets/icons/{{.Icon}}">
+      </div>
+      <div class="nameCol divButton">
+        <a class="cambiar editbutton" onclick="EditLink('{{.ID}}','L-{{.ID}}')">Edit</a>
+        <input type="submit" class="cambiar editbutton aceptar" style="display:none;">
+      </div>
+      <div class="nameCol divButton">
+        <a class="cambiar deletebutton" onclick="DeleteLink('{{.ID}}','L-{{.ID}}')">Delete</a>
+      </div>
+    </form>
+  </div>
+  {{end}}
+</fieldset>
+{{end}}

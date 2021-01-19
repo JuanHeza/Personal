@@ -1,0 +1,98 @@
+.content{
+    color: var(--text_color);
+    display: grid;
+    margin: 20px 0 20px 0;
+    width: 100%;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.project, .post{
+    width: 200px;
+    height: 250px;
+    margin: 20px 30px;
+    background-color: var(--enfasis_color_alpha);
+    border-radius: var(--cardBorder);
+}
+
+.projectHead{
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.projectIcon{
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+}
+
+.projectTitle{
+    height: 68px;
+    font-size: 18px;
+    margin: 6px;
+    overflow: hidden;
+    text-align: center;
+    color: var(--text_color);
+}
+
+.projectLenguages{
+    height: 40px;
+    margin: 5px 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.projectBody{
+    margin: 5px 10px;
+    height: 115px;
+    color: var(--text_color);
+    overflow: hidden;
+    text-align: justify;
+}
+.postTitle{
+    height: 40px;
+    font-size: 18px;
+    color: var(--text_color);
+    margin: 5px;
+    text-align: center;
+}
+.postMiddle{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.postProject{
+    height: 30px;
+    color: var(--text_color);
+    text-align: center;
+    font-size: 15px;
+}
+.postDate{
+    height: 30px;    
+    text-align: end;
+    margin: 0 10px;
+}
+.postLenguages{
+    margin: 5px 10px;
+    height: 40px;
+}
+.postBody{
+    height: 115px;
+    color: var(--text_color);
+    margin: 5px 10px;
+    text-align: justify;
+}
+
+@media screen and (max-width: 511px) { /* PHONE */
+    .content{
+        grid-template-columns: auto auto;
+    }
+    .project, .post{
+        margin: 20px 5px;
+    }
+}
+@media screen and (min-width: 512px) and (max-width: 1023px) {    /* TABLET */
+    .content{
+        grid-template-columns: auto auto auto;
+    }
+    .project, .post{
+        margin: 20px 25px;
+    }
+}

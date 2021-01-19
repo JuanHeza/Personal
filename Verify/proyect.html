@@ -1,0 +1,108 @@
+﻿{{define "proyect"}}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+
+    <link rel="stylesheet" href="/static/stylesheets/estilos.css" />
+    <link rel="stylesheet" href="/static/stylesheets/Project_Styles.css" />
+
+    <script type="text/javascript" src="/static/scripts/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Juan Heza Notebook</title>
+    <link rel="icon" href="/static/stylesheets/icons/59.ico" type="image/x-icon" />
+  </head>
+  <style>
+    .mainArea {
+      background-image: url({{.Banner}});
+    }
+  </style>
+  <body onload="move({{.Progress}})">
+    <!-- 
+			-->
+    {{template "header" "hi"}}
+    <main>
+      <!-- 
+      -->
+        <div id="sidebar">
+          <ul
+            id="content"
+            class="nav nav-pills nav-stacked"
+            style="max-width: 250px;"
+          >
+          <li>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          </li>
+            <li id="Introduccion" class="active">
+              <a  onclick="Active('Introduccion','active')" class="sidebarButton">
+                <span ></span> Introduccion</a>
+            </li>
+            <li id="Detalle" class="">
+              <a  onclick="Active('Detalle','active')" class="sidebarButton">
+                <span ></span> Detalles</a>
+            </li>
+            <li id="Modelos" class="">
+              <a  onclick="Active('Modelos','active')" class="sidebarButton">
+                <span ></span> Modelos</a>
+            </li>
+            <li id="Funciones" class="">
+              <a  onclick="Active('Funciones','active')" class="sidebarButton">
+                <span></span> Funciones</a>
+            </li>
+            <li id="Imagenes" class="">
+              <a  onclick="Active('Imagenes','active')" class="sidebarButton">
+                <span ></span> Imagenes</a>
+            </li>
+            <li id="Pendientes" class="">
+              <a  onclick="Active('Pendientes','active')" class="sidebarButton">
+                <span ></span> Pendientes</a>
+            </li>
+            <li id="Notas" class="">
+              <a  onclick="Active('Notas','active')" class="sidebarButton">
+                <span ></span> Notas</a>
+            </li>
+            <li id="Miss" class="" style='display: none;'>
+              <a  onclick="Active('Miss','active')" class="sidebarButton">
+                <span ></span> Notas</a>
+            </li>
+            <!-- <li id="" class="">	 <a  onclick="Active('')">		<span class="glyphicon glyphicon-picture"></span>  Galeria</a></li> -->
+          </ul>
+        </div>
+        <div class="mainArea">
+          {{template "card" .}}
+          
+          {{if .Functions}}
+            {{template "functions" .Functions}}
+          {{end}}
+          
+          {{if .Models}}
+            {{template "structures" .Models}}
+          {{end}}
+          
+          {{if .Tasks}}
+            {{template "tasks" .Tasks}}
+          {{end}}
+          
+          {{if .Images}}
+            {{template "galery" .Images}}
+          {{end}}
+          
+          {{if .Notes}}
+            {{template "notes" .Notes}}
+          {{end}}
+          
+          {{template "missing"}}
+        </div>
+      <!-- 
+      -->
+    </main>
+    {{template "footer"}}
+    <!-- 
+    -->
+  </body>
+</html>
+{{end}}

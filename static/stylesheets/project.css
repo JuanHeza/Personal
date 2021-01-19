@@ -1,0 +1,402 @@
+main {
+  width: auto;
+  overflow: hidden;
+  display: flex;
+}
+
+.mainArea {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-size: cover;
+  background-position: center;
+  float: left;
+}
+
+#Head{
+  width: 100%;
+}
+
+#Head > div{
+  margin: 30px auto;
+}
+
+.projectDetail {
+  text-align: justify;
+  color: var(--text_color);
+  text-transform: uppercase;
+  /* padding: 10px 50px 10px 50px; */
+  position: relative;
+  width: 80%;
+  align-content: center;
+  margin-right: 40px;
+  box-shadow: var(--shadow_box);
+  min-height: 130px;
+}
+.projectDetail>p{
+  position: absolute;
+  margin: 10px 20px 10px 20px;
+  font-size: 15px;
+}
+
+.projectIcon {
+  min-height: 170px;
+  height: fit-content;
+  width: 25%;
+  position: relative;
+  font-family: miso-bold;
+  color: var(--text_color);
+  font-size: 30px;
+  /* background-color: var(--placeHolder); */
+  box-shadow: var(--shadow_box);
+  text-align: center;
+  padding: 5px;
+}
+.projectIcon{
+  max-width: 128px;
+  max-height: 128px;
+}
+.projectLenguage {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+  width: 50%;
+  height: 30px;
+  font-size: 20px;
+}
+.project-lenguage-button{
+  width: 90%;
+}
+
+.projectNumbers {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-areas: "clock progressbar links";
+  gap: 5%;
+  height: 110px;
+  width: 80%;
+  /* grid-auto-columns: 300px; */
+}
+
+.projectNumbers>div{
+    height: 110px;
+}
+.projectLinks {
+    position: relative;
+    float: right;
+    box-shadow: var(--shadow_box);
+    width: 100%;
+    grid-area: links;
+    font-size: 20px;
+  }
+
+  .projectLinks>div{
+      margin: 10px 20px 5px 20px ;
+  }
+  a{
+      text-decoration: none;
+  }
+  .project-link-button{
+    margin: 10px 20px 5px 20px ;
+    height: 30%;
+    border-style: solid;
+    border-radius: 20px;
+    text-align: center;
+  }
+  .project-link-button>a{
+      margin:auto;
+  }
+  .github{
+    color: var(--text_color);
+    background-color: #080808;
+  }
+  .github:hover{
+    background-color: #80808080;
+  }
+  .website{
+      color: var(--text_color);
+      background-color: #4169e1;
+  }
+  .website:hover{
+      background-color: #4169e180;
+  }
+  .projectProgress {
+    position: relative;
+    float: right;
+    box-shadow: var(--shadow_box);
+    width: 100%;
+    grid-area: progressbar;
+  }
+
+.ProgressText {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  margin: 15px 15px 10px 15px;
+  color: var(--text_color);
+}
+
+.ProgressBar {
+  color: #000 !important;
+  background-color: #f1f1f1 !important;
+  border-radius: 16px;
+  margin: 0 15px 15px 15px;
+}
+
+.ProgressBar-Fill {
+  color: var(--text_color) !important;
+  background-color: var(--enfasis_color) !important;
+  border-radius: 16px;
+  height: 24px;
+}
+
+.projectTime {
+  position: relative;
+  float: left;
+  font-family: "Montserrat", "sans-serif";
+  height: 100px;
+  overflow: auto;
+  display: flex;
+  border-radius: 5px;
+  box-shadow: var(--shadow_box);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: fit-content; */
+  grid-area: clock;
+}
+
+.projectTime > p {
+  text-align: justify;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding: 20px;
+  color: var(--text_color);
+  text-transform: uppercase;
+}
+
+.clock-col {
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  float: left;
+  position: relative;
+  color: var(--text_color);
+  text-transform: uppercase;
+}
+
+.clock-container {
+  margin: 30px;
+  background-color: #080808;
+  border-radius: 5px;
+  padding: 60px 20px;
+  box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.15),
+    0 15px 90px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+}
+
+.clock-label {
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* ================================================================ */
+/* ============================= BODY ============================= */
+/* ================================================================ */
+
+#Body{
+    width: 90%;
+    margin: 50px auto;
+    color: var(--text_color);
+}
+#Body > div{
+    margin: 20px 0px 20px 0px;
+}
+.projectDescription{
+    padding:20px;
+    border-radius: var(--cardBorder);
+    font-size: larger;
+    text-align: justify;
+    min-height: 100px;
+    background-color: var(--enfasis_color_alpha);
+}
+#Galery{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    grid-template-areas: "titulo titulo titulo";
+    gap: 20px 5%
+}
+.sectionTitle{
+  text-align: center;
+  margin: 30px auto auto auto;
+  grid-area: titulo;
+}
+.projectImage{
+  width:100%;
+  height: 200px;
+  align-content: center;
+  position: relative;
+  border-radius: var(--cardBorder);
+  background-color: var(--enfasis_color_alpha);
+}
+.imageContainer{
+  margin: 15px auto;
+  display: block;
+  max-height: 155px;
+  max-width: 100%;
+  position: relative;
+  /* background-color: var(--placeHolder); */
+  box-shadow: var(--shadow_box);
+}
+
+.imageFooter{
+  margin: auto;
+  height: 30px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  font-family: miso-bold;
+  color: var(--text_color);
+  font-size: 20px;
+  text-align: center;
+}
+
+#Notes, #Posts{
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-areas: "titulo titulo titulo";
+  gap: 20px 5%
+}
+.projectNote{
+  width:100%;
+  height: 180px;
+  padding: 10px 0 10px 0;
+  background-color: var(--enfasis_color_alpha);
+  border-radius: var(--cardBorder);
+}
+.projectNote>div{
+  margin: auto 10px auto 10px;
+}
+.projectNote>.titulo{
+  height: 30px;
+  text-align: left;
+  text-decoration: solid;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+.projectNote>.fecha{
+  text-align: right;
+  height: 15px;
+  text-decoration: wavy;
+  font-size: 15px;
+}
+.projectNote>.detalle{
+  text-align: justify;
+  height: 135px;
+  font-size: 20px;
+}
+
+.post{
+  background: var(--enfasis_color_alpha); /* #ffffff80;*/
+  border-radius: var(--cardBorder);/*10px;*/
+  padding: 10px 0 10px 0;
+}
+.postTitle{
+  text-align: center;
+  height: fit-content;
+  min-height: 40px;
+  max-height: 60px;
+  overflow: hidden;
+  color: var(--text_color);
+  font-size: 25px;
+}
+.postDate{
+  height: 20px;
+  text-align: right;
+  color: var(--text_color);
+}
+.postIntro{
+  height: 100px;
+  margin: 10px;
+  text-align: justify;
+  overflow: hidden;
+  color: var(--text_color);
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 90%;
+}
+
+@media screen and (max-width: 511px) { /* PHONE */
+  
+.projectIcon {
+  width: 50%;
+}
+  .projectNumbers {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "clock"
+        "progressbar"
+        "links";
+    gap: 20px;
+    height: auto;
+    width: 80%;
+    /* grid-auto-columns: 300px; */
+  }
+  #Galery, #Notes, #Posts{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-areas: "titulo";
+    gap: 20px
+  }
+
+}
+@media screen and (min-width: 512px) and (max-width: 1023px) {    /* TABLET */
+  .projectNumbers {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-template-areas: "clock clock" "progressbar links";
+    gap: 20px 10%;
+    height: auto;
+    width: 80%;
+    /* grid-auto-columns: 300px; */
+  }
+
+  .projectTime{
+    grid-column: 1 / span 2;
+  }
+  
+  #Galery, #Notes, #Posts{
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-template-areas: "titulo titulo";
+    gap: 20px 10%
+  }
+
+}

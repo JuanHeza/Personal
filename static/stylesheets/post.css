@@ -1,0 +1,107 @@
+.content{
+    width: 100%;
+    color: var(--text_color);
+}
+
+.post{
+    margin: 40px;
+    padding: 20px 0;
+    background-color: var(--enfasis_color_alpha);
+    border-radius: var(--cardBorder);
+}
+
+.postTitle{
+    height: 60px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: auto;
+    text-align: center
+}
+.postMiddle{
+    min-height: 60px;
+    height:fit-content;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-areas: "project lenguages date";
+}
+.postProject{
+    margin: 5px 10px;
+    height: 30px;
+    padding-top: 10px;
+    font-size: 20px;
+    color: var(--text_color);
+    grid-area: project;
+    text-align: center;
+}
+.postLink > .postProject{
+    background-color: var(--placeHolder);
+    border-radius: 25px;
+    border-width: 5px;
+    border-style: groove;
+}
+.postDate{
+    margin: auto 20px auto auto;
+    height: auto;
+    font-size: 30px;
+    grid-area: date;
+    text-align: end;
+    font-family: auto;
+}
+.postLenguages{
+    grid-area: lenguages;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 5px;
+    margin: auto;
+}
+.postIntro, .postBody{
+    margin: 20px;
+    font-size: 20px;
+    text-align: justify;
+}
+.postReplit{
+    margin: auto;
+    height: 30px;
+    width: 50%;
+    font-size: 25px;
+    text-align: center;
+    border-radius: var(--cardBorder);
+    border-style: groove;
+    border-width: 5px;
+    background-color: var(--placeHolder);
+    color: var(--text_color);
+}
+
+
+@media screen and (max-width: 511px) { /* PHONE */
+.postMiddle{
+        grid-template-columns: 100%;
+        grid-template-areas: "date" "project" "lenguages" ;
+    }
+
+    .postReplit{
+        width: 80%;
+    }
+    .postProject{
+        width: 80%;
+        margin: 5px auto
+    }
+    .postDate{
+        margin: auto;
+        text-align: center;
+    }
+    
+}
+@media screen and (min-width: 512px) and (max-width: 1023px) {    /* TABLET */
+    .postMiddle{
+        grid-template-columns: 40% 40%;
+        gap: 10%;
+        grid-template-areas: "project date" "lenguages lenguages" ;
+    }
+    .postLenguages{
+        grid-column: 1 / span 2;
+    }
+    .postReplit{
+        width: 65%;
+    }
+}

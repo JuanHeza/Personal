@@ -1,0 +1,138 @@
+{{define "project"}}
+<!--  
+    <link rel="stylesheet" href="/static/stylesheets/project.css" />
+    <script type="text/javascript" src="/static/scripts/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+-->
+    {{template "header" .}}
+  <body onload="move({{.Data.Progreso}})">
+  <style>
+    .mainArea {
+      background-image: url(/static/images/{{.Data.ID}}/Banner.png);
+    }
+  </style>
+    <main>
+     <div class="mainArea">
+        <div id="Head">
+            <div class="projectIcon">
+                <image src="/static/images/{{.Data.ID}}/Icon.png"></image>
+                <div class="projectTitle">{{.Data.Titulo}}</div>
+            </div>
+            <div class="projectLenguage">
+                {{range .Data.Lenguajes}}
+                <a href="../ProjectList/{{.Titulo}}">
+                    <div  class="project-lenguage-button">
+                        <span>{{.Titulo}}</span>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+            <div class="projectDetail">
+                <p class="">{{.Data.Detalle}}</p>
+            </div>
+            <div class="projectNumbers">
+                <div class="projectTime">
+                    {{if .Data.Tiempo}}<div class="clock-col">
+                        <p class="clock-hours clock-timer">{{Horas .Data.Tiempo}}</p>
+                        <p class="clock-label">
+                        Hours
+                        </p>
+                    </div>
+                    <div class="clock-col">
+                        <p class="clock-minutes clock-timer">{{.Data.Tiempo.Minute}}</p>
+                        <p class="clock-label">
+                        Minutes
+                        </p>
+                    </div>
+                    <div class="clock-col">
+                        <p class="clock-seconds clock-timer">{{ .Data.Tiempo.Second}}</p>
+                        <p class="clock-label">
+                        Seconds
+                        </p>
+                    </div>
+                    {{else}}<p class="">Time Not Initialized</p> {{end}}
+                </div>
+                <div class="projectProgress" id="projectProgress">
+                    <div class="ProgressText">
+                        Progreso
+                        <div id="value"></div>
+                    </div>
+                    <div class="ProgressBar">
+                        <div class="ProgressBar-Fill" id="Fill" style="width: 1%;" onclick="move()"></div>
+                    </div>
+                </div>
+                <div class="projectLinks">
+                    {{if ne .Data.Github ""}}
+                    <a href="{{.Data.Github}}">
+                        <div  class="project-link-button github">
+                            <span>Github</span>
+                        </div>
+                    </a>
+                    {{end}}
+                    {{if ne .Data.Link ""}}
+                    <a href="{{.Data.Link}}">
+                        <div class="project-link-button website">
+                            <span>Website</span>
+                        </div>
+                    </a>
+                    {{end}}
+                      
+                </div>
+            </div>
+        </div>
+            <hr/>
+        <div id="Body"><!--  -->
+            <div id="Description">
+                <H1 class="sectionTitle"> Descripcion </H1>
+                <p class="projectDescription">{{.Data.Descripcion}}</p>
+            </div>
+            <div id="Galery">
+                <H1 class="sectionTitle">Imagenes</H1>
+                <div id="myModal" class="modal">
+                    <span class="close" onclick ='hideModal()'>&times;</span>
+                    <img class="modal-content" id="img01" alt="MyeModal">
+                    <div id="caption"></div>
+                </div>
+                {{$pr := .Data}}
+                {{range $x, $image := .Data.Galeria}}
+                <div class="projectImage">
+                    <img class="imageContainer" src="/static/images/{{$pr.ID}}/{{$image.Titulo}}" alt="{{$image.Titulo}}" id="Img-{{- $image.ID}}" onclick="maximize('Img-{{- $image.ID}}')"></image>
+                    <div class="imageFooter">{{$image.Detalle}}</div>
+                </div>
+                {{end}}
+            </div>
+            <div id="Notes">
+                <H1 class="sectionTitle">Notas</H1>
+                {{range .Data.Notas}}
+                <div class="projectNote">
+                    <div class="titulo">{{.Titulo}}</div>
+                    <div class="fecha">{{fecha .Fecha}}</div>
+                    <div class="detalle">{{.Detalle}}</div>
+                </div>
+                {{end}}
+            </div>
+            <div id="Posts">
+                <H1 class="sectionTitle">Posts</H1>                                 
+                {{range .Data.Posts}}
+                <a href="../Post/{{.ID}}">
+                    <div class="post">
+                        <div class="postTitle">{{.Titulo}}</div>
+                        <div class="postDate">{{fecha .Fecha}}</div>
+                        <div class="postIntro">
+                            {{.Detalle}}
+                        </div>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+    </div>
+      <!-- 
+      -->
+    </main>
+    {{template "footer"}}
+    <!-- 
+    -->
+  </body>
+</html>
+{{end}}

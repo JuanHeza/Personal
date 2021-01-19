@@ -3,23 +3,45 @@
     // Mantenga el puntero para ver las descripciones de los existentes atributos.
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-    
+    "configurations": [    
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}",
+            "env": {
+                "PQ_HOST":"localhost",
+                "PQ_PORT":"5432",
+                "PQ_USER":"postgres",
+                "PQ_PASSWORD":"JHZ697heza",
+                "PQ_DBNAME":"ProycetsDB",
+                "WAKATIME_API":"502f3c9e-67d4-48ce-a6b9-77dbe3887e7c",
+                "COOCKIE_KEY":"JAZLIN1",
+                "User": "JuanHeza",
+                "Pass": "JHZ697heza",
+            },
+            "args": []
+        },
         {
             "name": "Test",
             "type": "go",
             "request":"launch",
             "mode": "test",
             "program": "${workspaceFolder}",
-            "env": {},
-            "args": []
-        },{
-            "name": "Launch",
-            "type": "go",
-            "request": "launch",
-            "mode": "auto",
-            "program": "${workspaceFolder}",
-            "env": {},
+            "showLog": true,
+            "env": {
+                "PQ_HOST":"localhost",
+                "PQ_PORT":"5432",
+                "PQ_USER":"postgres",
+                "PQ_PASSWORD":"JHZ697heza",
+                "PQ_DBNAME":"ProycetsDB",
+                "WAKATIME_API":"502f3c9e-67d4-48ce-a6b9-77dbe3887e7c",
+                "COOCKIE_KEY":"JAZLIN1",
+                "User": "JuanHeza",
+                "Pass": "JHZ697heza",
+                "url":"https://wakatime.com/api/v1/users/current/stats/last_year?api_key=502f3c9e-67d4-48ce-a6b9-77dbe3887e7c&project="
+            },
             "args": []
         }
     ]
