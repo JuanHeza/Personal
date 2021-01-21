@@ -84,7 +84,8 @@ func StartConnection(host string, port string, user string, password string, dbn
 	connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 	fmt.Println(connString)
-	db, err := sql.Open("postgres", connString)
+	//db, err := sql.Open("postgres", connString)postgres://wnjnfehtehljvn:52ddcf83bda02fc6dd1c78c4b0ffb90bd0285ddfadcc49c141e78cbffe4a9d2e@ec2-52-72-190-41.compute-1.amazonaws.com:5432/d95nsvq9miuf8b
+	db, err := sql.Open("postgres", "postgres://wnjnfehtehljvn:52ddcf83bda02fc6dd1c78c4b0ffb90bd0285ddfadcc49c141e78cbffe4a9d2e@ec2-52-72-190-41.compute-1.amazonaws.com:5432/d95nsvq9miuf8b")
 
 	if err != nil {
 		panic(err)
