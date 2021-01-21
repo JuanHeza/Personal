@@ -154,10 +154,10 @@ func SetupDatabaseDevelopment() {
 
 //DropTables drop all tables in the shecma
 func (store *dbStore) DropTables() error {
-	var err error
 	for _, data := range schema {
 		query := fmt.Sprintf("DROP TABLE IF EXISTS %v CASCADE;", data.table)
-		_, err = store.db.Query(query)
+		rows, err := store.db.Query(query)
+		defer rows.Close()
 		if err != nil {
 			return err
 		}
@@ -168,10 +168,10 @@ func (store *dbStore) DropTables() error {
 
 //CreateTables take the schema and create the tables of the database
 func (store *dbStore) CreateTables() error {
-	var err error
 	for _, data := range schema {
 		query := fmt.Sprintf("CREATE TABLE %v(%v);", data.table, data.value)
-		_, err = store.db.Query(query)
+		rows, err := store.db.Query(query)
+		defer rows.Close()
 		if err != nil {
 			return err
 		}
