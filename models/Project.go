@@ -183,9 +183,8 @@ func getWakaTime(links []string) (total time.Time) {
 func (query *dbStore) CreateProject(pr *ProjectModel) (int, error) {
 	var ID int
 	today := time.Now().Truncate(time.Hour * 24)
-	_, err := query.db.Query(`INSERT INTO projects(	titulo, detalle, descripcion, progreso, github, link, tiempo, wakalinks, updated) 
-									VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9);`,
-		pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), today)
+	data, err := query.db.Query(`INSERT INTO projects(	titulo, detalle, descripcion, progreso, github, link, tiempo, wakalinks, updated) VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9);`, pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), today)
+	defer data.Close()
 	if err != nil {
 		return 0, err
 	}
@@ -239,12 +238,13 @@ func (query *dbStore) ReadAllProject() ([]*ProjectModel, error) {
 }
 
 func (query *dbStore) UpdateProject(pr *ProjectModel) error {
-	_, err := query.db.Query(`UPDATE projects SET titulo=$1, detalle=$2, descripcion=$3, progreso=$4, github=$5, link=$6, tiempo=$7, wakalinks=$8 WHERE project_id=$9;`,
-		pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), pr.ID)
+	data, err := query.db.Query(`UPDATE projects SET titulo=$1, detalle=$2, descripcion=$3, progreso=$4, github=$5, link=$6, tiempo=$7, wakalinks=$8 WHERE project_id=$9;`,	pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), pr.ID)
+	defer data.Close()
 	return err
 }
 
 func (query *dbStore) DeleteProject(pr *ProjectModel) error {
-	_, err := query.db.Query(`DELETE FROM projects WHERE project_id=$1;`, pr.ID)
+	data, err := query.db.Query(`DELETE FROM projects WHERE project_id=$1;`, pr.ID)
+	defer data.Close()
 	return err
 }

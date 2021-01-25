@@ -61,8 +61,8 @@ func (im *ImageModel) DeleteImage() {
 
 func (query *dbStore) CreateImage(im *ImageModel) error {
 	var ID int
-	_, err := query.db.Query(`INSERT INTO images(titulo, detalle, project_id) VALUES ($1,$2,$3);`,
-		im.Titulo, im.Detalle, im.ProjectID)
+	data, err := query.db.Query(`INSERT INTO images(titulo, detalle, project_id) VALUES ($1,$2,$3);`, im.Titulo, im.Detalle, im.ProjectID)
+	defer data.Close()
 	rows, err := query.db.Query("SELECT image_id FROM images WHERE titulo=$1 AND project_id = $2", im.Titulo, im.ProjectID)
 	if err != nil {
 		return err
@@ -96,14 +96,15 @@ func (query *dbStore) ReadImage(id int) ([]*ImageModel, error) {
 }
 
 func (query *dbStore) UpdateImage(im *ImageModel) error {
-	_, err := query.db.Query(`UPDATE images SET titulo=$1, detalle=$2 WHERE image_id=$3 AND project_id=$4;`, im.Titulo, im.Detalle, im.ID, im.ProjectID)
+	data, err := query.db.Query(`UPDATE images SET titulo=$1, detalle=$2 WHERE image_id=$3 AND project_id=$4;`, im.Titulo, im.Detalle, im.ID, im.ProjectID)
+	defer data.Close()
 	return err
 }
 
 func (query *dbStore) DeleteImage(im *ImageModel) error {
-	rows, err:= query.db.Query(`SELECT titulo, project_id FROM images WHERE image_id = $1`,im.ID)
+	rows, err := query.db.Query(`SELECT titulo, project_id FROM images WHERE image_id = $1`, im.ID)
 	defer rows.Close()
-	for rows.Next(){
+	for rows.Next() {
 		if err = rows.Scan(&im.Titulo, &im.ProjectID); err != nil {
 			return err
 		}

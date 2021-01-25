@@ -67,7 +67,8 @@ func (s *StaticData) UpdateStatics() {
 //===============================================================================================
 
 func (query *dbStore) CreateStatics(st *StaticData) error {
-	_, err := query.db.Query(`INSERT INTO statics(about ,contacto ,introduccion, tutorial, leng ) VALUES ($1,$2,$3,$4,$5);`, st.About, st.Contacto, st.Introduccion, st.Tutorial, st.Leng)
+	data, err := query.db.Query(`INSERT INTO statics(about ,contacto ,introduccion, tutorial, leng ) VALUES ($1,$2,$3,$4,$5);`, st.About, st.Contacto, st.Introduccion, st.Tutorial, st.Leng)
+	defer data.Close()
 	if err != nil {
 		return err
 	}
@@ -90,7 +91,8 @@ func (query *dbStore) ReadStatics(sdC map[string]interface{}) error {
 }
 
 func (query *dbStore) UpdateStatics(st *StaticData) error {
-	_, err := query.db.Query("UPDATE statics SET introduccion = $1, about = $2, tutorial = $3, contacto = $4 WHERE leng = $5", st.Introduccion, st.About, st.Tutorial, st.Contacto, st.Leng)
+	data, err := query.db.Query("UPDATE statics SET introduccion = $1, about = $2, tutorial = $3, contacto = $4 WHERE leng = $5", st.Introduccion, st.About, st.Tutorial, st.Contacto, st.Leng)
+	defer data.Close()
 	return err
 }
 

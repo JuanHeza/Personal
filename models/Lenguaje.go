@@ -111,8 +111,8 @@ func updateRelationships(lengs []*LenguageModel, proj int) {
 
 func (query *dbStore) CreateLenguage(ln *LenguageModel) error {
 	var ID int
-	_, err := query.db.Query(`INSERT INTO lenguajes(titulo) VALUES ($1);`,
-		ln.Titulo)
+	data, err := query.db.Query(`INSERT INTO lenguajes(titulo) VALUES ($1);`, ln.Titulo)
+	defer data.Close()
 	rows, err := query.db.Query("SELECT lenguaje_id FROM lenguajes WHERE titulo=$1", ln.Titulo)
 	if err != nil {
 		return err
@@ -178,12 +178,14 @@ func (query *dbStore) ReadAllLenguages() ([]*LenguageModel, error) {
 }
 
 // func (query *dbStore) UpdateLenguage(ln *LenguageModel) error {
-// 	_, err := query.db.Query(`UPDATE lenguajes SET titulo=$1 WHERE lenguaje_id=$2;`, ln.Titulo, ln.ID)
+// 	data, err := query.db.Query(`UPDATE lenguajes SET titulo=$1 WHERE lenguaje_id=$2;`, ln.Titulo, ln.ID)
+//defer data.Close()
 // 	return err
 // }
 
 // func (query *dbStore) DeleteLenguage(ln *LenguageModel) error {
-// 	_, err := query.db.Query(`DELETE FROM lenguajes WHERE lenguaje_id=$1;`, ln.ID)
+// 	data, err := query.db.Query(`DELETE FROM lenguajes WHERE lenguaje_id=$1;`, ln.ID)
+//defer data.Close()
 // 	return err
 // }
 
@@ -192,8 +194,8 @@ func (query *dbStore) ReadAllLenguages() ([]*LenguageModel, error) {
 //===============================================================================================
 
 func (query *dbStore) CreateRelationship(proj, leng int) error {
-	_, err := query.db.Query(`INSERT INTO proj_leng(lenguaje_id, project_id) VALUES ($1,$2);`,
-		leng, proj)
+	data, err := query.db.Query(`INSERT INTO proj_leng(lenguaje_id, project_id) VALUES ($1,$2);`, leng, proj)
+	defer data.Close()
 	return err
 }
 
@@ -236,6 +238,7 @@ func (query *dbStore) ReadLenguageRelationship(leng int) (map[int]*ProjectModel,
 }
 
 func (query *dbStore) DeleteRelationship(proj int) error {
-	_, err := query.db.Query(`DELETE FROM proj_leng WHERE project_id=$1;`, proj)
+	data, err := query.db.Query(`DELETE FROM proj_leng WHERE project_id=$1;`, proj)
+	defer data.Close()
 	return err
 }

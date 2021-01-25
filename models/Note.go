@@ -63,8 +63,8 @@ func (nt *NoteModel) DeleteNote() {
 
 func (query *dbStore) CreateNote(nt *NoteModel) error {
 	var ID int
-	_, err := query.db.Query(`INSERT INTO notes(titulo, detalle, fecha, project_id) VALUES ($1,$2,$3,$4);`,
-		nt.Titulo, nt.Detalle, nt.Fecha, nt.ProjectID)
+	data, err := query.db.Query(`INSERT INTO notes(titulo, detalle, fecha, project_id) VALUES ($1,$2,$3,$4);`, nt.Titulo, nt.Detalle, nt.Fecha, nt.ProjectID)
+	defer data.Close()
 	rows, err := query.db.Query("SELECT note_id FROM notes WHERE titulo=$1 AND project_id = $2", nt.Titulo, nt.ProjectID)
 	if err != nil {
 		return err
@@ -99,11 +99,13 @@ func (query *dbStore) ReadNote(id int) ([]*NoteModel, error) {
 }
 
 func (query *dbStore) UpdateNote(nt *NoteModel) error {
-	_, err := query.db.Query(`UPDATE notes SET titulo=$1, fecha=$2, detalle=$3 WHERE note_id=$4 AND project_id=$5;`, nt.Titulo, nt.Fecha, nt.Detalle, nt.ID, nt.ProjectID)
+	data, err := query.db.Query(`UPDATE notes SET titulo=$1, fecha=$2, detalle=$3 WHERE note_id=$4 AND project_id=$5;`, nt.Titulo, nt.Fecha, nt.Detalle, nt.ID, nt.ProjectID)
+	defer data.Close()
 	return err
 }
 
 func (query *dbStore) DeleteNote(nt *NoteModel) error {
-	_, err := query.db.Query(`DELETE FROM notes WHERE note_id=$1 AND project_id=$2;`, nt.ID, nt.ProjectID)
+	data, err := query.db.Query(`DELETE FROM notes WHERE note_id=$1 AND project_id=$2;`, nt.ID, nt.ProjectID)
+	defer data.Close()
 	return err
 }

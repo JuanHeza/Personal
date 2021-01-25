@@ -57,7 +57,8 @@ func (ln *LinkModel) DeleteLink() string {
 //===============================================================================================
 
 func (query *dbStore) CreateLink(ln *LinkModel) error {
-	_, err := query.db.Query(`INSERT INTO links(icon , link ) VALUES ($1,$2);`, ln.Icon, ln.Link)
+	data, err := query.db.Query(`INSERT INTO links(icon , link ) VALUES ($1,$2);`, ln.Icon, ln.Link)
+	defer data.Close()
 	if err != nil {
 		return err
 	}
@@ -95,7 +96,8 @@ func (query *dbStore) UpdateLink(ln *LinkModel) (string, error) {
 		_, err = query.db.Query("UPDATE links SET link = $1, icon = $3 WHERE link_id = $2", ln.Link, ln.ID, ln.Icon)
 		return icon, err
 	}
-	_, err := query.db.Query("UPDATE links SET link = $1 WHERE link_id = $2", ln.Link, ln.ID)
+	data, err := query.db.Query("UPDATE links SET link = $1 WHERE link_id = $2", ln.Link, ln.ID)
+	defer data.Close()
 	Link.ReadLink()
 	return "", err
 }
