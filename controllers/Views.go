@@ -12,7 +12,7 @@ var (
 	Templates *template.Template
 	files     = []string{
 		"views/edit.html",
-		"views/Error.html",
+		"views/error.html",
 		"views/footer.html",
 		"views/header.html",
 		"views/home.html",
