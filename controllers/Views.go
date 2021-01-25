@@ -11,19 +11,19 @@ var (
 	//Templates variable with all the templates data
 	Templates *template.Template
 	files     = []string{
-		"Views/edit.html",
-		"Views/Error.html",
-		"Views/footer.html",
-		"Views/header.html",
-		"Views/home.html",
-		"Views/login.html",
-		"Views/post.html",
-		"Views/postEditor.html",
-		"Views/postList.html",
-		"Views/project.html",
-		"Views/projectForm.html",
-		"Views/projectList.html",
-		"Views/staticInfo.html",
+		"views/edit.html",
+		"views/Error.html",
+		"views/footer.html",
+		"views/header.html",
+		"views/home.html",
+		"views/login.html",
+		"views/post.html",
+		"views/postEditor.html",
+		"views/postList.html",
+		"views/project.html",
+		"views/projectForm.html",
+		"views/projectList.html",
+		"views/staticInfo.html",
 	}
 )
 
