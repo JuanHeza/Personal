@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq" // to get workiing postgresql
 )
@@ -81,11 +82,15 @@ func InitQueries(q Query) {
 
 //StartConnection conects to the database with the provided credentials
 func StartConnection(host string, port string, user string, password string, dbname string) {
-	connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+	var connString string
+	if os.Getenv("development") == "true" {
+		connString = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+			host, port, user, password, dbname)
+	} else {
+		connString = os.Getenv("DATABASE_URL")
+	}
 	fmt.Println(connString)
-	//db, err := sql.Open("postgres", connString)postgres://wnjnfehtehljvn:52ddcf83bda02fc6dd1c78c4b0ffb90bd0285ddfadcc49c141e78cbffe4a9d2e@ec2-52-72-190-41.compute-1.amazonaws.com:5432/d95nsvq9miuf8b
-	db, err := sql.Open("postgres", "postgres://wnjnfehtehljvn:52ddcf83bda02fc6dd1c78c4b0ffb90bd0285ddfadcc49c141e78cbffe4a9d2e@ec2-52-72-190-41.compute-1.amazonaws.com:5432/d95nsvq9miuf8b")
+	db, err := sql.Open("postgres", connString)
 
 	if err != nil {
 		panic(err)

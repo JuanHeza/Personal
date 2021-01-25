@@ -20,6 +20,7 @@
                 "COOCKIE_KEY":"JAZLIN1",
                 "User": "JuanHeza",
                 "Pass": "JHZ697heza",
+                "development": "true",
             },
             "args": []
         },
@@ -40,6 +41,7 @@
                 "COOCKIE_KEY":"JAZLIN1",
                 "User": "JuanHeza",
                 "Pass": "JHZ697heza",
+                "development": "true",
                 "url":"https://wakatime.com/api/v1/users/current/stats/last_year?api_key=502f3c9e-67d4-48ce-a6b9-77dbe3887e7c&project="
             },
             "args": []
