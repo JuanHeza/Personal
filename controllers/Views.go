@@ -16,7 +16,7 @@ var (
 		"views/footer.html",
 		"views/header.html",
 		"views/home.html",
-		"views/login.html",
+		"views/logIn.html",
 		"views/post.html",
 		"views/postEditor.html",
 		"views/postList.html",
