@@ -11,6 +11,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}",
             "env": {
+                "PORT": "8080",
                 "PQ_HOST":"localhost",
                 "PQ_PORT":"5432",
                 "PQ_USER":"postgres",
@@ -32,6 +33,7 @@
             "program": "${workspaceFolder}",
             "showLog": true,
             "env": {
+                "PORT": "8080",
                 "PQ_HOST":"localhost",
                 "PQ_PORT":"5432",
                 "PQ_USER":"postgres",

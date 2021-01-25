@@ -25,5 +25,5 @@ func main() {
 	r := newRouter()
 	models.Static.ReadStatics()
 	log.Println("listening http://127.0.0.1:8080/Home/")
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":"+os.Getenv("PORT"), r)
 }
