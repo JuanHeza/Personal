@@ -12,8 +12,8 @@ var (
 			Detalle:     "uno muy bonito",
 			Descripcion: "se supone que este va mas largo",
 			Progreso:    44,
-			Github:      "github",
-			Link:        "link",
+			Github:      "ttps://github.com/JuanHeza",
+			Link:        "ttps://github.com/JuanHeza",
 			// Tiempo:      tiempo,
 			WakaLinks: []string{"Personal"},
 			Notas: []*NoteModel{
@@ -50,8 +50,8 @@ var (
 			Detalle:     "mi favorito",
 			Descripcion: "hi patito feo",
 			Progreso:    44,
-			Github:      "github",
-			Link:        "link",
+			Github:      "ttps://github.com/JuanHeza",
+			Link:        "ttps://github.com/JuanHeza",
 			// Tiempo:      tiempo,
 			WakaLinks: []string{"Arrow", "Arrow-Servidor", "Arrow-App"},
 			Notas: []*NoteModel{
