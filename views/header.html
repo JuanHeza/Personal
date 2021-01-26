@@ -18,21 +18,6 @@
     <a href="/Home/"><div id="title-robby" class="title">Juan Heza</div></a>
     <div id="icons-container-right">
       
-      {{ $credential := IsAdminAutenticathed }}
-      {{if eq $credential.Auth true}}
-      <a href="/LogOut">
-        <div class="icon icon-logOut" style="background-image: url(/static/stylesheets/icons/lock.png)"></div>
-      </a>
-      {{if eq $credential.Admin true}} 
-      <a href="/Edit/">
-        <div class="icon icon-gear" style="background-image: url(/static/stylesheets/icons/settings.png)"></div>
-      </a>
-        {{end}} 
-      {{else}}
-      <a href="/LogIn">
-        <div class="icon icon-logIn" style="background-image: url(/static/stylesheets/icons/key.png)"></div>
-      </a>
-      {{end}}
       {{range Links}}
       <a href="{{.Link}}">
         <div class="icon" style='background-image: url(/static/stylesheets/icons/{{.Icon}} )'></div>

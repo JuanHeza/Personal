@@ -68,6 +68,22 @@
           <div class="icon" style='background-image: url(/static/stylesheets/icons/{{.Icon}} )'></div>
         </a>
         {{end}}
+        
+      {{ $credential := IsAdminAutenticathed }}
+      {{if eq $credential.Auth true}}
+      <a href="/LogOut">
+        <div class="icon icon-logOut" style="background-image: url(/static/stylesheets/icons/lock.png)"></div>
+      </a>
+      {{if eq $credential.Admin true}} 
+      <a href="/Edit/">
+        <div class="icon icon-gear" style="background-image: url(/static/stylesheets/icons/settings.png)"></div>
+      </a>
+        {{end}} 
+      {{else}}
+      <a href="/LogIn">
+        <div class="icon icon-logIn" style="background-image: url(/static/stylesheets/icons/key.png)"></div>
+      </a>
+      {{end}}
       </div>
     </div>
   </div>
