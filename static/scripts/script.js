@@ -20,10 +20,13 @@ function maximize(id) {
   var modalImg = document.getElementById("img01");
   var img = document.getElementById(id);
   var captionText = document.getElementById("caption");
+  var close = document.getElementById("close");
+  close.style.textAlign = "right"
   modal.style.display = "block";
   console.log(this);
   modalImg.src = img.src;
   captionText.innerHTML = img.alt;
+  captionText.style.textAlign = "center";
 }
 
 // Get the <span> element that closes the modal

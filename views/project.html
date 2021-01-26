@@ -20,8 +20,8 @@
             </div>
             <div class="projectLenguage">
                 {{range .Data.Lenguajes}}
-                <a href="../ProjectList/{{.Titulo}}">
-                    <div  class="project-lenguage-button">
+                <a href="../ProjectList/{{.Id}">
+                    <div  class="lenguage-button project-lenguage">
                         <span>{{.Titulo}}</span>
                     </div>
                 </a>
@@ -89,7 +89,7 @@
             <div id="Galery">
                 <H1 class="sectionTitle">Imagenes</H1>
                 <div id="myModal" class="modal">
-                    <span class="close" onclick ='hideModal()'>&times;</span>
+                    <span id="close" class="close" onclick ='hideModal()'>&times;</span>
                     <img class="modal-content" id="img01" alt="MyeModal">
                     <div id="caption"></div>
                 </div>
