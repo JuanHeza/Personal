@@ -21,7 +21,7 @@ function maximize(id) {
   var img = document.getElementById(id);
   var captionText = document.getElementById("caption");
   var close = document.getElementById("close");
-  close.style.textAlign = "right"
+  close.style.textAlign = "right";
   modal.style.display = "block";
   console.log(this);
   modalImg.src = img.src;
@@ -40,8 +40,8 @@ function hideModal() {
 
 
 function AddLink(){
-  icon = document.getElementById("LinkForm")
-  clon = icon.cloneNode(true)
+  var icon = document.getElementById("LinkForm")
+  var clon = icon.cloneNode(true)
   icon.querySelector(".nameCol input[type='text']").value=""
   icon.querySelector(".nameCol .icon").src=""
   $(clon).removeAttr("id")
