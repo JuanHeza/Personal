@@ -70,7 +70,7 @@ func Links() []*models.LinkModel {
 	return models.StaticDataCollection["link"].([]*models.LinkModel)
 }
 
-func folderExist(id int) string {
+func folderExist(id string) string {
 	folder := fmt.Sprint(id)
 	_, err := os.Stat("./static/images/" + folder)
 	if os.IsNotExist(err) {

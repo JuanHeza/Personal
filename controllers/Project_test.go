@@ -139,11 +139,9 @@ func Test_parseForm(t *testing.T) {
 				Titulo:      "Personal",
 				Detalle:     "uno muy bonito",
 				Descripcion: "se supone que este va mas largo",
-				Progreso:    44,
 				Github:      "github",
 				Link:        "link",
 				// Tiempo:      tiempo,
-				WakaLinks: []string{"link_1", "link_2"},
 				Notas: []*models.NoteModel{
 					{
 						Titulo:  "PROJECTO 1 NOTA 1",

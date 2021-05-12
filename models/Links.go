@@ -27,12 +27,12 @@ func (ln *LinkModel) CreateLink() error {
 }
 
 // ReadLink fills the staticdata map with the contact links
-func (ln *LinkModel) ReadLink() {
+func (ln *LinkModel) ReadLink() []*LinkModel {
 	linkList, err := Queries.ReadLink()
 	if err != nil {
 		panic(err)
 	}
-	StaticDataCollection["link"] = linkList
+	return linkList
 }
 
 // UpdateLink updates the data of the record with the ID

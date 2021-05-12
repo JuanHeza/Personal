@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/JuanHeza/Personal/models"
@@ -159,8 +160,8 @@ func parseProjectForm(r *http.Request) (pr *models.ProjectModel, err error) {
 	pr.Github = r.Form.Get("github")
 	pr.Link = r.Form.Get("link")
 	pr.Descripcion = r.Form.Get("descripcion")
-	pr.WakaLinks = r.Form["wakalinks"]
-	pr.Progreso, err = strconv.Atoi(r.Form.Get("progreso"))
+	pr.Label = r.Form.Get("Label")
+	pr.Status = r.Form.Get("status")
 	if err != nil {
 		panic(err)
 	}
@@ -211,7 +212,7 @@ func parseProjectForm(r *http.Request) (pr *models.ProjectModel, err error) {
 
 func handleMultipart(pr *models.ProjectModel, r *http.Request) {
 	var imageList []*models.ImageModel
-	folder := folderExist(pr.ID)
+	folder := folderExist(strings.ReplaceAll(pr.Titulo, " ", "-"))
 
 	icon, handler, err := r.FormFile("icon")
 	if err == nil {

@@ -65,13 +65,11 @@ func TestProjectModel_ReadProject(t *testing.T) {
 					ID:       1,
 					Titulo:   "Personal",
 					Detalle:  "uno muy bonito",
-					Progreso: 44,
 				},
 				{
 					ID:       2,
 					Titulo:   "Artemis",
 					Detalle:  "mi favorito",
-					Progreso: 44,
 				},
 			},
 		}, {

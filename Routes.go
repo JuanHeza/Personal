@@ -40,6 +40,13 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/Update/{model}/{id}", controllers.UpdateHandler).Methods(http.MethodPut)
 	r.HandleFunc("/Delete/{model}/{id}", controllers.DeleteHandler).Methods(http.MethodDelete)
 
+	r.HandleFunc("/api/Home/", controllers.ApiHomeHandler).Methods("GET", "OPTIONS")               // WORKING
+	r.HandleFunc("/api/Image/{folder}/{title}", controllers.IconHandler).Methods("GET", "OPTIONS") // WORKING
+	r.HandleFunc("/api/Project/{id}/", controllers.ApiProjectHandler).Methods("GET", "OPTIONS")    // WORKING
+	r.HandleFunc("/api/Post/{id}/", controllers.ApiPostHandler).Methods("GET", "OPTIONS")          // WORKING
+	r.HandleFunc("/api/Lista/{filtro}/", controllers.ApiListHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/api/Lenguage/{id}/", controllers.ApiListHandler).Methods("GET", "OPTIONS")
+
 	// r.HandleFunc("/Crud/Links/{id}", controllers.UpdateLinkHandler).Methods(http.MethodPost)   //
 	// r.HandleFunc("/Crud/Links/{id}", controllers.DeleteLinkHandler).Methods(http.MethodDelete) //
 	// r.HandleFunc("/Crud/Notas", updateNotasHandler).Methods(http.MethodPut) //

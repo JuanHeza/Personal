@@ -23,11 +23,11 @@ var (
 			titulo TEXT,
 			detalle TEXT,
 			descripcion TEXT,
-			progreso INTEGER,
+			status TEXT,
 			github TEXT,
 			link TEXT,
 			tiempo timestamp, 
-			wakalinks TEXT[],
+			label TEXT,
 			updated timestamp, 
 			PRIMARY KEY(project_id)`,
 		}, // PROJECTS

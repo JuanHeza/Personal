@@ -238,6 +238,16 @@ func (query *dbStore) DeletePost(pt *PostModel) (err error) {
 	return
 }
 
+// ReadAllByLenguage the lenguages of the database or just the relations if a project is given
+func (ln *PostModel) ReadAllByLenguage(leng int) (all []*PostModel) {
+	var err error
+	all, err = Queries.ReadPostLenguageRelationship(leng)
+	if err != nil {
+		panic(err)
+	}
+	return all
+}
+
 //===============================================================================================
 //========================================== Post_Leng ==========================================
 //===============================================================================================
@@ -266,4 +276,28 @@ func (query *dbStore) ReadPostRelationship(post int) (lengs []*LenguageModel, er
 func (query *dbStore) DeletePostRelationship(pt int) (err error) {
 	_, err = query.db.Query(`DELETE FROM post_leng WHERE post_id=$1;`, pt)
 	return
+}
+
+func (query *dbStore) ReadPostLenguageRelationship(leng int) (list []*PostModel, err error) {
+	aux := make(map[int]*PostModel)
+	rows, err := query.db.Query("SELECT pt.post_id, pt.titulo, pt.fecha, pt.detalle, pt.project_id, lengs.titulo, lengs.lenguaje_id, pr.titulo  FROM post_leng AS rl JOIN lenguajes AS ln ON rl.lenguaje_id = ln.lenguaje_id JOIN posts AS pt ON rl.post_id = pt.post_id JOIN post_leng AS rels ON rels.post_id = pt.post_id JOIN lenguajes AS lengs ON lengs.lenguaje_id = rels.lenguaje_id LEFT JOIN projects AS pr ON pt.Project_id = pr.Project_id WHERE ln.lenguaje_id = $1", leng)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var pr = &PostModel{}
+		var ln = &LenguageModel{}
+		if err := rows.Scan(&pr.ID, &pr.Titulo, &pr.Fecha, &pr.Detalle, &pr.ProjectID, &ln.Titulo, &ln.ID, &pr.ProjectTitle); err != nil {
+			return nil, err
+		}
+		if _, ok := aux[pr.ID]; ok == false {
+			aux[pr.ID] = pr
+		}
+		aux[pr.ID].Lenguajes = append(aux[pr.ID].Lenguajes, ln)
+	}
+	for _, value := range aux {
+		list = append(list, value)
+	}
+	return list, nil
 }

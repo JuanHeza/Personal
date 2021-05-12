@@ -21,7 +21,7 @@
                 "COOCKIE_KEY":"JAZLIN1",
                 "User": "JuanHeza",
                 "Pass": "JHZ697heza",
-                "development": "true",
+                "development": 1,
             },
             "args": []
         },

@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"os"
 
 	_ "github.com/lib/pq" // to get workiing postgresql
 )
@@ -50,7 +49,7 @@ type Query interface {
 
 	CreateRelationship(leng, proj int) error
 	ReadRelationship(proj int) ([]int, error)
-	ReadLenguageRelationship(leng int) (map[int]*ProjectModel, error)
+	ReadLenguageRelationship(leng int) ([]*ProjectModel, error)
 	DeleteRelationship(proj int) error
 
 	CreatePost(pt *PostModel) (err error)
@@ -58,6 +57,7 @@ type Query interface {
 	ReadAllProjectPosts(pr int) (all []*PostModel, err error)
 	DeletePost(pt *PostModel) (err error)
 	UpdatePost(pt *PostModel) error
+	ReadPostLenguageRelationship(id int) (list []*PostModel, err error)
 
 	CreatePostRelationship(ln *LenguageModel, pt int) (err error)
 	ReadPostRelationship(post int) (lengs []*LenguageModel, err error)
@@ -83,12 +83,7 @@ func InitQueries(q Query) {
 //StartConnection conects to the database with the provided credentials
 func StartConnection(host string, port string, user string, password string, dbname string) {
 	var connString string
-	if os.Getenv("development") == "true" {
-		connString = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-			host, port, user, password, dbname)
-	} else {
-		connString = os.Getenv("DATABASE_URL")
-	}
+	connString = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 	fmt.Println(connString)
 	db, err := sql.Open("postgres", connString)
 

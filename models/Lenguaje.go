@@ -57,8 +57,8 @@ func (ln *LenguageModel) ReadAll() []*LenguageModel {
 }
 
 // ReadAllByLenguage the lenguages of the database or just the relations if a project is given
-func (ln *LenguageModel) ReadAllByLenguage(leng int) map[int]*ProjectModel {
-	var all map[int]*ProjectModel
+func (ln *LenguageModel) ReadAllByLenguage(leng int) []*ProjectModel {
+	var all []*ProjectModel
 	var err error
 	all, err = Queries.ReadLenguageRelationship(leng)
 	if err != nil {
@@ -216,9 +216,10 @@ func (query *dbStore) ReadRelationship(proj int) ([]int, error) {
 	return leng, nil
 }
 
-func (query *dbStore) ReadLenguageRelationship(leng int) (map[int]*ProjectModel, error) {
-	var list = make(map[int]*ProjectModel)
-	rows, err := query.db.Query("SELECT pr.project_id, pr.titulo, pr.detalle, lengs.titulo, lengs.lenguaje_id  FROM proj_leng AS rl JOIN lenguajes AS ln ON rl.lenguaje_id = ln.lenguaje_id JOIN projects AS pr ON rl.project_id = pr.project_id JOIN proj_leng AS rels ON rels.project_id = pr.project_id JOIN lenguajes AS lengs ON lengs.lenguaje_id = rels.lenguaje_id WHERE ln.lenguaje_id = $1", leng)
+func (query *dbStore) ReadLenguageRelationship(leng int) ([]*ProjectModel, error) {
+	var aux = make(map[int]*ProjectModel)
+	var list []*ProjectModel
+	rows, err := query.db.Query("SELECT pr.project_id, pr.titulo, pr.detalle, pr.label, pr.status, lengs.titulo, lengs.lenguaje_id  FROM proj_leng AS rl JOIN lenguajes AS ln ON rl.lenguaje_id = ln.lenguaje_id JOIN projects AS pr ON rl.project_id = pr.project_id JOIN proj_leng AS rels ON rels.project_id = pr.project_id JOIN lenguajes AS lengs ON lengs.lenguaje_id = rels.lenguaje_id WHERE ln.lenguaje_id = $1", leng)
 	if err != nil {
 		return nil, err
 	}
@@ -226,13 +227,17 @@ func (query *dbStore) ReadLenguageRelationship(leng int) (map[int]*ProjectModel,
 	for rows.Next() {
 		var pr = &ProjectModel{}
 		var ln = &LenguageModel{}
-		if err := rows.Scan(&pr.ID, &pr.Titulo, &pr.Detalle, &ln.Titulo, &ln.ID); err != nil {
+		if err := rows.Scan(&pr.ID, &pr.Titulo, &pr.Detalle, &pr.Label, &pr.Status, &ln.Titulo, &ln.ID); err != nil {
 			return nil, err
 		}
-		if _, ok := list[pr.ID]; ok == false {
-			list[pr.ID] = pr
+		if _, ok := aux[pr.ID]; ok == false {
+			aux[pr.ID] = pr
 		}
-		list[pr.ID].Lenguajes = append(list[pr.ID].Lenguajes, ln)
+		aux[pr.ID].Lenguajes = append(aux[pr.ID].Lenguajes, ln)
+	}
+
+	for _, value := range aux {
+		list = append(list, value)
 	}
 	return list, nil
 }

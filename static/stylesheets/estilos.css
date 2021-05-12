@@ -301,13 +301,7 @@ header{
 	text-align: center;
 }
 .lists > a{
-    padding: 5px;
-    border-radius: 20px;
-    height: fit-content;
-    width: 90%;
-    border-style: outset;
-    background-color: var(--placeHolder);
-    margin: 10px 0 10px 0;
+	background-color: var(--placeHolder);
 }
 .lenguagesList{
 	display: flex;

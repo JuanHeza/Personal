@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/lib/pq"
 )
 
 //ProjectModel is the main structure of the page, stores the general data of every project
@@ -17,16 +15,15 @@ type ProjectModel struct {
 	Lenguajes   []*LenguageModel
 	Detalle     string
 	Descripcion string
-	Progreso    int
 	Github      string
 	Link        string
-	// Icon        string
-	// Banner      string
-	Tiempo    time.Time //in minutes
-	WakaLinks []string  // lins of wakatime to retrive the time
-	Notas     []*NoteModel
-	Galeria   []*ImageModel
-	Posts     []*PostModel
+	Label       string
+	Status      string
+	Notas       []*NoteModel
+	Galeria     []*ImageModel
+	Posts       []*PostModel
+	Pinned      bool //	IMPLEMENTAR
+
 }
 
 var (
@@ -37,17 +34,16 @@ var (
 )
 
 // NewProject is a new instance of the model
-func NewProject(tit string, leng []*LenguageModel, det string, des string, pro int, git string, link string, time time.Time, waka []string, notes []*NoteModel, images []*ImageModel) *ProjectModel {
+func NewProject(tit string, leng []*LenguageModel, det string, des string, stat string, git string, link string, label string, notes []*NoteModel, images []*ImageModel) *ProjectModel {
 	return &ProjectModel{
 		Titulo:      tit,
 		Lenguajes:   leng,
 		Detalle:     det,
 		Descripcion: des,
-		Progreso:    pro,
+		Status:      stat,
 		Github:      git,
 		Link:        link,
-		Tiempo:      time,
-		WakaLinks:   waka,
+		Label:       label,
 		Notas:       notes,
 		Galeria:     images,
 	}
@@ -55,7 +51,7 @@ func NewProject(tit string, leng []*LenguageModel, det string, des string, pro i
 
 //CreateProject create an instance of the model
 func (pr *ProjectModel) CreateProject() {
-	pr.Tiempo = getWakaTime(pr.WakaLinks)
+	// pr.Tiempo = getWakaTime(pr.WakaLinks)
 	id, err := Queries.CreateProject(pr)
 	if err != nil {
 		panic(err)
@@ -183,7 +179,7 @@ func getWakaTime(links []string) (total time.Time) {
 func (query *dbStore) CreateProject(pr *ProjectModel) (int, error) {
 	var ID int
 	today := time.Now().Truncate(time.Hour * 24)
-	data, err := query.db.Query(`INSERT INTO projects(	titulo, detalle, descripcion, progreso, github, link, tiempo, wakalinks, updated) VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9);`, pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), today)
+	data, err := query.db.Query(`INSERT INTO projects(	titulo, detalle, descripcion, status, github, link, label, updated) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`, pr.Titulo, pr.Detalle, pr.Descripcion, pr.Status, pr.Github, pr.Link, pr.Label, today)
 	defer data.Close()
 	if err != nil {
 		return 0, err
@@ -203,32 +199,31 @@ func (query *dbStore) CreateProject(pr *ProjectModel) (int, error) {
 
 func (query *dbStore) ReadProject(id int) (*ProjectModel, error) {
 	var one *ProjectModel
-	rows, err := query.db.Query("SELECT project_id, titulo, detalle, descripcion, progreso, github, link, tiempo, wakalinks FROM projects WHERE project_id=$1", id)
+	rows, err := query.db.Query("SELECT project_id, titulo, detalle, descripcion, status, github, link, label FROM projects WHERE project_id=$1", id)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
 		one = &ProjectModel{}
-		if err := rows.Scan(&one.ID, &one.Titulo, &one.Detalle, &one.Descripcion, &one.Progreso, &one.Github, &one.Link, &one.Tiempo, pq.Array(&one.WakaLinks)); err != nil {
+		if err := rows.Scan(&one.ID, &one.Titulo, &one.Detalle, &one.Descripcion, &one.Status, &one.Github, &one.Link, &one.Label); err != nil {
 			fmt.Println("ERROR ID;", id, "NO ENCONTRADO", err)
 			return nil, err
 		}
-		one.Tiempo = one.Tiempo.UTC()
 	}
 	return one, nil
 }
 
 func (query *dbStore) ReadAllProject() ([]*ProjectModel, error) {
 	var all []*ProjectModel
-	rows, err := query.db.Query("SELECT project_id, titulo, detalle, progreso FROM projects") //lenguajes
+	rows, err := query.db.Query("SELECT project_id, titulo, detalle, label, status FROM projects") //lenguajes
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
 		pr := &ProjectModel{}
-		if err := rows.Scan(&pr.ID, &pr.Titulo, &pr.Detalle, &pr.Progreso); err != nil {
+		if err := rows.Scan(&pr.ID, &pr.Titulo, &pr.Detalle, &pr.Label, &pr.Status); err != nil {
 			fmt.Println(err)
 			return nil, err
 		}
@@ -238,7 +233,7 @@ func (query *dbStore) ReadAllProject() ([]*ProjectModel, error) {
 }
 
 func (query *dbStore) UpdateProject(pr *ProjectModel) error {
-	data, err := query.db.Query(`UPDATE projects SET titulo=$1, detalle=$2, descripcion=$3, progreso=$4, github=$5, link=$6, tiempo=$7, wakalinks=$8 WHERE project_id=$9;`,	pr.Titulo, pr.Detalle, pr.Descripcion, pr.Progreso, pr.Github, pr.Link, pr.Tiempo, pq.Array(pr.WakaLinks), pr.ID)
+	data, err := query.db.Query(`UPDATE projects SET titulo=$1, detalle=$2, descripcion=$3, status=$4, github=$5, link=$6, label=$8 WHERE project_id=$9;`, pr.Titulo, pr.Detalle, pr.Descripcion, pr.Status, pr.Github, pr.Link, pr.Label, pr.ID)
 	defer data.Close()
 	return err
 }

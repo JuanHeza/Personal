@@ -10,7 +10,7 @@ type StaticData struct {
 	About        string
 	Tutorial     string
 	Contacto     string
-	Link         [][]string /* array de [link, link image]*/
+	// Link         [][]string /* array de [link, link image]*/
 	// Avatar       string
 	// Banner       string
 	Leng string
@@ -45,7 +45,9 @@ func (s *StaticData) CreateStatics() {
 //ReadStatics fills the collection whit data
 func (s *StaticData) ReadStatics() {
 	err := Queries.ReadStatics(StaticDataCollection)
-	Link.ReadLink()
+	ln := Link.ReadLink()
+	StaticDataCollection["link"] = ln
+	// fmt.Println(StaticDataCollection)
 	if err != nil {
 		panic(err)
 	}

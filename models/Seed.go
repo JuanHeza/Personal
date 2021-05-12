@@ -11,11 +11,11 @@ var (
 			Titulo:      "Personal",
 			Detalle:     "uno muy bonito",
 			Descripcion: "se supone que este va mas largo",
-			Progreso:    44,
+			Status:      "Proceso",
 			Github:      "ttps://github.com/JuanHeza",
 			Link:        "ttps://github.com/JuanHeza",
 			// Tiempo:      tiempo,
-			WakaLinks: []string{"Personal"},
+			Label: "Personal",
 			Notas: []*NoteModel{
 				{
 					Titulo:  "PROJECTO 1 NOTA 1",
@@ -49,11 +49,11 @@ var (
 			Titulo:      "Artemis",
 			Detalle:     "mi favorito",
 			Descripcion: "hi patito feo",
-			Progreso:    44,
-			Github:      "ttps://github.com/JuanHeza",
-			Link:        "ttps://github.com/JuanHeza",
+			Status:      "Proceso",
+			Github:      "https://github.com/JuanHeza",
+			Link:        "https://github.com/JuanHeza",
 			// Tiempo:      tiempo,
-			WakaLinks: []string{"Arrow", "Arrow-Servidor", "Arrow-App"},
+			Label: "Personal",
 			Notas: []*NoteModel{
 				{
 					Titulo:  "PROJECTO 2 NOTA 1",
@@ -162,6 +162,7 @@ var (
 		{Link: "mailto:juanehza@hotmail.com", Icon: "envelope.png", ID: 1},
 		{Link: "https://repl.it/@JuanHeza/", Icon: "Repl.it.png", ID: 2},
 		{Link: "https://github.com/JuanHeza", Icon: "GitHub-Mark-32px.png", ID: 3},
+		{Link: "/api/Home/", Icon: "GitHub-Mark-32px.png", ID: 4},
 	}
 	posts = []*PostModel{
 		{
@@ -183,7 +184,7 @@ var (
 			Detalle:   "DETALLE DEL POST",
 			Cuerpo:    "AQUI DEBES PONER EL CUERPO EXPICANDO TODA LA CACERIA",
 			Lenguajes: []*LenguageModel{
-				{Titulo: "Go"},
+				{Titulo: "Ruby"},
 			},
 		},
 	}

@@ -65,6 +65,7 @@ func uploadGalleryImage(folder string /* file multipart.File, */, handler []*mul
 }
 
 func uploadImage(folder string, file multipart.File, handler *multipart.FileHeader, err error, name ...string) (string, error) {
+	
 	var f *os.File
 	if err != nil {
 		return "", err
