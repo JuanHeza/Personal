@@ -117,8 +117,8 @@ var (
 
 //SetupDatabase drop tables if exist and creates a new one
 func SetupDatabase(seed bool) {
-	var host, port, user, password, dbname = "localhost", "5432", "postgres", "JHZ697heza", "ProycetsDB"
-	StartConnection(host, port, user, password, dbname)
+	var host, port, user, password, dbname, ssl = "localhost", "5432", "postgres", "JHZ697heza", "ProycetsDB", "disable"
+	StartConnection(host, port, user, password, dbname, ssl)
 	db := getDatabase()
 	err := db.DropTables()
 	if err != nil {
