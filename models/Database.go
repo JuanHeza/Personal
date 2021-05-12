@@ -81,9 +81,9 @@ func InitQueries(q Query) {
 }
 
 //StartConnection conects to the database with the provided credentials
-func StartConnection(host string, port string, user string, password string, dbname string) {
+func StartConnection(host string, port string, user string, password string, dbname string, ssl string) {
 	var connString string
-	connString = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	connString = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, ssl)
 	fmt.Println(connString)
 	db, err := sql.Open("postgres", connString)
 

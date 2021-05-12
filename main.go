@@ -16,11 +16,12 @@ var (
 	user     = os.Getenv("PQ_USER")
 	password = os.Getenv("PQ_PASSWORD")
 	dbname   = os.Getenv("PQ_DBNAME")
+	ssl 	 = os.Getenv("PQ_SSL")
 	//APIKey is the WakaTime key
 )
 
 func main() {
-	models.StartConnection(host, port, user, password, dbname)
+	models.StartConnection(host, port, user, password, dbname, ssl)
 	models.SetupDatabaseDevelopment()
 	r := newRouter()
 	models.Static.ReadStatics()
