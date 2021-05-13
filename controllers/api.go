@@ -33,8 +33,10 @@ func ApiHomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func IconHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
 	var dir string
+	vars := mux.Vars(r)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if vars["folder"] == "Icons" || vars["folder"] == "icons" {
 		dir = "./static/stylesheets/icons/" + vars["title"] + ".png"
 	} else {
@@ -51,6 +53,8 @@ func ApiProjectHandler(w http.ResponseWriter, r *http.Request) {
 		"Data": &models.ProjectModel{},
 	}
 	vars := mux.Vars(r)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	log.Printf("/Project/%v @ Project.ApiProjectHandler", vars["id"])
 	id, err := strconv.Atoi(vars["id"])
 	if IfErr(err, w, r) {
@@ -70,6 +74,8 @@ func ApiPostHandler(w http.ResponseWriter, r *http.Request) {
 		"Data": &models.PostModel{},
 	}
 	vars := mux.Vars(r)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	log.Printf("/Post/%v @ Post.ApiPostHandler", vars["id"])
 	id, err := strconv.Atoi(vars["id"])
 	IfErr(err, w, r)
@@ -81,8 +87,10 @@ func ApiPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ApiListHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
 	var Data = make(map[string]interface{})
+	vars := mux.Vars(r)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	switch vars["filtro"] {
 	case "Post":
 		Data["data"], _ = ApiPostListHanler()
