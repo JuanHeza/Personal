@@ -14,10 +14,10 @@ import (
 
 //ApiHomeHandler is the handler of the homepage
 func ApiHomeHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("/api/Home/ @ Project.ApiHomeHandler") 
+	log.Printf("/api/Home/ @ Project.ApiHomeHandler")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
 	_, data, err := models.Project.ReadProject()
 	st := models.StaticDataCollection["es"].(models.StaticData)
 	// log.Println(st)
